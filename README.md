@@ -1,3 +1,28 @@
+<div align="center">
+
+![XuniaDAO system](docs/assets/sonoxo-system.svg)
+
+# XuniaDAO Registry
+
+**A Sonoxo-hosted integration of the community Flow native token registry.**
+
+`UPSTREAM-BASED` · `TOKEN METADATA` · `FLOW ECOSYSTEM`
+
+</div>
+
+> **Attribution:** the code and registry documentation below originate from the FlowFans community project. This repository does not claim original authorship. Verify upstream provenance, license, token addresses, and current maintenance status before production use.
+
+## The simple version
+
+1. A contributor submits token metadata and artwork.
+2. Automated rules validate the schema and file layout.
+3. Valid entries become part of mainnet or testnet lists.
+4. Wallets and applications fetch those lists.
+
+The registry is metadata infrastructure—not a guarantee that a token is safe, valuable, endorsed, or authentic.
+
+---
+
 # Flow Native Token List
 
 The community maintained Flow native token registry.
