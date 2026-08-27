@@ -1,4 +1,5 @@
 export * from './lib/ecosystem';
+export * from './lib/glass-onion-layer';
 export * from './lib/quantum-ontology';
 export * from './lib/sagi';
 export * from './lib/super-agent';
