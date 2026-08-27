@@ -1,30 +1,34 @@
 {
   "codename": "GLASS ONION",
   "umbrella": "XUNIA",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "layers": [
     {
       "id": "xunia",
       "name": "XUNIA / XuniaDAO",
       "repository": "https://github.com/sonoxo/xuniadao",
+      "visibility": "PUBLIC",
       "role": "ecosystem registry, DAO metadata, integration and governance intelligence"
     },
     {
       "id": "zyra",
       "name": "ZYRA",
       "repository": "https://github.com/sonoxo/zyra",
+      "visibility": "PUBLIC",
       "role": "agentic orchestration, workflows and bounded command execution"
     },
     {
       "id": "sonoxo",
       "name": "SONOXO / GPT-DOUG-LLM",
       "repository": "https://github.com/sonoxo/gpt-doug-llm",
+      "visibility": "PUBLIC",
       "role": "model brain, intelligence ontology and defensive agent runtime"
     },
     {
       "id": "almighty-sonoxo",
       "name": "AlmightySonoxo",
       "repository": "https://github.com/sonoxo/AlmightySonoxo",
+      "visibility": "PUBLIC",
       "role": "creative, media and public-facing ecosystem layer"
     },
     {
@@ -32,9 +36,27 @@
       "name": "VA3LM",
       "repository": "https://github.com/sonoxo/gpt-doug-llm/tree/main/va3lm",
       "runtime": "http://127.0.0.1:8088",
+      "visibility": "PUBLIC",
       "role": "Virginia Agentic Large Learning Language Model coding and programming command center"
+    },
+    {
+      "id": "gpt-uap-xo",
+      "name": "GPT-UAP-XO",
+      "repository": "https://github.com/sonoxo/gpt-uap-xo",
+      "visibility": "PRIVATE",
+      "command": "/glass uap",
+      "role": "terminal-first local agent runtime for chat, tools, memory, APIs and bounded parallel workers"
     }
   ],
+  "routing": {
+    "uapAgentRuntime": [
+      "XUNIA_SCOPE",
+      "GPT_UAP_XO_PLAN",
+      "GPT_UAP_XO_BOUNDED_WORKERS",
+      "PROVENANCE_CHECK",
+      "ZYRA_ACTION_GATE"
+    ]
+  },
   "technologyIntelligence": [
     "Anthropic / Claude",
     "Google",
