@@ -7,6 +7,7 @@ on:
       - 'src/lib/glass-onion-layer.ts'
       - 'src/lib/glass-onion-layer.spec.ts'
       - 'ecosystem/glass-onion-layer.json'
+      - 'ecosystem/gpt-uap-xo.json'
       - 'docs/GLASSONION_LAYER.md'
       - 'src/index.ts'
       - '.github/workflows/glass-onion-layer.yml'
@@ -15,6 +16,7 @@ on:
       - 'src/lib/glass-onion-layer.ts'
       - 'src/lib/glass-onion-layer.spec.ts'
       - 'ecosystem/glass-onion-layer.json'
+      - 'ecosystem/gpt-uap-xo.json'
       - 'docs/GLASSONION_LAYER.md'
       - 'src/index.ts'
       - '.github/workflows/glass-onion-layer.yml'
@@ -47,11 +49,20 @@ jobs:
           const { GLASS_ONION_LAYER, routeGlassOnion } = require('./dist/main/lib/glass-onion-layer');
           assert.equal(GLASS_ONION_LAYER.codename, 'GLASS ONION');
           assert.equal(GLASS_ONION_LAYER.command, '/glass');
-          assert.equal(GLASS_ONION_LAYER.layers.length, 5);
+          assert.equal(GLASS_ONION_LAYER.uapCommand, '/glass uap');
+          assert.equal(GLASS_ONION_LAYER.layers.length, 6);
+          assert.ok(GLASS_ONION_LAYER.layers.includes('gpt-uap-xo'));
+          assert.ok(GLASS_ONION_LAYER.capabilities.includes('UAP_AGENT_RUNTIME'));
           assert.equal(routeGlassOnion({
             objective: 'CI ontology route',
             capability: 'ONTOLOGY_WORKFLOW',
             targets: ['xunia', 'sonoxo', 'va3lm', 'zyra']
+          }).decision, 'ALLOW');
+          assert.equal(routeGlassOnion({
+            objective: 'CI UAP route',
+            capability: 'UAP_AGENT_RUNTIME',
+            targets: ['xunia', 'gpt-uap-xo', 'zyra'],
+            provenance: ['repo:sonoxo/gpt-uap-xo']
           }).decision, 'ALLOW');
           assert.equal(routeGlassOnion({
             objective: 'CI mutation route',
@@ -74,10 +85,17 @@ jobs:
           const fs = require('fs');
           const assert = require('assert');
           const contract = JSON.parse(fs.readFileSync('ecosystem/glass-onion-layer.json', 'utf8'));
+          const uap = JSON.parse(fs.readFileSync('ecosystem/gpt-uap-xo.json', 'utf8'));
           assert.equal(contract.codename, 'GLASS ONION');
-          assert.equal(contract.version, '2.0.0');
+          assert.equal(contract.version, '2.2.0');
           assert.equal(contract.command, '/glass');
-          assert.equal(contract.layers.length, 5);
+          assert.equal(contract.uapCommand, '/glass uap');
+          assert.equal(contract.layers.length, 6);
+          assert.ok(contract.layers.includes('gpt-uap-xo'));
+          assert.ok(contract.capabilities.includes('UAP_AGENT_RUNTIME'));
+          assert.equal(uap.status, 'BOUND');
+          assert.equal(uap.command, '/glass uap');
+          assert.equal(uap.visibility, 'PRIVATE');
           assert.equal(contract.invariants.provenanceRequired, true);
           assert.equal(contract.invariants.automaticFundMovement, false);
           console.log('GLASS ONION MACHINE CONTRACT: PASS');
