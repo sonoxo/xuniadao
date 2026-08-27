@@ -1,0 +1,72 @@
+{
+  "id": "XUNIA-XRPL-TOKEN-WALLET-ONTOLOGY",
+  "version": "1.0.0",
+  "command": "/glass xrpl pathways",
+  "repositories": {
+    "standards": {
+      "xunia": "sonoxo/XRPL-StandardsXUNIA-",
+      "upstream": "XRPLF/XRPL-Standards",
+      "license": "MIT"
+    },
+    "client": {
+      "xunia": "sonoxo/xrpl.jsXUNIA",
+      "upstream": "XRPLF/xrpl.js",
+      "license": "ISC"
+    },
+    "node": {
+      "xunia": "sonoxo/rippledXUNIA",
+      "upstream": "XRPLF/rippled",
+      "license": "ISC"
+    }
+  },
+  "pathways": {
+    "read": [
+      "DISCOVER_STANDARD",
+      "CONNECT_NODE",
+      "READ_LEDGER",
+      "READ_ACCOUNT",
+      "READ_TOKEN",
+      "READ_TRUST_LINES",
+      "WRITE_AUDIT_EVIDENCE"
+    ],
+    "transaction": [
+      "DISCOVER_STANDARD",
+      "BUILD_UNSIGNED_TRANSACTION",
+      "VALIDATE_TRANSACTION",
+      "REQUEST_HUMAN_APPROVAL",
+      "SIGN_WITH_EXTERNAL_WALLET",
+      "SUBMIT_TRANSACTION",
+      "VERIFY_VALIDATED_LEDGER",
+      "WRITE_AUDIT_EVIDENCE"
+    ]
+  },
+  "objectTypes": [
+    "STANDARD",
+    "CLIENT_LIBRARY",
+    "LEDGER_NODE",
+    "NETWORK",
+    "ACCOUNT",
+    "WALLET",
+    "TOKEN",
+    "TRUST_LINE",
+    "TRANSACTION",
+    "SIGNATURE",
+    "HUMAN_APPROVAL",
+    "AUDIT_EVIDENCE"
+  ],
+  "controls": {
+    "provenanceRequired": true,
+    "validatedLedgerReadsAllowed": true,
+    "unsignedTransactionBuildRequiresReview": true,
+    "humanApprovalRequiredForSigning": true,
+    "externalSignerRequired": true,
+    "walletSeedStorage": false,
+    "privateKeyStorage": false,
+    "secretsInRepository": false,
+    "secretsInAuditEvidence": false,
+    "automaticFundMovement": false,
+    "automaticTokenIssuance": false,
+    "automaticTrustLineMutation": false,
+    "upstreamAffiliationClaim": false
+  }
+}
