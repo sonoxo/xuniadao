@@ -15,6 +15,10 @@ on:
       - 'cadence/**'
       - 'ecosystem/**'
       - 'docs/VA3LM-SAGI.md'
+      - 'docs/GOOD_FIRST_ISSUES.md'
+      - 'CONTRIBUTING.md'
+      - 'CONTRIBUTORS.md'
+      - '.github/PULL_REQUEST_TEMPLATE.md'
       - 'scripts/glass-onion-bootstrap.sh'
       - 'README.md'
       - '.github/workflows/glass-onion.yml'
@@ -31,6 +35,10 @@ on:
       - 'cadence/**'
       - 'ecosystem/**'
       - 'docs/VA3LM-SAGI.md'
+      - 'docs/GOOD_FIRST_ISSUES.md'
+      - 'CONTRIBUTING.md'
+      - 'CONTRIBUTORS.md'
+      - '.github/PULL_REQUEST_TEMPLATE.md'
       - 'scripts/glass-onion-bootstrap.sh'
       - 'README.md'
       - '.github/workflows/glass-onion.yml'
@@ -124,6 +132,17 @@ jobs:
           grep -q 'contract XuniaIntent' cadence/contracts/XuniaIntent.cdc
           grep -q 'IntentSubmitted' cadence/contracts/XuniaIntent.cdc
           echo 'CADENCE / FLOW LANE: PASS'
+
+      - name: Contributor lane lock
+        run: |
+          test -f CONTRIBUTING.md
+          test -f CONTRIBUTORS.md
+          test -f docs/GOOD_FIRST_ISSUES.md
+          test -f .github/PULL_REQUEST_TEMPLATE.md
+          grep -q 'Flow / Cadence' CONTRIBUTING.md
+          grep -q 'GF-001' docs/GOOD_FIRST_ISSUES.md
+          grep -q 'Community contributors' CONTRIBUTORS.md
+          echo 'GLASS ONION CONTRIBUTOR LANES: PASS'
 
       - name: Bootstrap syntax
         run: bash -n scripts/glass-onion-bootstrap.sh
