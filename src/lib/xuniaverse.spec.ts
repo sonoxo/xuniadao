@@ -10,7 +10,8 @@ test('XuniaDAO is the XUNIAverse root', (t) => {
 });
 
 test('all indexed repository nodes preserve upstream ownership and license boundaries', (t) => {
-  t.is(XUNIAVERSE_REPOSITORIES.length, 53);
+  t.is(XUNIAVERSE_REPOSITORIES.length, 54);
+  t.true(XUNIAVERSE_REPOSITORIES.some((node) => node.repository === 'sonoxo/xrpl-dev-portalXUNIA' && node.role === 'XUNIA_EXTENSION'));
   for (const repository of XUNIAVERSE_REPOSITORIES) {
     t.true(repository.preservesUpstreamOwnership);
     t.is(repository.root, 'sonoxo/xuniadao');
