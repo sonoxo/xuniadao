@@ -2,6 +2,7 @@ import { getXuniaLayer, XuniaLayerId } from './ecosystem';
 
 export type GlassOnionCapability =
   | 'INTELLIGENCE_QUERY'
+  | 'AIT_ONTOLOGY'
   | 'CODE_PLAN'
   | 'ONTOLOGY_WORKFLOW'
   | 'MEDIA_WORKFLOW'
@@ -40,6 +41,15 @@ const PIPELINES: Readonly<Record<GlassOnionCapability, readonly string[]>> = {
     'SONOXO_ONTOLOGY',
     'VA3LM_REASON',
     'ZYRA_VERIFY',
+  ],
+  AIT_ONTOLOGY: [
+    'AIT_INGEST',
+    'AIT_PROVENANCE_CHECK',
+    'AIT_NORMALIZE',
+    'AIT_CORRELATE',
+    'AIT_ANALYZE',
+    'VA3LM_COMMAND_REVIEW',
+    'ZYRA_ACTION_GATE',
   ],
   CODE_PLAN: [
     'XUNIA_SCOPE',
@@ -127,7 +137,7 @@ export const routeGlassOnion = (request: GlassOnionRequest): GlassOnionRoute => 
   }
 
   if (
-    request.capability === 'INTELLIGENCE_QUERY' &&
+    (request.capability === 'INTELLIGENCE_QUERY' || request.capability === 'AIT_ONTOLOGY') &&
     (!request.provenance || request.provenance.length === 0)
   ) {
     reasons.push('PROVENANCE_REQUIRED_FOR_INTELLIGENCE_PROMOTION');
@@ -150,8 +160,9 @@ export const routeGlassOnion = (request: GlassOnionRequest): GlassOnionRoute => 
 
 export const GLASS_ONION_LAYER = {
   codename: 'GLASS ONION',
-  version: '2.0.0',
+  version: '2.1.0',
   command: '/glass',
+  aitCommand: '/glass ait',
   umbrella: 'XUNIA',
   layers: ['xunia', 'zyra', 'sonoxo', 'almighty-sonoxo', 'va3lm'] as readonly XuniaLayerId[],
   capabilities: Object.keys(PIPELINES) as readonly GlassOnionCapability[],
