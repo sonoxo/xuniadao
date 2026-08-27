@@ -14,10 +14,19 @@ export interface XuniaLayer {
   readonly status: 'ACTIVE' | 'EMBEDDED';
 }
 
+export interface TechnologyIntelligenceLayer {
+  readonly provider: string;
+  readonly capability: string;
+  readonly relationship:
+    | 'INTEGRATION_READY'
+    | 'ARCHITECTURE_ALIGNED'
+    | 'MODEL_COMPATIBLE';
+}
+
 export const GLASS_ONION = {
   codename: 'GLASS ONION',
   umbrella: 'XUNIA',
-  version: '1.0.0',
+  version: '1.1.0',
   layers: [
     {
       id: 'xunia',
@@ -56,6 +65,35 @@ export const GLASS_ONION = {
       status: 'EMBEDDED',
     },
   ] as readonly XuniaLayer[],
+  technologyIntelligence: [
+    {
+      provider: 'Anthropic / Claude',
+      capability: 'model-provider and agent reasoning interoperability',
+      relationship: 'MODEL_COMPATIBLE',
+    },
+    {
+      provider: 'Google',
+      capability: 'cloud, AI, data and developer-platform integration targets',
+      relationship: 'INTEGRATION_READY',
+    },
+    {
+      provider: 'Palantir',
+      capability: 'ontology, workflow and action-model architecture alignment',
+      relationship: 'ARCHITECTURE_ALIGNED',
+    },
+    {
+      provider: 'IBM / Red Hat',
+      capability: 'enterprise Linux, hybrid-cloud and governance integration targets',
+      relationship: 'INTEGRATION_READY',
+    },
+    {
+      provider: 'AWS',
+      capability: 'cloud runtime, storage, identity and managed-service integration targets',
+      relationship: 'INTEGRATION_READY',
+    },
+  ] as readonly TechnologyIntelligenceLayer[],
+  affiliationBoundary:
+    'Technology compatibility or architecture alignment does not itself imply sponsorship, investment, partnership, endorsement, or government affiliation.',
   rules: {
     humanApprovalForMutation: true,
     automaticFundMovement: false,
