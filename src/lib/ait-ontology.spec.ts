@@ -2,10 +2,12 @@ import test from 'ava';
 
 import {
   AIT_ONTOLOGY,
+  AIT_SOURCE_BINDING,
   createAITSeed,
   evaluateAITAction,
   linkAITObjects,
   validateAITObject,
+  validateAITSourceBinding,
 } from './ait-ontology';
 
 test('AIT ontology identity and command are locked', (t) => {
@@ -15,10 +17,23 @@ test('AIT ontology identity and command are locked', (t) => {
   t.true(AIT_ONTOLOGY.relationTypes.includes('CORROBORATES'));
 });
 
-test('AIT seed produces governed Glass Onion graph', (t) => {
+test('AIT source is bound to a pinned XUNIA Glass Onion contract', (t) => {
+  const binding = validateAITSourceBinding(AIT_SOURCE_BINDING);
+  t.is(binding.status, 'BOUND');
+  t.is(binding.sourceId, 'xunia:glass-onion:ait');
+  t.is(binding.repository, 'sonoxo/xuniadao');
+  t.is(binding.baselineCommit, '041dcc38b4a2f751b0b9e2c8d2488931ddeb6f5e');
+  t.is(binding.contractPath, 'ecosystem/ait-ontology.json');
+  t.is(binding.implementationPath, 'src/lib/ait-ontology.ts');
+  t.true(AIT_ONTOLOGY.invariants.sourceBindingRequired);
+});
+
+test('AIT seed produces governed and source-bound Glass Onion graph', (t) => {
   const seed = createAITSeed();
-  t.is(seed.objects.length, 4);
-  t.is(seed.relations.length, 3);
+  t.is(seed.objects.length, 5);
+  t.is(seed.relations.length, 4);
+  t.true(seed.objects.some((object) => object.id === 'ait:source:xunia-binding'));
+  t.true(seed.relations.some((relation) => relation.type === 'SUPPORTED_BY'));
   t.true(seed.relations.some((relation) => relation.type === 'GOVERNS'));
   t.true(seed.relations.some((relation) => relation.type === 'ROUTES_TO'));
 });

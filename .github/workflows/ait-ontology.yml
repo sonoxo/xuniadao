@@ -41,26 +41,38 @@ jobs:
         run: |
           node <<'NODE'
           const assert = require('assert');
-          const { AIT_ONTOLOGY, createAITSeed, evaluateAITAction } = require('./dist/main/lib/ait-ontology');
+          const {
+            AIT_ONTOLOGY,
+            AIT_SOURCE_BINDING,
+            createAITSeed,
+            evaluateAITAction,
+            validateAITSourceBinding
+          } = require('./dist/main/lib/ait-ontology');
           const { GLASS_ONION_LAYER, routeGlassOnion } = require('./dist/main/lib/glass-onion-layer');
           assert.equal(AIT_ONTOLOGY.command, '/glass ait');
           assert.ok(AIT_ONTOLOGY.objectTypes.includes('AIT_EVIDENCE'));
           assert.ok(AIT_ONTOLOGY.relationTypes.includes('CORROBORATES'));
+          const binding = validateAITSourceBinding(AIT_SOURCE_BINDING);
+          assert.equal(binding.status, 'BOUND');
+          assert.equal(binding.sourceId, 'xunia:glass-onion:ait');
+          assert.equal(binding.repository, 'sonoxo/xuniadao');
+          assert.equal(binding.baselineCommit, '041dcc38b4a2f751b0b9e2c8d2488931ddeb6f5e');
           const seed = createAITSeed();
-          assert.equal(seed.objects.length, 4);
-          assert.equal(seed.relations.length, 3);
+          assert.equal(seed.objects.length, 5);
+          assert.equal(seed.relations.length, 4);
+          assert.ok(seed.objects.some(x => x.id === 'ait:source:xunia-binding'));
           assert.equal(evaluateAITAction({ action: 'ANALYZE', objectIds: ['ait:system:glass-onion'] }).decision, 'ALLOW');
           assert.equal(evaluateAITAction({ action: 'MOVE', objectIds: ['ait:action:test'], movesFunds: true }).decision, 'BLOCK');
           assert.ok(GLASS_ONION_LAYER.capabilities.includes('AIT_ONTOLOGY'));
           const route = routeGlassOnion({
-            objective: 'Route AIT intelligence',
+            objective: 'Route bound AIT intelligence',
             capability: 'AIT_ONTOLOGY',
             targets: ['xunia', 'sonoxo', 'va3lm', 'zyra'],
-            provenance: ['source:ci']
+            provenance: binding.provenance
           });
           assert.equal(route.decision, 'ALLOW');
           assert.ok(route.pipeline.includes('AIT_CORRELATE'));
-          console.log('AIT ONTOLOGY LOCK: PASS');
+          console.log('AIT ONTOLOGY BINDING LOCK: PASS');
           NODE
       - name: Machine contract lock
         run: |
@@ -72,6 +84,18 @@ jobs:
           assert.equal(contract.command, '/glass ait');
           assert.deepEqual(contract.decisionStates, ['ALLOW', 'REVIEW', 'BLOCK']);
           assert.equal(contract.invariants.provenanceRequired, true);
+          assert.equal(contract.invariants.sourceBindingRequired, true);
           assert.equal(contract.invariants.automaticFundMovement, false);
-          console.log('AIT MACHINE CONTRACT: PASS');
+          assert.equal(contract.sourceBinding.status, 'BOUND');
+          assert.equal(contract.sourceBinding.repository, 'sonoxo/xuniadao');
+          assert.equal(contract.externalAITBinding.status, 'BOUND');
+          assert.equal(contract.externalAITBinding.externalAffiliationClaim, false);
+          for (const path of [
+            contract.sourceBinding.contractPath,
+            contract.sourceBinding.implementationPath,
+            contract.sourceBinding.verificationWorkflow
+          ]) {
+            assert.ok(fs.existsSync(path), `missing bound source path: ${path}`);
+          }
+          console.log('AIT MACHINE BINDING CONTRACT: PASS');
           NODE
