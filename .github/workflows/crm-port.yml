@@ -1,0 +1,73 @@
+name: CRM Port Cloud Fleet
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/lib/crm-port.ts'
+      - 'src/lib/crm-port.spec.ts'
+      - 'src/lib/glass-onion-layer.ts'
+      - 'src/lib/glass-onion-layer.spec.ts'
+      - 'src/index.ts'
+      - 'ecosystem/crm-port.json'
+      - 'docs/CRM_PORT.md'
+      - '.github/workflows/crm-port.yml'
+  pull_request:
+    paths:
+      - 'src/lib/crm-port.ts'
+      - 'src/lib/crm-port.spec.ts'
+      - 'src/lib/glass-onion-layer.ts'
+      - 'src/lib/glass-onion-layer.spec.ts'
+      - 'src/index.ts'
+      - 'ecosystem/crm-port.json'
+      - 'docs/CRM_PORT.md'
+      - '.github/workflows/crm-port.yml'
+
+jobs:
+  cloud-fleet:
+    name: cloud-${{ matrix.lane }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        lane: [parser, migration, governance]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: yarn
+      - name: Install
+        run: yarn install --frozen-lockfile
+      - name: Build
+        run: yarn build:main
+      - name: Unit tests
+        run: yarn test:unit
+      - name: Port contract verification
+        run: |
+          node <<'NODE'
+          const assert = require('assert');
+          const fs = require('fs');
+          const port = require('./dist/main/lib/crm-port');
+          const glass = require('./dist/main/lib/glass-onion-layer');
+          const contract = JSON.parse(fs.readFileSync('ecosystem/crm-port.json', 'utf8'));
+          assert.equal(port.CRM_PORT.command, '/glass crm port');
+          assert.equal(glass.GLASS_ONION_LAYER.crmPortCommand, '/glass crm port');
+          assert.equal(contract.status, 'ACTIVE');
+          assert.equal(contract.capabilities.bulkRead, true);
+          assert.equal(contract.capabilities.bulkWrite, true);
+          assert.equal(contract.capabilities.bulkMigration, true);
+          assert.equal(contract.capabilities.idempotentUpsert, true);
+          assert.equal(contract.controls.bulkWriteRequiresHumanApproval, true);
+          const route = glass.routeGlassOnion({
+            objective: 'CI bulk CRM port',
+            capability: 'CRM_PORT',
+            targets: ['xunia', 'zyra', 'gpt-uap-xo'],
+            provenance: ['source:ci']
+          });
+          assert.equal(route.decision, 'ALLOW');
+          assert.ok(route.pipeline.includes('SCHEMA_MAP'));
+          assert.ok(route.pipeline.includes('ROLLBACK_MANIFEST'));
+          console.log('CRM PORT CLOUD FLEET: PASS');
+          NODE
