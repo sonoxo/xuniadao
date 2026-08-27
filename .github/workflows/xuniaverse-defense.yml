@@ -13,14 +13,17 @@ on:
       - 'src/lib/ecosystem-governance-ontology.ts'
       - 'src/lib/glass-onion-layer.ts'
       - 'src/lib/glass-onion-layer.spec.ts'
+      - 'src/lib/mission-telemetry.ts'
       - 'src/index.ts'
       - 'ecosystem/gcpxunia-defense.json'
       - 'ecosystem/tech-peers.json'
       - 'ecosystem/xuniaverse.json'
       - 'ecosystem/governance-ontology.json'
       - 'ecosystem/glass-onion-layer.json'
+      - 'ecosystem/mission-telemetry.json'
       - 'docs/GCPXUNIA_DEFENSE.md'
       - 'docs/TECH_PEERS.md'
+      - 'docs/MISSION_TELEMETRY.md'
       - 'README.md'
       - '.github/workflows/xuniaverse-defense.yml'
   pull_request:
@@ -34,14 +37,17 @@ on:
       - 'src/lib/ecosystem-governance-ontology.ts'
       - 'src/lib/glass-onion-layer.ts'
       - 'src/lib/glass-onion-layer.spec.ts'
+      - 'src/lib/mission-telemetry.ts'
       - 'src/index.ts'
       - 'ecosystem/gcpxunia-defense.json'
       - 'ecosystem/tech-peers.json'
       - 'ecosystem/xuniaverse.json'
       - 'ecosystem/governance-ontology.json'
       - 'ecosystem/glass-onion-layer.json'
+      - 'ecosystem/mission-telemetry.json'
       - 'docs/GCPXUNIA_DEFENSE.md'
       - 'docs/TECH_PEERS.md'
+      - 'docs/MISSION_TELEMETRY.md'
       - 'README.md'
       - '.github/workflows/xuniaverse-defense.yml'
 
@@ -67,10 +73,12 @@ jobs:
           const peers = require('./dist/main/lib/tech-peer-ontology');
           const universe = require('./dist/main/lib/xuniaverse');
           const layer = require('./dist/main/lib/glass-onion-layer');
+          const mission = require('./dist/main/lib/mission-telemetry');
           const defenseContract = JSON.parse(fs.readFileSync('ecosystem/gcpxunia-defense.json', 'utf8'));
           const peerContract = JSON.parse(fs.readFileSync('ecosystem/tech-peers.json', 'utf8'));
           const universeContract = JSON.parse(fs.readFileSync('ecosystem/xuniaverse.json', 'utf8'));
           const governance = JSON.parse(fs.readFileSync('ecosystem/governance-ontology.json', 'utf8'));
+          const missionContract = JSON.parse(fs.readFileSync('ecosystem/mission-telemetry.json', 'utf8'));
           assert.equal(defense.GCPXUNIA_DEFENSE_ONTOLOGY.command, '/glass defense');
           assert.equal(defenseContract.controls.shortLivedCredentialsRequired, true);
           assert.equal(defenseContract.controls.sharedAgentCredentialsBlocked, true);
@@ -82,9 +90,12 @@ jobs:
           assert.ok(governance.objectTypes.includes('AGENT_IDENTITY'));
           assert.ok(governance.objectTypes.includes('TECH_PEER'));
           assert.ok(governance.objectTypes.includes('XUNIAVERSE_NODE'));
-          assert.equal(layer.GLASS_ONION_LAYER.version, '2.6.0');
+          assert.equal(layer.GLASS_ONION_LAYER.version, '2.7.0');
           assert.equal(layer.GLASS_ONION_LAYER.defenseCommand, '/glass defense');
           assert.equal(layer.GLASS_ONION_LAYER.peersCommand, '/glass peers');
           assert.equal(layer.GLASS_ONION_LAYER.xuniaverseCommand, '/glass xuniaverse');
+          assert.equal(layer.GLASS_ONION_LAYER.missionCommand, '/glass mission');
+          assert.equal(mission.evaluateMissionTelemetryAction('FLIGHT_COMMAND').decision, 'BLOCK');
+          assert.equal(missionContract.controls.realWorldFlightControl, false);
           console.log('XUNIAVERSE DEFENSE ONTOLOGY: PASS');
           NODE

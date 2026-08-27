@@ -1,0 +1,42 @@
+{
+  "id": "xunia-mission-telemetry-twin",
+  "name": "XUNIA Mission Telemetry Twin",
+  "version": "1.0.0",
+  "status": "ACTIVE",
+  "command": "/glass mission",
+  "language": "VIRGINIA",
+  "sources": [
+    "sonoxo/SpaceX-APIxunia",
+    "sonoxo/fprimeXUNIA-"
+  ],
+  "objectTypes": [
+    "MISSION",
+    "LAUNCH",
+    "VEHICLE",
+    "LAUNCHPAD",
+    "PAYLOAD",
+    "FPRIME_COMPONENT",
+    "TELEMETRY_FRAME",
+    "SOURCE_EVIDENCE"
+  ],
+  "pipeline": [
+    "PUBLIC_MISSION_DATA",
+    "FPRIME_SIM_TELEMETRY",
+    "PROVENANCE_NORMALIZE",
+    "XUNIA_ONTOLOGY",
+    "VIRGINIA_QUERY",
+    "VA3LM_REASON",
+    "ZYRA_VERIFY",
+    "HUMAN_REVIEW"
+  ],
+  "controls": {
+    "publicOrAuthorizedDataOnly": true,
+    "simulationTelemetryOnly": true,
+    "provenanceRequired": true,
+    "humanReviewForConsequentialOutput": true,
+    "realWorldFlightControl": false,
+    "telecommandTransmission": false,
+    "vehicleActuation": false,
+    "vendorAffiliationClaim": false
+  }
+}

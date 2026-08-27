@@ -28,6 +28,7 @@ jobs:
           const exchange = require('./dist/main/lib/exchange-market');
           const evidence = require('./dist/main/lib/compliance-evidence');
           const ontology = require('./dist/main/lib/ecosystem-governance-ontology');
+          const mission = require('./dist/main/lib/mission-telemetry');
           const gdprHipaa = JSON.parse(fs.readFileSync('ecosystem/gdpr-hipaa.json','utf8'));
           const crm = JSON.parse(fs.readFileSync('ecosystem/crm.json','utf8'));
           const crmPort = JSON.parse(fs.readFileSync('ecosystem/crm-port.json','utf8'));
@@ -36,12 +37,13 @@ jobs:
           const exchangeContract = JSON.parse(fs.readFileSync('ecosystem/exchange-market.json','utf8'));
           const evidenceContract = JSON.parse(fs.readFileSync('ecosystem/compliance-evidence.json','utf8'));
           const governanceContract = JSON.parse(fs.readFileSync('ecosystem/governance-ontology.json','utf8'));
+          const missionContract = JSON.parse(fs.readFileSync('ecosystem/mission-telemetry.json','utf8'));
           const pkg = JSON.parse(fs.readFileSync('package.json','utf8'));
 
           assert.equal(pkg.name, 'xunia-glass-onion');
           assert.equal(pkg.license, 'Apache-2.0');
-          assert.equal(glass.GLASS_ONION_LAYER.version, '2.5.0');
-          assert.equal(glassContract.version, '2.5.0');
+          assert.equal(glass.GLASS_ONION_LAYER.version, '2.7.0');
+          assert.equal(glass.GLASS_ONION_LAYER.missionCommand, '/glass mission');
           assert.equal(glass.GLASS_ONION_LAYER.licensesCommand, '/glass licenses');
           assert.equal(glass.GLASS_ONION_LAYER.exchangesCommand, '/glass exchanges');
           assert.equal(glass.GLASS_ONION_LAYER.evidenceCommand, '/glass evidence');
@@ -54,6 +56,9 @@ jobs:
           assert.equal(ontology.ECOSYSTEM_GOVERNANCE_ONTOLOGY.architecture, 'OBJECT_PROPERTY_LINK_ACTION_EVIDENCE_DECISION');
           assert.equal(governanceContract.invariants.externalListingRequiresExchangeEvidence, true);
           assert.equal(governanceContract.invariants.productionComplianceRequiresOperationalEvidence, true);
+          assert.equal(mission.MISSION_TELEMETRY_ONTOLOGY.command, '/glass mission');
+          assert.equal(mission.evaluateMissionTelemetryAction('FLIGHT_COMMAND').decision, 'BLOCK');
+          assert.equal(missionContract.controls.realWorldFlightControl, false);
           assert.equal(gdprHipaa.status, 'SOFTWARE_POLICY_CONTROLS_COMPLETE');
           assert.equal(crm.status, 'ACTIVE');
           assert.equal(crmPort.status, 'ACTIVE');
