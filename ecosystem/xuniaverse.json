@@ -1,9 +1,9 @@
 {
   "id": "XUNIAVERSE",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "rootRepository": "sonoxo/xuniadao",
   "face": "XUNIA / XuniaDAO",
-  "repositoryCount": 54,
+  "repositoryCount": 57,
   "defenseOntology": "GCPXUNIA-VIRGINIA-VA3LM-DEFENSE",
   "peerOntology": "XUNIAVERSE-TECH-PEER-ONTOLOGY",
   "repositories": [
@@ -60,7 +60,10 @@
     "sonoxo/DCSxunia",
     "sonoxo/VICARxunia",
     "sonoxo/plandev-uiXUNIA",
-    "sonoxo/xrpl-dev-portalXUNIA"
+    "sonoxo/xrpl-dev-portalXUNIA",
+    "sonoxo/XRPL-StandardsXUNIA-",
+    "sonoxo/xrpl.jsXUNIA",
+    "sonoxo/rippledXUNIA"
   ],
   "rules": {
     "xuniadaoIsRoot": true,

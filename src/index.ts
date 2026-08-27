@@ -20,4 +20,5 @@ export * from './lib/tech-peer-ontology';
 export * from './lib/tokenlist';
 export * from './lib/va3lm';
 export * from './lib/xrpl-documentation';
+export * from './lib/xrpl-token-wallet-ontology';
 export * from './lib/xuniaverse';

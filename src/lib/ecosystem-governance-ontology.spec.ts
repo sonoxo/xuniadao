@@ -14,6 +14,7 @@ test('governance ontology exposes object-link-action model', (t) => {
   t.true(ECOSYSTEM_GOVERNANCE_ONTOLOGY.objectTypes.includes('COMPLIANCE_REQUIREMENT'));
   t.true(ECOSYSTEM_GOVERNANCE_ONTOLOGY.actions.includes('DISCOVER_LISTING'));
   t.true(ECOSYSTEM_GOVERNANCE_ONTOLOGY.actions.includes('ATTACH_EVIDENCE'));
+  t.true(ECOSYSTEM_GOVERNANCE_ONTOLOGY.domains.includes('XRPL_TOKEN_WALLET'));
 });
 
 test('seed graph links repository license and compliance requirements', (t) => {
