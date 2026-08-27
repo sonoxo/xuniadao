@@ -8,6 +8,7 @@ export type GlassOnionCapability =
   | 'MEDIA_WORKFLOW'
   | 'QUANTUM_BLUEPRINT'
   | 'CADENCE_FLOW'
+  | 'UAP_AGENT_RUNTIME'
   | 'CI_VALIDATION';
 
 export type GlassOnionDecision = 'ALLOW' | 'REVIEW' | 'BLOCK';
@@ -80,6 +81,13 @@ const PIPELINES: Readonly<Record<GlassOnionCapability, readonly string[]>> = {
     'VA3LM_PLAN',
     'ZYRA_TRANSACTION_GATE',
     'XUNIA_VERIFY',
+  ],
+  UAP_AGENT_RUNTIME: [
+    'XUNIA_SCOPE',
+    'GPT_UAP_XO_PLAN',
+    'GPT_UAP_XO_BOUNDED_WORKERS',
+    'PROVENANCE_CHECK',
+    'ZYRA_ACTION_GATE',
   ],
   CI_VALIDATION: [
     'XUNIA_SCOPE',
@@ -160,11 +168,12 @@ export const routeGlassOnion = (request: GlassOnionRequest): GlassOnionRoute => 
 
 export const GLASS_ONION_LAYER = {
   codename: 'GLASS ONION',
-  version: '2.1.0',
+  version: '2.2.0',
   command: '/glass',
   aitCommand: '/glass ait',
+  uapCommand: '/glass uap',
   umbrella: 'XUNIA',
-  layers: ['xunia', 'zyra', 'sonoxo', 'almighty-sonoxo', 'va3lm'] as readonly XuniaLayerId[],
+  layers: ['xunia', 'zyra', 'sonoxo', 'almighty-sonoxo', 'va3lm', 'gpt-uap-xo'] as readonly XuniaLayerId[],
   capabilities: Object.keys(PIPELINES) as readonly GlassOnionCapability[],
   invariants: {
     provenanceRequired: true,
