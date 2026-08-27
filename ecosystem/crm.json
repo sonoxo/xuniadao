@@ -1,0 +1,30 @@
+{
+  "id": "GLASS-CRM",
+  "version": "1.0.0",
+  "command": "/glass crm",
+  "umbrella": "XUNIA",
+  "layer": "GLASS ONION",
+  "status": "ACTIVE",
+  "entities": ["ACCOUNT", "CONTACT", "LEAD", "OPPORTUNITY", "ACTIVITY", "TASK", "DEAL", "CUSTOMER"],
+  "stages": ["NEW", "QUALIFIED", "DISCOVERY", "PROPOSAL", "NEGOTIATION", "WON", "LOST"],
+  "pipeline": ["CRM_INGEST", "AIT_NORMALIZE", "CRM_RELATIONSHIP_GRAPH", "VA3LM_ANALYZE", "ZYRA_WORKFLOW", "UAP_AGENT_TASKS"],
+  "features": {
+    "accounts": true,
+    "contacts": true,
+    "leads": true,
+    "opportunities": true,
+    "activities": true,
+    "tasks": true,
+    "deals": true,
+    "customers": true,
+    "pipelineMetrics": true,
+    "followUpPlanning": true,
+    "relationshipGraph": true
+  },
+  "controls": {
+    "provenanceRequired": true,
+    "humanReviewForMutation": true,
+    "humanReviewForExternalCommunication": true,
+    "humanReviewForBulkOutreach": true
+  }
+}
