@@ -1,3 +1,4 @@
+export * from './lib/ait-ontology';
 export * from './lib/ecosystem';
 export * from './lib/glass-onion-layer';
 export * from './lib/quantum-ontology';
