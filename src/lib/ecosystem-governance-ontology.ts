@@ -115,7 +115,7 @@ export const createGovernanceSeed = (): { readonly objects: readonly GovernanceO
     },
     {
       id: 'node:xuniaverse', type: 'XUNIAVERSE_NODE', name: 'XUNIAverse Root',
-      properties: { face: 'XUNIA / XuniaDAO', repositoryCount: 53 }, provenance: ['contract:ecosystem/xuniaverse.json'],
+      properties: { face: 'XUNIA / XuniaDAO', repositoryCount: 57 }, provenance: ['contract:ecosystem/xuniaverse.json'],
     },
     {
       id: 'runtime:va3lm', type: 'RUNTIME', name: 'VA3LM',
@@ -178,7 +178,7 @@ export const createGovernanceSeed = (): { readonly objects: readonly GovernanceO
 
 export const ECOSYSTEM_GOVERNANCE_ONTOLOGY = {
   id: 'GLASS-ONION-GOVERNANCE-ONTOLOGY',
-  version: '1.1.0',
+  version: '1.2.0',
   command: '/glass ontology governance',
   architecture: 'OBJECT_PROPERTY_LINK_ACTION_EVIDENCE_DECISION',
   objectTypes: [
@@ -196,7 +196,7 @@ export const ECOSYSTEM_GOVERNANCE_ONTOLOGY = {
     'ASSESS_READINESS', 'ISSUE_INTERNAL_ATTESTATION', 'VERIFY_AGENT_IDENTITY', 'BROKER_AGENT_AUTH',
     'REVOKE_AGENT_ACCESS', 'VERIFY_PEER_SOURCE', 'REGISTER_XUNIAVERSE_NODE',
   ] as readonly GovernanceAction[],
-  domains: ['LICENSES', 'EXCHANGES', 'GDPR_HIPAA_EVIDENCE', 'AGENT_IDENTITY', 'GCPXUNIA_DEFENSE', 'TECH_PEERS', 'XUNIAVERSE'] as const,
+  domains: ['LICENSES', 'EXCHANGES', 'GDPR_HIPAA_EVIDENCE', 'AGENT_IDENTITY', 'GCPXUNIA_DEFENSE', 'TECH_PEERS', 'XUNIAVERSE', 'XRPL_TOKEN_WALLET'] as const,
   invariants: {
     provenanceRequired: true,
     externalListingRequiresExchangeEvidence: true,
