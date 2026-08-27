@@ -1,7 +1,10 @@
 {
   "codename": "GLASS ONION",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "command": "/glass",
+  "aitCommand": "/glass ait",
+  "crmCommand": "/glass crm",
+  "crmCertificationCommand": "/glass certify crm",
   "uapCommand": "/glass uap",
   "umbrella": "XUNIA",
   "purpose": "Cross-repository intelligence and orchestration membrane for the XUNIA ecosystem.",
@@ -16,6 +19,8 @@
   "capabilities": [
     "INTELLIGENCE_QUERY",
     "AIT_ONTOLOGY",
+    "CRM",
+    "CRM_CERTIFICATION",
     "CODE_PLAN",
     "ONTOLOGY_WORKFLOW",
     "MEDIA_WORKFLOW",
@@ -23,6 +28,14 @@
     "CADENCE_FLOW",
     "UAP_AGENT_RUNTIME",
     "CI_VALIDATION"
+  ],
+  "crmCertificationPipeline": [
+    "CRM_CONTROL_SCOPE",
+    "PALANTIR_ONTOLOGY_GRAPH",
+    "EVIDENCE_VERIFICATION",
+    "CONTROL_ASSESSMENT",
+    "RISK_CHECK",
+    "ATTESTATION_GATE"
   ],
   "uapPipeline": [
     "XUNIA_SCOPE",
@@ -41,11 +54,7 @@
     "EXECUTE_OR_REVIEW",
     "VERIFY"
   ],
-  "decisions": [
-    "ALLOW",
-    "REVIEW",
-    "BLOCK"
-  ],
+  "decisions": ["ALLOW", "REVIEW", "BLOCK"],
   "invariants": {
     "provenanceRequired": true,
     "humanApprovalForMutation": true,

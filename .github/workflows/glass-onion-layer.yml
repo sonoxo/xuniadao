@@ -6,18 +6,26 @@ on:
     paths:
       - 'src/lib/glass-onion-layer.ts'
       - 'src/lib/glass-onion-layer.spec.ts'
+      - 'src/lib/crm-certification.ts'
+      - 'src/lib/crm-certification.spec.ts'
       - 'ecosystem/glass-onion-layer.json'
       - 'ecosystem/gpt-uap-xo.json'
+      - 'ecosystem/crm-certification.json'
       - 'docs/GLASSONION_LAYER.md'
+      - 'docs/CRM_CERTIFICATION.md'
       - 'src/index.ts'
       - '.github/workflows/glass-onion-layer.yml'
   pull_request:
     paths:
       - 'src/lib/glass-onion-layer.ts'
       - 'src/lib/glass-onion-layer.spec.ts'
+      - 'src/lib/crm-certification.ts'
+      - 'src/lib/crm-certification.spec.ts'
       - 'ecosystem/glass-onion-layer.json'
       - 'ecosystem/gpt-uap-xo.json'
+      - 'ecosystem/crm-certification.json'
       - 'docs/GLASSONION_LAYER.md'
+      - 'docs/CRM_CERTIFICATION.md'
       - 'src/index.ts'
       - '.github/workflows/glass-onion-layer.yml'
 
@@ -50,13 +58,22 @@ jobs:
           assert.equal(GLASS_ONION_LAYER.codename, 'GLASS ONION');
           assert.equal(GLASS_ONION_LAYER.command, '/glass');
           assert.equal(GLASS_ONION_LAYER.uapCommand, '/glass uap');
+          assert.equal(GLASS_ONION_LAYER.crmCommand, '/glass crm');
+          assert.equal(GLASS_ONION_LAYER.crmCertificationCommand, '/glass certify crm');
           assert.equal(GLASS_ONION_LAYER.layers.length, 6);
           assert.ok(GLASS_ONION_LAYER.layers.includes('gpt-uap-xo'));
           assert.ok(GLASS_ONION_LAYER.capabilities.includes('UAP_AGENT_RUNTIME'));
+          assert.ok(GLASS_ONION_LAYER.capabilities.includes('CRM_CERTIFICATION'));
           assert.equal(routeGlassOnion({
             objective: 'CI ontology route',
             capability: 'ONTOLOGY_WORKFLOW',
             targets: ['xunia', 'sonoxo', 'va3lm', 'zyra']
+          }).decision, 'ALLOW');
+          assert.equal(routeGlassOnion({
+            objective: 'CI CRM certification route',
+            capability: 'CRM_CERTIFICATION',
+            targets: ['xunia', 'sonoxo', 'va3lm', 'zyra'],
+            provenance: ['repo:sonoxo/xuniadao', 'contract:ecosystem/crm-certification.json']
           }).decision, 'ALLOW');
           assert.equal(routeGlassOnion({
             objective: 'CI UAP route',
@@ -86,13 +103,20 @@ jobs:
           const assert = require('assert');
           const contract = JSON.parse(fs.readFileSync('ecosystem/glass-onion-layer.json', 'utf8'));
           const uap = JSON.parse(fs.readFileSync('ecosystem/gpt-uap-xo.json', 'utf8'));
+          const crmCert = JSON.parse(fs.readFileSync('ecosystem/crm-certification.json', 'utf8'));
           assert.equal(contract.codename, 'GLASS ONION');
-          assert.equal(contract.version, '2.2.0');
+          assert.equal(contract.version, '2.3.0');
           assert.equal(contract.command, '/glass');
           assert.equal(contract.uapCommand, '/glass uap');
+          assert.equal(contract.crmCommand, '/glass crm');
+          assert.equal(contract.crmCertificationCommand, '/glass certify crm');
           assert.equal(contract.layers.length, 6);
           assert.ok(contract.layers.includes('gpt-uap-xo'));
           assert.ok(contract.capabilities.includes('UAP_AGENT_RUNTIME'));
+          assert.ok(contract.capabilities.includes('CRM_CERTIFICATION'));
+          assert.equal(crmCert.status, 'INTERNAL_ATTESTED');
+          assert.equal(crmCert.attestation.externalCertificationStatus, 'NOT_ISSUED');
+          assert.equal(crmCert.claims.palantirAffiliationOrEndorsement, false);
           assert.equal(uap.status, 'BOUND');
           assert.equal(uap.command, '/glass uap');
           assert.equal(uap.visibility, 'PRIVATE');
