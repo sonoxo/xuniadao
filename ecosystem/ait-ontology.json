@@ -1,10 +1,25 @@
 {
   "id": "AIT-ONTOLOGY",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "command": "/glass ait",
   "umbrella": "XUNIA",
   "layer": "GLASS ONION",
-  "sourceBinding": "INTERNAL_GLASS_ONION_CONTRACT",
+  "sourceBinding": {
+    "status": "BOUND",
+    "sourceId": "xunia:glass-onion:ait",
+    "bindingType": "CONTROLLED_REPOSITORY_CONTRACT",
+    "repository": "sonoxo/xuniadao",
+    "ref": "main",
+    "baselineCommit": "041dcc38b4a2f751b0b9e2c8d2488931ddeb6f5e",
+    "contractPath": "ecosystem/ait-ontology.json",
+    "implementationPath": "src/lib/ait-ontology.ts",
+    "verificationWorkflow": ".github/workflows/ait-ontology.yml",
+    "provenance": [
+      "repo:sonoxo/xuniadao",
+      "commit:041dcc38b4a2f751b0b9e2c8d2488931ddeb6f5e",
+      "contract:ecosystem/ait-ontology.json"
+    ]
+  },
   "objects": [
     "AIT_AGENT",
     "AIT_SYSTEM",
@@ -43,6 +58,7 @@
   "decisionStates": ["ALLOW", "REVIEW", "BLOCK"],
   "invariants": {
     "provenanceRequired": true,
+    "sourceBindingRequired": true,
     "humanReviewForPromotion": true,
     "humanReviewForHighImpact": true,
     "automaticFundMovement": false,
@@ -50,7 +66,13 @@
     "arbitraryRemoteShell": false
   },
   "externalAITBinding": {
-    "status": "UNBOUND",
-    "reason": "No AMOS/AIT repository was discoverable in the connected GitHub space at implementation time. External binding must use a verified repository or source identifier."
+    "status": "BOUND",
+    "bindingMode": "XUNIA_CONTROLLED_SOURCE",
+    "sourceId": "xunia:glass-onion:ait",
+    "repository": "sonoxo/xuniadao",
+    "baselineCommit": "041dcc38b4a2f751b0b9e2c8d2488931ddeb6f5e",
+    "contractPath": "ecosystem/ait-ontology.json",
+    "implementationPath": "src/lib/ait-ontology.ts",
+    "externalAffiliationClaim": false
   }
 }
