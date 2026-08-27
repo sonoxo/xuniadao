@@ -2,13 +2,13 @@
 
 # 🧅 XUNIA // GLASS ONION
 
-### Agentic ecosystem registry, ontology, CRM, and governed execution fabric
+### Agentic ecosystem registry, ontology, CRM, bulk data porting, and governed execution fabric
 
 **XUNIA → ZYRA → SONOXO / GPT-DOUG-LLM → AlmightySonoxo → VA3LM → GPT-UAP-XO**
 
-`GLASS ONION` · `CRM ACTIVE` · `AIT BOUND` · `VA3LM :8088` · `PROVENANCE REQUIRED` · `HUMAN-GATED MUTATIONS`
+`GLASS ONION` · `CRM ACTIVE` · `BULK PORT ACTIVE` · `AIT BOUND` · `VA3LM :8088` · `PROVENANCE REQUIRED` · `HUMAN-GATED MUTATIONS`
 
-[Architecture](#-architecture) · [CRM](#-glass-onion-crm) · [CRM Certification](#-crm-certification) · [Commands](#-command-surface) · [Development](#-development)
+[Architecture](#-architecture) · [CRM](#-glass-onion-crm) · [Bulk Port](#-crm-bulk-data-port) · [CRM Certification](#-crm-certification) · [Commands](#-command-surface) · [Development](#-development)
 
 </div>
 
@@ -38,6 +38,7 @@ flowchart TD
     V[VA3LM :8088\nCode + Plan + Verify]
     U[GPT-UAP-XO\nBounded Local Agents]
     C[CRM\nAccounts + Contacts + Pipeline]
+    P[CRM Port\nBulk Read + Write + Migration]
     CERT[CRM Certification Ontology\nControls + Evidence + Attestation]
     H[Human Command Gate]
 
@@ -47,13 +48,16 @@ flowchart TD
     X --> V
     X --> U
     X --> C
+    C --> P
     C --> CERT
+    P --> Z
     CERT --> Z
     S --> V
     V --> Z
     U --> Z
     H --> X
     H --> Z
+    H --> P
     H --> CERT
 ```
 
@@ -89,6 +93,36 @@ CRM supports accounts, contacts, leads, opportunities, activities, tasks, deals,
 Documentation: [`docs/CRM.md`](docs/CRM.md)  
 Machine contract: [`ecosystem/crm.json`](ecosystem/crm.json)
 
+## 📦 CRM Bulk Data Port
+
+Command: **`/glass crm port`**
+
+The port layer supports **bulk read, bulk write, and bulk system-to-system migration**.
+
+Formats:
+
+`CSV · JSON · NDJSON · ZIP_BUNDLE`
+
+Import path:
+
+```text
+PORT_INGEST
+  → FORMAT_PARSE
+  → SCHEMA_MAP
+  → DEDUPE
+  → CONSENT_PROVENANCE_CHECK
+  → DRY_RUN
+  → HUMAN_REVIEW
+  → BATCH_WRITE
+  → AUDIT
+  → ROLLBACK_MANIFEST
+```
+
+Capabilities include schema mapping, stable-ID dedupe, configurable dedupe keys, bounded batches, maximum-record limits, dry-run, human-approved writes, insert-only or idempotent upsert strategy, audit events, rollback manifests, consent gates, export filtering, and field redaction.
+
+Documentation: [`docs/CRM_PORT.md`](docs/CRM_PORT.md)  
+Machine contract: [`ecosystem/crm-port.json`](ecosystem/crm-port.json)
+
 ## 🛡️ CRM Certification
 
 Command: **`/glass certify crm`**
@@ -97,7 +131,7 @@ The repository carries the **XUNIA CRM Internal Control Attestation**:
 
 `XUNIA-CRM-ICA-1`
 
-Current state: **`INTERNAL_ATTESTED`**
+Current state: **`INTERNAL_ATTESTED`** with software/policy controls marked **ready for external assessment** where applicable.
 
 The certification model uses a Palantir-ontology-aligned structure:
 
@@ -117,11 +151,10 @@ Actions:
 
 `ATTACH_EVIDENCE · RUN_CONTROL_CHECK · REQUEST_REVIEW · ISSUE_INTERNAL_ATTESTATION · REVOKE_ATTESTATION`
 
-Internally attested code-level controls currently cover provenance, human review for CRM mutation, human review for external communication, human review for bulk outreach, and CI locking of the CRM contract.
-
-External SOC 2, HIPAA, GDPR, CCPA, CAN-SPAM, and TCPA status is **readiness only / conditional**, not third-party certification. The machine contract explicitly prevents those claims from being represented as issued without separate evidence.
+External SOC 2, HIPAA, GDPR, CCPA, CAN-SPAM, and TCPA status remains readiness/conditional rather than third-party certification unless an independent issuer provides evidence.
 
 Certification details: [`docs/CRM_CERTIFICATION.md`](docs/CRM_CERTIFICATION.md)  
+Readiness: [`docs/CRM_COMPLIANCE_READINESS.md`](docs/CRM_COMPLIANCE_READINESS.md)  
 Machine attestation: [`ecosystem/crm-certification.json`](ecosystem/crm-certification.json)
 
 ## 🧠 AIT ontology
@@ -155,6 +188,7 @@ Binding contract: [`ecosystem/gpt-uap-xo.json`](ecosystem/gpt-uap-xo.json)
 | `/glass` | GLASS ONION routing surface |
 | `/glass ait` | AIT ontology and intelligence pipeline |
 | `/glass crm` | CRM relationship and pipeline layer |
+| `/glass crm port` | Bulk CRM read/write/migration engine |
 | `/glass certify crm` | CRM control evidence and internal attestation |
 | `/glass uap` | GPT-UAP-XO bounded local-agent route |
 | `/VA3LM-SAGI` | VA3LM guardrail intelligence surface |
@@ -164,12 +198,13 @@ Binding contract: [`ecosystem/gpt-uap-xo.json`](ecosystem/gpt-uap-xo.json)
 ```text
 Provenance required                 YES
 Human review for mutation           YES
+Bulk CRM write approval             YES
 Automatic fund movement             NO
 Automatic governance voting         NO
 Arbitrary remote shell              NO
 ```
 
-Agents can analyze, plan, explain, test, and prepare reviewed actions. Consequential mutation remains human-gated.
+Agents can analyze, plan, parse, map, deduplicate, dry-run, test, and prepare migration batches. Consequential mutations remain human-gated.
 
 ## 🧬 XuniaDAO / Flow registry
 
@@ -193,7 +228,7 @@ yarn build:main
 yarn test:unit
 ```
 
-GitHub Actions lock the Glass Onion ecosystem, AIT ontology, CRM contract, CRM certification ontology, and command routing before merge.
+GitHub Actions lock the Glass Onion ecosystem, AIT ontology, CRM contract, CRM bulk-port runtime, CRM certification ontology, and command routing before merge. The CRM Port Cloud Fleet runs parser, migration, and governance lanes in parallel cloud jobs.
 
 ## Technology alignment boundary
 
@@ -202,6 +237,6 @@ The architecture contains integration patterns aligned with model, cloud, ontolo
 <div align="center">
 
 ### 🧅 GLASS ONION
-**Six connected layers. CRM and evidence graphs. Human command at the boundary.**
+**Six connected layers. CRM, bulk migration, and evidence graphs. Human command at the boundary.**
 
 </div>

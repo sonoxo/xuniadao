@@ -4,6 +4,7 @@ export type GlassOnionCapability =
   | 'INTELLIGENCE_QUERY'
   | 'AIT_ONTOLOGY'
   | 'CRM'
+  | 'CRM_PORT'
   | 'CRM_CERTIFICATION'
   | 'CODE_PLAN'
   | 'ONTOLOGY_WORKFLOW'
@@ -41,6 +42,7 @@ const PIPELINES: Readonly<Record<GlassOnionCapability, readonly string[]>> = {
   INTELLIGENCE_QUERY: ['XUNIA_INGEST', 'PROVENANCE_CHECK', 'SONOXO_ONTOLOGY', 'VA3LM_REASON', 'ZYRA_VERIFY'],
   AIT_ONTOLOGY: ['AIT_INGEST', 'AIT_PROVENANCE_CHECK', 'AIT_NORMALIZE', 'AIT_CORRELATE', 'AIT_ANALYZE', 'VA3LM_COMMAND_REVIEW', 'ZYRA_ACTION_GATE'],
   CRM: ['CRM_INGEST', 'AIT_NORMALIZE', 'CRM_RELATIONSHIP_GRAPH', 'VA3LM_ANALYZE', 'ZYRA_WORKFLOW', 'UAP_AGENT_TASKS'],
+  CRM_PORT: ['PORT_INGEST', 'FORMAT_PARSE', 'SCHEMA_MAP', 'DEDUPE', 'CONSENT_PROVENANCE_CHECK', 'DRY_RUN', 'HUMAN_REVIEW', 'BATCH_WRITE_OR_EXPORT', 'AUDIT', 'ROLLBACK_MANIFEST'],
   CRM_CERTIFICATION: ['CRM_CONTROL_SCOPE', 'PALANTIR_ONTOLOGY_GRAPH', 'EVIDENCE_VERIFICATION', 'CONTROL_ASSESSMENT', 'RISK_CHECK', 'ATTESTATION_GATE'],
   CODE_PLAN: ['XUNIA_SCOPE', 'VA3LM_PLAN', 'SONOXO_CODE_INTELLIGENCE', 'ZYRA_VALIDATE'],
   ONTOLOGY_WORKFLOW: ['XUNIA_OBJECTS', 'SONOXO_ONTOLOGY', 'VA3LM_FUNCTION_PLAN', 'ZYRA_ACTION_GATE'],
@@ -80,6 +82,7 @@ export const routeGlassOnion = (request: GlassOnionRequest): GlassOnionRoute => 
       request.capability === 'INTELLIGENCE_QUERY' ||
       request.capability === 'AIT_ONTOLOGY' ||
       request.capability === 'CRM' ||
+      request.capability === 'CRM_PORT' ||
       request.capability === 'CRM_CERTIFICATION'
     ) &&
     (!request.provenance || request.provenance.length === 0)
@@ -104,10 +107,11 @@ export const routeGlassOnion = (request: GlassOnionRequest): GlassOnionRoute => 
 
 export const GLASS_ONION_LAYER = {
   codename: 'GLASS ONION',
-  version: '2.3.0',
+  version: '2.4.0',
   command: '/glass',
   aitCommand: '/glass ait',
   crmCommand: '/glass crm',
+  crmPortCommand: '/glass crm port',
   crmCertificationCommand: '/glass certify crm',
   uapCommand: '/glass uap',
   umbrella: 'XUNIA',

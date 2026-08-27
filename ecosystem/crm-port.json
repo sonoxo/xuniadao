@@ -1,0 +1,53 @@
+{
+  "id": "GLASS-CRM-PORT",
+  "version": "1.0.0",
+  "command": "/glass crm port",
+  "status": "ACTIVE",
+  "modes": ["IMPORT", "EXPORT"],
+  "formats": ["CSV", "JSON", "NDJSON", "ZIP_BUNDLE"],
+  "capabilities": {
+    "bulkRead": true,
+    "bulkWrite": true,
+    "bulkMigration": true,
+    "schemaMapping": true,
+    "dedupe": true,
+    "dryRun": true,
+    "idempotentUpsert": true,
+    "rollbackManifest": true,
+    "exportFiltering": true,
+    "exportRedaction": true,
+    "auditTrail": true,
+    "batching": true,
+    "consentGate": true,
+    "provenanceGate": true,
+    "rbac": true
+  },
+  "pipeline": [
+    "PORT_INGEST",
+    "FORMAT_PARSE",
+    "SCHEMA_MAP",
+    "DEDUPE",
+    "CONSENT_PROVENANCE_CHECK",
+    "DRY_RUN",
+    "HUMAN_REVIEW",
+    "BATCH_WRITE_OR_EXPORT",
+    "AUDIT",
+    "ROLLBACK_MANIFEST"
+  ],
+  "controls": {
+    "bulkWriteRequiresHumanApproval": true,
+    "provenanceRequired": true,
+    "roleBasedAccessRequired": true,
+    "batchLimitRequired": true,
+    "maxRecordsRequired": true,
+    "exportRedactionSupported": true,
+    "rollbackRequiredForWrites": true
+  },
+  "zipBundle": {
+    "manifestRequired": true,
+    "entryFormats": ["CSV", "JSON", "NDJSON"],
+    "duplicateEntryNamesRejected": true,
+    "provenanceRequired": true,
+    "optionalSha256PerEntry": true
+  }
+}
