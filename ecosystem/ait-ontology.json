@@ -1,0 +1,56 @@
+{
+  "id": "AIT-ONTOLOGY",
+  "version": "1.0.0",
+  "command": "/glass ait",
+  "umbrella": "XUNIA",
+  "layer": "GLASS ONION",
+  "sourceBinding": "INTERNAL_GLASS_ONION_CONTRACT",
+  "objects": [
+    "AIT_AGENT",
+    "AIT_SYSTEM",
+    "AIT_CAPABILITY",
+    "AIT_INTEL_SOURCE",
+    "AIT_EVIDENCE",
+    "AIT_OBSERVATION",
+    "AIT_HYPOTHESIS",
+    "AIT_DECISION",
+    "AIT_WORKFLOW",
+    "AIT_ACTION",
+    "AIT_CONTROL"
+  ],
+  "relations": [
+    "OPERATES",
+    "PRODUCES",
+    "SUPPORTED_BY",
+    "DERIVED_FROM",
+    "CORROBORATES",
+    "CONTRADICTS",
+    "ROUTES_TO",
+    "REQUIRES",
+    "GOVERNS",
+    "EXECUTES",
+    "APPLIES_TO"
+  ],
+  "pipeline": [
+    "AIT_INGEST",
+    "AIT_PROVENANCE_CHECK",
+    "AIT_NORMALIZE",
+    "AIT_CORRELATE",
+    "AIT_ANALYZE",
+    "VA3LM_COMMAND_REVIEW",
+    "ZYRA_ACTION_GATE"
+  ],
+  "decisionStates": ["ALLOW", "REVIEW", "BLOCK"],
+  "invariants": {
+    "provenanceRequired": true,
+    "humanReviewForPromotion": true,
+    "humanReviewForHighImpact": true,
+    "automaticFundMovement": false,
+    "automaticGovernanceVoting": false,
+    "arbitraryRemoteShell": false
+  },
+  "externalAITBinding": {
+    "status": "UNBOUND",
+    "reason": "No AMOS/AIT repository was discoverable in the connected GitHub space at implementation time. External binding must use a verified repository or source identifier."
+  }
+}
