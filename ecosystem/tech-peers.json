@@ -1,0 +1,24 @@
+{
+  "id": "XUNIAVERSE-TECH-PEER-ONTOLOGY",
+  "version": "1.0.0",
+  "command": "/glass peers",
+  "root": "sonoxo/xuniadao",
+  "status": "EVIDENCE_BACKED_REFERENCE_GRAPH",
+  "objectTypes": ["TECH_PEER", "SECURITY_DOMAIN", "SOURCE", "CREDENTIAL_EVIDENCE", "ASSESSMENT"],
+  "linkTypes": ["BENCHMARKS_AGAINST", "LEARNS_FROM", "VALIDATES_WITH", "MODELS_AFTER", "SUPPORTED_BY_EVIDENCE"],
+  "peers": [
+    {"name":"Google Cloud Security Community","relation":"LEARNS_FROM","source":"https://security.googlecloudcommunity.com/"},
+    {"name":"Google Security Operations","relation":"BENCHMARKS_AGAINST","source":"https://security.googlecloudcommunity.com/security-forums-1"},
+    {"name":"Google Threat Intelligence","relation":"BENCHMARKS_AGAINST","source":"https://security.googlecloudcommunity.com/security-forums-1"},
+    {"name":"Security Command Center","relation":"BENCHMARKS_AGAINST","source":"https://security.googlecloudcommunity.com/security-command-center-4"},
+    {"name":"Security Validation","relation":"VALIDATES_WITH","source":"https://security.googlecloudcommunity.com/security-forums-1"},
+    {"name":"Cloud Security Foundation","relation":"LEARNS_FROM","source":"https://security.googlecloudcommunity.com/cloud-security-foundation-7"},
+    {"name":"Palantir Ontology","relation":"MODELS_AFTER","source":"https://www.palantir.com/docs/foundry/ontology/overview"}
+  ],
+  "credentialPolicy": {
+    "peerReviewCredentialClaim": "EVIDENCE_REQUIRED_FOR_PUBLIC_CLAIM",
+    "primarySourcesPreferred": true,
+    "affiliationMustNotBeInferred": true,
+    "communityParticipationIsNotVendorEndorsement": true
+  }
+}

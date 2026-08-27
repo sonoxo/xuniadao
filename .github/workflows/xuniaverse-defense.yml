@@ -1,0 +1,90 @@
+name: XUNIAverse Defense Ontology Lock
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/lib/gcpxunia-defense.ts'
+      - 'src/lib/gcpxunia-defense.spec.ts'
+      - 'src/lib/tech-peer-ontology.ts'
+      - 'src/lib/tech-peer-ontology.spec.ts'
+      - 'src/lib/xuniaverse.ts'
+      - 'src/lib/xuniaverse.spec.ts'
+      - 'src/lib/ecosystem-governance-ontology.ts'
+      - 'src/lib/glass-onion-layer.ts'
+      - 'src/lib/glass-onion-layer.spec.ts'
+      - 'src/index.ts'
+      - 'ecosystem/gcpxunia-defense.json'
+      - 'ecosystem/tech-peers.json'
+      - 'ecosystem/xuniaverse.json'
+      - 'ecosystem/governance-ontology.json'
+      - 'ecosystem/glass-onion-layer.json'
+      - 'docs/GCPXUNIA_DEFENSE.md'
+      - 'docs/TECH_PEERS.md'
+      - 'README.md'
+      - '.github/workflows/xuniaverse-defense.yml'
+  pull_request:
+    paths:
+      - 'src/lib/gcpxunia-defense.ts'
+      - 'src/lib/gcpxunia-defense.spec.ts'
+      - 'src/lib/tech-peer-ontology.ts'
+      - 'src/lib/tech-peer-ontology.spec.ts'
+      - 'src/lib/xuniaverse.ts'
+      - 'src/lib/xuniaverse.spec.ts'
+      - 'src/lib/ecosystem-governance-ontology.ts'
+      - 'src/lib/glass-onion-layer.ts'
+      - 'src/lib/glass-onion-layer.spec.ts'
+      - 'src/index.ts'
+      - 'ecosystem/gcpxunia-defense.json'
+      - 'ecosystem/tech-peers.json'
+      - 'ecosystem/xuniaverse.json'
+      - 'ecosystem/governance-ontology.json'
+      - 'ecosystem/glass-onion-layer.json'
+      - 'docs/GCPXUNIA_DEFENSE.md'
+      - 'docs/TECH_PEERS.md'
+      - 'README.md'
+      - '.github/workflows/xuniaverse-defense.yml'
+
+jobs:
+  xuniaverse-defense-lock:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: yarn
+      - run: yarn install --frozen-lockfile
+      - run: yarn build:main
+      - run: yarn test:unit
+      - name: Defense ontology contract lock
+        run: |
+          node <<'NODE'
+          const assert = require('assert');
+          const fs = require('fs');
+          const defense = require('./dist/main/lib/gcpxunia-defense');
+          const peers = require('./dist/main/lib/tech-peer-ontology');
+          const universe = require('./dist/main/lib/xuniaverse');
+          const layer = require('./dist/main/lib/glass-onion-layer');
+          const defenseContract = JSON.parse(fs.readFileSync('ecosystem/gcpxunia-defense.json', 'utf8'));
+          const peerContract = JSON.parse(fs.readFileSync('ecosystem/tech-peers.json', 'utf8'));
+          const universeContract = JSON.parse(fs.readFileSync('ecosystem/xuniaverse.json', 'utf8'));
+          const governance = JSON.parse(fs.readFileSync('ecosystem/governance-ontology.json', 'utf8'));
+          assert.equal(defense.GCPXUNIA_DEFENSE_ONTOLOGY.command, '/glass defense');
+          assert.equal(defenseContract.controls.shortLivedCredentialsRequired, true);
+          assert.equal(defenseContract.controls.sharedAgentCredentialsBlocked, true);
+          assert.equal(peers.TECH_PEER_ONTOLOGY.command, '/glass peers');
+          assert.equal(peerContract.credentialPolicy.affiliationMustNotBeInferred, true);
+          assert.equal(universe.XUNIAVERSE.rootRepository, 'sonoxo/xuniadao');
+          assert.equal(universe.XUNIAVERSE_REPOSITORIES.length, 53);
+          assert.equal(universeContract.repositoryCount, 53);
+          assert.ok(governance.objectTypes.includes('AGENT_IDENTITY'));
+          assert.ok(governance.objectTypes.includes('TECH_PEER'));
+          assert.ok(governance.objectTypes.includes('XUNIAVERSE_NODE'));
+          assert.equal(layer.GLASS_ONION_LAYER.version, '2.6.0');
+          assert.equal(layer.GLASS_ONION_LAYER.defenseCommand, '/glass defense');
+          assert.equal(layer.GLASS_ONION_LAYER.peersCommand, '/glass peers');
+          assert.equal(layer.GLASS_ONION_LAYER.xuniaverseCommand, '/glass xuniaverse');
+          console.log('XUNIAVERSE DEFENSE ONTOLOGY: PASS');
+          NODE

@@ -11,7 +11,12 @@ test('Glass Onion identity and six-layer membrane are locked', (t) => {
   t.is(GLASS_ONION_LAYER.licensesCommand, '/glass licenses');
   t.is(GLASS_ONION_LAYER.exchangesCommand, '/glass exchanges');
   t.is(GLASS_ONION_LAYER.evidenceCommand, '/glass evidence');
+  t.is(GLASS_ONION_LAYER.identityCommand, '/glass identity');
+  t.is(GLASS_ONION_LAYER.defenseCommand, '/glass defense');
+  t.is(GLASS_ONION_LAYER.peersCommand, '/glass peers');
+  t.is(GLASS_ONION_LAYER.xuniaverseCommand, '/glass xuniaverse');
   t.is(GLASS_ONION_LAYER.uapCommand, '/glass uap');
+  t.is(GLASS_ONION_LAYER.face, 'XUNIA / XuniaDAO');
   t.deepEqual(GLASS_ONION_LAYER.layers, ['xunia', 'zyra', 'sonoxo', 'almighty-sonoxo', 'va3lm', 'gpt-uap-xo']);
 });
 
@@ -67,8 +72,43 @@ test('compliance evidence route does not infer production proof from code', (t) 
   t.true(GLASS_ONION_LAYER.invariants.productionComplianceEvidenceCannotBeInferred);
 });
 
+test('agent identity route uses SPIFFE verification and brokered auth', (t) => {
+  const route = routeGlassOnion({ objective: 'Verify VA3LM agent identity before outbound auth', capability: 'AGENT_IDENTITY_SECURITY', targets: ['xunia', 'va3lm', 'zyra'], provenance: ['google-iam-agent-identity'] });
+  t.is(route.decision, 'ALLOW');
+  t.true(route.pipeline.includes('SPIFFE_IDENTITY_VERIFY'));
+  t.true(route.pipeline.includes('AUTH_MANAGER_BROKER'));
+  t.true(route.pipeline.includes('DPOP_OR_MTLS_BINDING'));
+});
+
+test('GCPXUNIA defense routes through Virginia and VA3LM', (t) => {
+  const route = routeGlassOnion({ objective: 'Run defensive cloud identity policy evaluation', capability: 'GCPXUNIA_DEFENSE', targets: ['xunia', 'va3lm', 'zyra'], provenance: ['contract:ecosystem/gcpxunia-defense.json'] });
+  t.is(route.decision, 'ALLOW');
+  t.true(route.pipeline.includes('GCPXUNIA_AUTH_BROKER'));
+  t.true(route.pipeline.includes('VIRGINIA_POLICY_BOUNDARY'));
+  t.true(route.pipeline.includes('VA3LM_REASON_AND_PLAN'));
+  t.true(route.pipeline.includes('ZYRA_ACTION_GATE'));
+});
+
+test('technology peer ontology requires sourced peer evidence', (t) => {
+  const route = routeGlassOnion({ objective: 'Update credible technology peer graph', capability: 'TECH_PEER_ONTOLOGY', targets: ['xunia', 'va3lm'], provenance: ['https://security.googlecloudcommunity.com/', 'https://www.palantir.com/docs/foundry/ontology/overview'] });
+  t.is(route.decision, 'ALLOW');
+  t.true(route.pipeline.includes('PRIMARY_SOURCE_VERIFY'));
+  t.true(route.pipeline.includes('CREDENTIAL_EVIDENCE_CHECK'));
+});
+
+test('XUNIAverse registry makes XuniaDAO the repository root', (t) => {
+  const route = routeGlassOnion({ objective: 'Index Sonoxo repositories under the XUNIAverse root', capability: 'XUNIAVERSE_REGISTRY', targets: ['xunia', 'zyra', 'sonoxo'], provenance: ['contract:ecosystem/xuniaverse.json'] });
+  t.is(route.decision, 'ALLOW');
+  t.true(route.pipeline.includes('XUNIADAO_ROOT_LINK'));
+  t.true(GLASS_ONION_LAYER.invariants.xuniadaoIsXuniaverseRoot);
+});
+
 test('provenance-sensitive capabilities without provenance are held for review', (t) => {
-  const capabilities = ['INTELLIGENCE_QUERY', 'AIT_ONTOLOGY', 'CRM', 'CRM_PORT', 'CRM_CERTIFICATION', 'LICENSE_REGISTRY', 'EXCHANGE_MARKET_DATA', 'COMPLIANCE_EVIDENCE'] as const;
+  const capabilities = [
+    'INTELLIGENCE_QUERY', 'AIT_ONTOLOGY', 'CRM', 'CRM_PORT', 'CRM_CERTIFICATION',
+    'LICENSE_REGISTRY', 'EXCHANGE_MARKET_DATA', 'COMPLIANCE_EVIDENCE', 'AGENT_IDENTITY_SECURITY',
+    'GCPXUNIA_DEFENSE', 'TECH_PEER_ONTOLOGY', 'XUNIAVERSE_REGISTRY',
+  ] as const;
   for (const capability of capabilities) {
     const route = routeGlassOnion({ objective: 'Promote governed information', capability, targets: ['xunia', 'zyra'] });
     t.is(route.decision, 'REVIEW');

@@ -1,0 +1,47 @@
+{
+  "id": "GCPXUNIA-VIRGINIA-VA3LM-DEFENSE",
+  "version": "1.0.0",
+  "command": "/glass defense",
+  "status": "ACTIVE_DEFENSIVE_CONTROL_MODEL",
+  "architecture": "PALANTIR_ONTOLOGY_ALIGNED",
+  "root": "sonoxo/xuniadao",
+  "layers": ["GCPXUNIA", "VIRGINIA", "VA3LM", "ZYRA_ACTION_GATE"],
+  "flow": [
+    "XUNIA_SCOPE",
+    "AGENT_IDENTITY_VERIFY",
+    "GCPXUNIA_AUTH_BROKER",
+    "VIRGINIA_POLICY_BOUNDARY",
+    "VA3LM_REASON_AND_PLAN",
+    "RUNTIME_GUARDRAIL",
+    "ZYRA_ACTION_GATE",
+    "AUDIT_EVIDENCE"
+  ],
+  "controls": {
+    "agentFirstClassPrincipal": true,
+    "spiffeIdentityPreferred": true,
+    "shortLivedCredentialsRequired": true,
+    "sharedAgentCredentialsBlocked": true,
+    "longLivedAgentCredentialsBlocked": true,
+    "dpopSupported": true,
+    "mtlsSupported": true,
+    "leastPrivilegeRequired": true,
+    "broadAgentGrantsRequireReview": true,
+    "userDelegationSeparatedFromAgentAuthority": true,
+    "humanApprovalForSensitiveMutation": true,
+    "runtimeGuardrailsRequired": true,
+    "auditEvidenceRequired": true,
+    "arbitraryRemoteShell": false,
+    "automaticFundMovement": false
+  },
+  "sources": [
+    "https://docs.cloud.google.com/iam/docs/auth-agent-own-identity",
+    "https://docs.cloud.google.com/iam/docs/auth-manager-overview",
+    "https://security.googlecloudcommunity.com/cloud-security-foundation-7/whats-new-in-iam-next-2026-7522",
+    "https://www.palantir.com/docs/foundry/ontology/overview"
+  ],
+  "claims": {
+    "googleCloudDeploymentClaimed": false,
+    "palantirDeploymentClaimed": false,
+    "vendorEndorsementClaimed": false
+  }
+}

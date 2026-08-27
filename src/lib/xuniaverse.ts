@@ -1,0 +1,89 @@
+export type XuniaverseNodeRole = 'ROOT' | 'CORE' | 'XUNIA_EXTENSION' | 'PRODUCT' | 'DEFENSE' | 'REFERENCE';
+
+export interface XuniaverseRepositoryNode {
+  readonly repository: string;
+  readonly role: XuniaverseNodeRole;
+  readonly root: 'sonoxo/xuniadao';
+  readonly preservesUpstreamOwnership: true;
+}
+
+const node = (repository: string, role: XuniaverseNodeRole): XuniaverseRepositoryNode => ({
+  repository,
+  role,
+  root: 'sonoxo/xuniadao',
+  preservesUpstreamOwnership: true,
+});
+
+export const XUNIAVERSE_REPOSITORIES: readonly XuniaverseRepositoryNode[] = [
+  node('sonoxo/xuniadao', 'ROOT'),
+  node('sonoxo/zyra', 'CORE'),
+  node('sonoxo/gpt-doug-llm', 'CORE'),
+  node('sonoxo/AlmightySonoxo', 'CORE'),
+  node('sonoxo/gpt-uap-xo', 'CORE'),
+  node('sonoxo/xuniahubchatbot', 'CORE'),
+  node('sonoxo/hounddogZyra', 'XUNIA_EXTENSION'),
+  node('sonoxo/ZYRAxAlgorithm', 'XUNIA_EXTENSION'),
+  node('sonoxo/flow-ai-tools', 'XUNIA_EXTENSION'),
+  node('sonoxo/plandevXUNIA-', 'XUNIA_EXTENSION'),
+  node('sonoxo/AIT-CoreXUNIA', 'XUNIA_EXTENSION'),
+  node('sonoxo/MMGISxunia-', 'XUNIA_EXTENSION'),
+  node('sonoxo/BSLxunia', 'XUNIA_EXTENSION'),
+  node('sonoxo/DCSxunia', 'XUNIA_EXTENSION'),
+  node('sonoxo/VICARxunia', 'XUNIA_EXTENSION'),
+  node('sonoxo/plandev-uiXUNIA', 'XUNIA_EXTENSION'),
+  node('sonoxo/aip-community-registry-zyra', 'XUNIA_EXTENSION'),
+  node('sonoxo/feelingcheck-companion', 'PRODUCT'),
+  node('sonoxo/soundcloudopen', 'PRODUCT'),
+  node('sonoxo/distroprep', 'PRODUCT'),
+  node('sonoxo/uShop', 'PRODUCT'),
+  node('sonoxo/WUPify', 'PRODUCT'),
+  node('sonoxo/soundnode-app-xunia', 'PRODUCT'),
+  node('sonoxo/TrackerGuard', 'DEFENSE'),
+  node('sonoxo/eyeris', 'DEFENSE'),
+  node('sonoxo/ghidraGPTDougLLMXYRA', 'DEFENSE'),
+  node('sonoxo/hermes-agent', 'DEFENSE'),
+  node('sonoxo/myNetwork', 'DEFENSE'),
+  node('sonoxo/SuperAGI', 'REFERENCE'),
+  node('sonoxo/0-hello-world-svelte', 'REFERENCE'),
+  node('sonoxo/mindsdb', 'REFERENCE'),
+  node('sonoxo/osirisanon', 'REFERENCE'),
+  node('sonoxo/GDK', 'REFERENCE'),
+  node('sonoxo/Smash-Bros-Ultimate-Random-Character-Selector', 'REFERENCE'),
+  node('sonoxo/blueprint', 'REFERENCE'),
+  node('sonoxo/tslint', 'REFERENCE'),
+  node('sonoxo/python-language-server', 'REFERENCE'),
+  node('sonoxo/openai-apps-sdk-examples', 'REFERENCE'),
+  node('sonoxo/cody-public-snapshot', 'REFERENCE'),
+  node('sonoxo/vibesdk', 'REFERENCE'),
+  node('sonoxo/cline', 'REFERENCE'),
+  node('sonoxo/llama.cpp', 'REFERENCE'),
+  node('sonoxo/vllm', 'REFERENCE'),
+  node('sonoxo/langchain', 'REFERENCE'),
+  node('sonoxo/open-webui', 'REFERENCE'),
+  node('sonoxo/ml-agents', 'REFERENCE'),
+  node('sonoxo/awesome-ai-tools-for-game-dev', 'REFERENCE'),
+  node('sonoxo/anything-llm', 'REFERENCE'),
+  node('sonoxo/DeepLearning-YouTube', 'REFERENCE'),
+  node('sonoxo/witchcraft-go-tasks', 'REFERENCE'),
+  node('sonoxo/pymss-studio', 'REFERENCE'),
+  node('sonoxo/awesome-machine-learning', 'REFERENCE'),
+  node('sonoxo/FreeToken', 'REFERENCE'),
+] as const;
+
+export const XUNIAVERSE = {
+  id: 'XUNIAVERSE',
+  version: '1.0.0',
+  rootRepository: 'sonoxo/xuniadao',
+  face: 'XUNIA / XuniaDAO',
+  nodeCount: XUNIAVERSE_REPOSITORIES.length,
+  repositoryNodes: XUNIAVERSE_REPOSITORIES,
+  defenseOntology: 'GCPXUNIA-VIRGINIA-VA3LM-DEFENSE',
+  peerOntology: 'XUNIAVERSE-TECH-PEER-ONTOLOGY',
+  rules: {
+    xuniadaoIsRoot: true,
+    preserveRepositoryLicense: true,
+    preserveUpstreamOwnership: true,
+    preserveForkAttribution: true,
+    noVendorAffiliationInference: true,
+  },
+} as const;
