@@ -1,0 +1,68 @@
+name: Governance Ontology Lock
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/lib/ecosystem-governance-ontology.ts'
+      - 'src/lib/ecosystem-governance-ontology.spec.ts'
+      - 'src/lib/exchange-market.ts'
+      - 'src/lib/exchange-market.spec.ts'
+      - 'src/lib/compliance-evidence.ts'
+      - 'src/lib/compliance-evidence.spec.ts'
+      - 'ecosystem/governance-ontology.json'
+      - 'ecosystem/exchange-market.json'
+      - 'ecosystem/compliance-evidence.json'
+      - 'package.json'
+      - '.github/workflows/governance-ontology.yml'
+  pull_request:
+    paths:
+      - 'src/lib/ecosystem-governance-ontology.ts'
+      - 'src/lib/ecosystem-governance-ontology.spec.ts'
+      - 'src/lib/exchange-market.ts'
+      - 'src/lib/exchange-market.spec.ts'
+      - 'src/lib/compliance-evidence.ts'
+      - 'src/lib/compliance-evidence.spec.ts'
+      - 'ecosystem/governance-ontology.json'
+      - 'ecosystem/exchange-market.json'
+      - 'ecosystem/compliance-evidence.json'
+      - 'package.json'
+      - '.github/workflows/governance-ontology.yml'
+
+jobs:
+  ontology-lock:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: yarn
+      - run: yarn install --frozen-lockfile
+      - run: yarn build:main
+      - run: yarn test:unit
+      - name: Governance ontology contract lock
+        run: |
+          node <<'NODE'
+          const assert = require('assert');
+          const fs = require('fs');
+          const ontology = JSON.parse(fs.readFileSync('ecosystem/governance-ontology.json','utf8'));
+          const exchanges = JSON.parse(fs.readFileSync('ecosystem/exchange-market.json','utf8'));
+          const evidence = JSON.parse(fs.readFileSync('ecosystem/compliance-evidence.json','utf8'));
+          const pkg = JSON.parse(fs.readFileSync('package.json','utf8'));
+          assert.equal(ontology.architecture, 'OBJECT_PROPERTY_LINK_ACTION_EVIDENCE_DECISION');
+          assert.ok(ontology.objectTypes.includes('LICENSE'));
+          assert.ok(ontology.objectTypes.includes('EXCHANGE'));
+          assert.ok(ontology.objectTypes.includes('COMPLIANCE_REQUIREMENT'));
+          assert.equal(exchanges.status, 'LIVE_READ_ONLY_DISCOVERY');
+          assert.equal(exchanges.capabilities.liveTickerRead, true);
+          assert.equal(exchanges.capabilities.orderPlacement, false);
+          assert.equal(exchanges.listingState.selfDeclaredListingAllowed, false);
+          assert.equal(evidence.status, 'COLLECTION_FRAMEWORK_ACTIVE');
+          assert.equal(evidence.controls.productionEvidenceCannotBeInferredFromCode, true);
+          assert.equal(evidence.claims.gdprRegulatorCertificationIssued, false);
+          assert.equal(evidence.claims.hipaaGovernmentCertificationIssued, false);
+          assert.equal(pkg.name, 'xunia-glass-onion');
+          console.log('GOVERNANCE ONTOLOGY LOCK: PASS');
+          NODE

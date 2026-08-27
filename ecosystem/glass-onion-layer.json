@@ -1,13 +1,18 @@
 {
   "codename": "GLASS ONION",
-  "version": "2.3.0",
+  "version": "2.5.0",
   "command": "/glass",
   "aitCommand": "/glass ait",
   "crmCommand": "/glass crm",
+  "crmPortCommand": "/glass crm port",
   "crmCertificationCommand": "/glass certify crm",
+  "licensesCommand": "/glass licenses",
+  "exchangesCommand": "/glass exchanges",
+  "evidenceCommand": "/glass evidence",
+  "governanceOntologyCommand": "/glass ontology governance",
   "uapCommand": "/glass uap",
   "umbrella": "XUNIA",
-  "purpose": "Cross-repository intelligence and orchestration membrane for the XUNIA ecosystem.",
+  "purpose": "Cross-repository intelligence, ontology, licensing, compliance evidence, market discovery, and governed orchestration membrane for the XUNIA ecosystem.",
   "layers": [
     "xunia",
     "zyra",
@@ -20,7 +25,11 @@
     "INTELLIGENCE_QUERY",
     "AIT_ONTOLOGY",
     "CRM",
+    "CRM_PORT",
     "CRM_CERTIFICATION",
+    "LICENSE_REGISTRY",
+    "EXCHANGE_MARKET_DATA",
+    "COMPLIANCE_EVIDENCE",
     "CODE_PLAN",
     "ONTOLOGY_WORKFLOW",
     "MEDIA_WORKFLOW",
@@ -29,35 +38,23 @@
     "UAP_AGENT_RUNTIME",
     "CI_VALIDATION"
   ],
-  "crmCertificationPipeline": [
-    "CRM_CONTROL_SCOPE",
-    "PALANTIR_ONTOLOGY_GRAPH",
-    "EVIDENCE_VERIFICATION",
-    "CONTROL_ASSESSMENT",
-    "RISK_CHECK",
-    "ATTESTATION_GATE"
-  ],
-  "uapPipeline": [
-    "XUNIA_SCOPE",
-    "GPT_UAP_XO_PLAN",
-    "GPT_UAP_XO_BOUNDED_WORKERS",
-    "PROVENANCE_CHECK",
-    "ZYRA_ACTION_GATE"
-  ],
-  "pipeline": [
-    "INGEST",
-    "PROVENANCE_CHECK",
-    "NORMALIZE",
-    "ONTOLOGY",
-    "PLAN",
-    "GUARDRAIL",
-    "EXECUTE_OR_REVIEW",
-    "VERIFY"
-  ],
+  "governanceOntology": {
+    "contract": "ecosystem/governance-ontology.json",
+    "architecture": "OBJECT_PROPERTY_LINK_ACTION_EVIDENCE_DECISION",
+    "domains": ["LICENSES", "EXCHANGES", "GDPR_HIPAA_EVIDENCE"]
+  },
+  "pipelines": {
+    "LICENSE_REGISTRY": ["REPOSITORY_DISCOVERY", "LICENSE_FILE_VERIFY", "SPDX_VALIDATE", "OBLIGATION_EVALUATE", "ATTRIBUTION_EVIDENCE"],
+    "EXCHANGE_MARKET_DATA": ["TOKEN_SCOPE", "LISTING_PACKET_VALIDATE", "LIVE_EXCHANGE_DISCOVERY", "LISTING_STATUS_VERIFY", "READ_ONLY_TICKER"],
+    "COMPLIANCE_EVIDENCE": ["FRAMEWORK_SCOPE", "REQUIREMENT_MAP", "EVIDENCE_INGEST", "PROVENANCE_VERIFY", "EXPIRY_CHECK", "READINESS_ASSESSMENT"]
+  },
   "decisions": ["ALLOW", "REVIEW", "BLOCK"],
   "invariants": {
     "provenanceRequired": true,
     "humanApprovalForMutation": true,
+    "exchangeMarketDataReadOnly": true,
+    "externalExchangeListingCannotBeSelfDeclared": true,
+    "productionComplianceEvidenceCannotBeInferred": true,
     "automaticFundMovement": false,
     "automaticGovernanceVoting": false,
     "arbitraryRemoteShell": false

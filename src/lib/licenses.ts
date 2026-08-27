@@ -115,16 +115,16 @@ export const ECOSYSTEM_LICENSES: readonly RepositoryLicenseRecord[] = [
   },
   {
     repository: 'sonoxo/gpt-uap-xo',
-    licenseId: 'UNDECLARED',
-    licenseName: 'No repository license file verified',
-    licenseClass: 'UNDECLARED',
-    licenseFile: null,
+    licenseId: 'Apache-2.0',
+    licenseName: 'Apache License 2.0',
+    licenseClass: 'PERMISSIVE',
+    licenseFile: 'LICENSE',
     verified: true,
-    source: 'https://github.com/sonoxo/gpt-uap-xo',
-    permissions: [],
-    obligations: ['do-not-assume-permission-to-copy-modify-or-redistribute'],
-    restrictions: ['all-rights-reserved-by-default-unless-another-grant-applies'],
-    notes: ['A LICENSE file was not found when the registry was built.'],
+    source: 'https://github.com/sonoxo/gpt-uap-xo/blob/main/LICENSE',
+    permissions: LICENSE_CATALOG['Apache-2.0'].permissions,
+    obligations: LICENSE_CATALOG['Apache-2.0'].obligations,
+    restrictions: LICENSE_CATALOG['Apache-2.0'].restrictions,
+    notes: ['Licensed on main by merged PR #2; package metadata points to LICENSE.'],
   },
 ] as const;
 
@@ -147,7 +147,7 @@ export const validateEcosystemLicenses = (): readonly string[] => {
 
 export const LICENSE_REGISTRY = {
   id: 'GLASS-ONION-LICENSE-REGISTRY',
-  version: '1.0.0',
+  version: '1.1.0',
   command: '/glass licenses',
   status: 'VERIFIED_REPOSITORY_LICENSES',
   catalog: ['Apache-2.0', 'MIT', 'BUSL-1.1'] as const,

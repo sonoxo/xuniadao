@@ -1,8 +1,16 @@
 {
-  "name": "flow-native-token-registry",
-  "version": "0.1.3",
-  "description": "Flow native token registry",
-  
+  "name": "xunia-glass-onion",
+  "version": "1.0.0",
+  "description": "XUNIA GLASS ONION agentic ecosystem registry, ontology, CRM, compliance, licensing, token metadata, and governed execution contracts",
+  "keywords": [
+    "xunia",
+    "glass-onion",
+    "crm",
+    "ontology",
+    "flow",
+    "token-registry",
+    "agentic"
+  ],
   "scripts": {
     "test": "run-s build test:*",
     "test:lint": "eslint src --ext .ts",
@@ -14,16 +22,25 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/FlowFans/flow-token-list.git"
+    "url": "git+https://github.com/sonoxo/xuniadao.git"
   },
-  "author": "",
-  "license": "Apache",
+  "author": "Sonoxo",
+  "contributors": [
+    "FlowFans community contributors (upstream Flow native token registry)"
+  ],
+  "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/FlowFans/flow-token-list/issues"
+    "url": "https://github.com/sonoxo/xuniadao/issues"
   },
-  "homepage": "https://github.com/FlowFans/flow-token-list#readme",
+  "homepage": "https://github.com/sonoxo/xuniadao#readme",
+  "x-upstream": {
+    "name": "flow-native-token-registry",
+    "repository": "https://github.com/FlowFans/flow-token-list",
+    "license": "Apache-2.0",
+    "note": "Flow token-registry code and data retain their upstream provenance and attribution."
+  },
   "engines": {
-    "node": ">=10"
+    "node": ">=18"
   },
   "main": "dist/main/index.js",
   "typings": "dist/main/index.d.ts",
@@ -48,7 +65,7 @@
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^7.8.0",
     "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-eslint-comments": "^3.0.2",
     "eslint-plugin-functional": "^3.0.2",
     "gh-pages": "^3.1.0",
     "npm-run-all": "^4.1.5",

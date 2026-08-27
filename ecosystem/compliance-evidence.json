@@ -1,0 +1,48 @@
+{
+  "id": "GLASS-COMPLIANCE-EVIDENCE",
+  "version": "1.0.0",
+  "command": "/glass evidence",
+  "status": "COLLECTION_FRAMEWORK_ACTIVE",
+  "frameworks": ["GDPR", "HIPAA"],
+  "productionEvidenceState": "REQUIRED",
+  "requirements": {
+    "GDPR": [
+      "GDPR-ROPA",
+      "GDPR-LAWFUL-BASIS",
+      "GDPR-NOTICES",
+      "GDPR-DPIA",
+      "GDPR-TRANSFERS",
+      "GDPR-PROCESSORS",
+      "GDPR-DSR",
+      "GDPR-BREACH"
+    ],
+    "HIPAA": [
+      "HIPAA-SCOPE",
+      "HIPAA-EPHI-INVENTORY",
+      "HIPAA-RISK-ANALYSIS",
+      "HIPAA-RISK-MANAGEMENT",
+      "HIPAA-ACCESS",
+      "HIPAA-AUDIT",
+      "HIPAA-INTEGRITY-TRANSMISSION",
+      "HIPAA-PHYSICAL",
+      "HIPAA-CONTINGENCY",
+      "HIPAA-TRAINING",
+      "HIPAA-BAA",
+      "HIPAA-BREACH",
+      "HIPAA-EVALUATION"
+    ]
+  },
+  "controls": {
+    "provenanceRequired": true,
+    "sourceRequired": true,
+    "expiryTracking": true,
+    "productionEvidenceCannotBeInferredFromCode": true,
+    "executedContractsRequiredWhereApplicable": true,
+    "notApplicableRequiresRecordedDetermination": true
+  },
+  "claims": {
+    "codeReadinessIsProductionCompliance": false,
+    "gdprRegulatorCertificationIssued": false,
+    "hipaaGovernmentCertificationIssued": false
+  }
+}

@@ -6,26 +6,24 @@ on:
     paths:
       - 'src/lib/glass-onion-layer.ts'
       - 'src/lib/glass-onion-layer.spec.ts'
-      - 'src/lib/crm-certification.ts'
-      - 'src/lib/crm-certification.spec.ts'
+      - 'src/lib/ecosystem-governance-ontology.ts'
+      - 'src/lib/ecosystem-governance-ontology.spec.ts'
       - 'ecosystem/glass-onion-layer.json'
+      - 'ecosystem/governance-ontology.json'
       - 'ecosystem/gpt-uap-xo.json'
       - 'ecosystem/crm-certification.json'
-      - 'docs/GLASSONION_LAYER.md'
-      - 'docs/CRM_CERTIFICATION.md'
       - 'src/index.ts'
       - '.github/workflows/glass-onion-layer.yml'
   pull_request:
     paths:
       - 'src/lib/glass-onion-layer.ts'
       - 'src/lib/glass-onion-layer.spec.ts'
-      - 'src/lib/crm-certification.ts'
-      - 'src/lib/crm-certification.spec.ts'
+      - 'src/lib/ecosystem-governance-ontology.ts'
+      - 'src/lib/ecosystem-governance-ontology.spec.ts'
       - 'ecosystem/glass-onion-layer.json'
+      - 'ecosystem/governance-ontology.json'
       - 'ecosystem/gpt-uap-xo.json'
       - 'ecosystem/crm-certification.json'
-      - 'docs/GLASSONION_LAYER.md'
-      - 'docs/CRM_CERTIFICATION.md'
       - 'src/index.ts'
       - '.github/workflows/glass-onion-layer.yml'
 
@@ -35,92 +33,62 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: yarn
-
       - name: Install
         run: yarn install --frozen-lockfile
-
       - name: Build
         run: yarn build:main
-
       - name: Unit tests
         run: yarn test:unit
-
       - name: Glass Onion command lock
         run: |
           node <<'NODE'
           const assert = require('assert');
           const { GLASS_ONION_LAYER, routeGlassOnion } = require('./dist/main/lib/glass-onion-layer');
+          const ontology = require('./dist/main/lib/ecosystem-governance-ontology');
           assert.equal(GLASS_ONION_LAYER.codename, 'GLASS ONION');
-          assert.equal(GLASS_ONION_LAYER.command, '/glass');
-          assert.equal(GLASS_ONION_LAYER.uapCommand, '/glass uap');
-          assert.equal(GLASS_ONION_LAYER.crmCommand, '/glass crm');
-          assert.equal(GLASS_ONION_LAYER.crmCertificationCommand, '/glass certify crm');
+          assert.equal(GLASS_ONION_LAYER.version, '2.5.0');
+          assert.equal(GLASS_ONION_LAYER.licensesCommand, '/glass licenses');
+          assert.equal(GLASS_ONION_LAYER.exchangesCommand, '/glass exchanges');
+          assert.equal(GLASS_ONION_LAYER.evidenceCommand, '/glass evidence');
           assert.equal(GLASS_ONION_LAYER.layers.length, 6);
-          assert.ok(GLASS_ONION_LAYER.layers.includes('gpt-uap-xo'));
-          assert.ok(GLASS_ONION_LAYER.capabilities.includes('UAP_AGENT_RUNTIME'));
-          assert.ok(GLASS_ONION_LAYER.capabilities.includes('CRM_CERTIFICATION'));
-          assert.equal(routeGlassOnion({
-            objective: 'CI ontology route',
-            capability: 'ONTOLOGY_WORKFLOW',
-            targets: ['xunia', 'sonoxo', 'va3lm', 'zyra']
-          }).decision, 'ALLOW');
-          assert.equal(routeGlassOnion({
-            objective: 'CI CRM certification route',
-            capability: 'CRM_CERTIFICATION',
-            targets: ['xunia', 'sonoxo', 'va3lm', 'zyra'],
-            provenance: ['repo:sonoxo/xuniadao', 'contract:ecosystem/crm-certification.json']
-          }).decision, 'ALLOW');
-          assert.equal(routeGlassOnion({
-            objective: 'CI UAP route',
-            capability: 'UAP_AGENT_RUNTIME',
-            targets: ['xunia', 'gpt-uap-xo', 'zyra'],
-            provenance: ['repo:sonoxo/gpt-uap-xo']
-          }).decision, 'ALLOW');
-          assert.equal(routeGlassOnion({
-            objective: 'CI mutation route',
-            capability: 'CODE_PLAN',
-            targets: ['xunia', 'zyra'],
-            mutatesRepository: true
-          }).decision, 'REVIEW');
-          assert.equal(routeGlassOnion({
-            objective: 'CI prohibited route',
-            capability: 'CADENCE_FLOW',
-            targets: ['xunia'],
-            movesFunds: true
-          }).decision, 'BLOCK');
+          for (const capability of ['LICENSE_REGISTRY','EXCHANGE_MARKET_DATA','COMPLIANCE_EVIDENCE']) {
+            assert.ok(GLASS_ONION_LAYER.capabilities.includes(capability));
+          }
+          assert.equal(routeGlassOnion({ objective: 'CI license route', capability: 'LICENSE_REGISTRY', targets: ['xunia'], provenance: ['path:LICENSE'] }).decision, 'ALLOW');
+          assert.equal(routeGlassOnion({ objective: 'CI exchange route', capability: 'EXCHANGE_MARKET_DATA', targets: ['xunia','zyra'], provenance: ['api:exchange'] }).decision, 'ALLOW');
+          assert.equal(routeGlassOnion({ objective: 'CI evidence route', capability: 'COMPLIANCE_EVIDENCE', targets: ['xunia','zyra'], provenance: ['evidence:index'] }).decision, 'ALLOW');
+          assert.equal(ontology.ECOSYSTEM_GOVERNANCE_ONTOLOGY.architecture, 'OBJECT_PROPERTY_LINK_ACTION_EVIDENCE_DECISION');
+          assert.equal(ontology.evaluateGovernanceAction({ action: 'READ_TICKER', objectIds: ['exchange:coinbase'], provenance: ['api:coinbase'] }), 'ALLOW');
+          assert.equal(ontology.evaluateGovernanceAction({ action: 'DISCOVER_LISTING', objectIds: ['exchange:coinbase'], provenance: ['api:coinbase'], externalListingClaim: true }), 'REVIEW');
+          assert.equal(ontology.evaluateGovernanceAction({ action: 'READ_TICKER', objectIds: ['exchange:coinbase'], provenance: ['api:coinbase'], movesFunds: true }), 'BLOCK');
           console.log('GLASS ONION LAYER LOCK: PASS');
           NODE
-
       - name: Machine contract lock
         run: |
           node <<'NODE'
           const fs = require('fs');
           const assert = require('assert');
           const contract = JSON.parse(fs.readFileSync('ecosystem/glass-onion-layer.json', 'utf8'));
-          const uap = JSON.parse(fs.readFileSync('ecosystem/gpt-uap-xo.json', 'utf8'));
-          const crmCert = JSON.parse(fs.readFileSync('ecosystem/crm-certification.json', 'utf8'));
+          const ontology = JSON.parse(fs.readFileSync('ecosystem/governance-ontology.json', 'utf8'));
           assert.equal(contract.codename, 'GLASS ONION');
-          assert.equal(contract.version, '2.3.0');
-          assert.equal(contract.command, '/glass');
-          assert.equal(contract.uapCommand, '/glass uap');
-          assert.equal(contract.crmCommand, '/glass crm');
-          assert.equal(contract.crmCertificationCommand, '/glass certify crm');
+          assert.equal(contract.version, '2.5.0');
+          assert.equal(contract.licensesCommand, '/glass licenses');
+          assert.equal(contract.exchangesCommand, '/glass exchanges');
+          assert.equal(contract.evidenceCommand, '/glass evidence');
+          assert.equal(contract.governanceOntologyCommand, '/glass ontology governance');
           assert.equal(contract.layers.length, 6);
-          assert.ok(contract.layers.includes('gpt-uap-xo'));
-          assert.ok(contract.capabilities.includes('UAP_AGENT_RUNTIME'));
-          assert.ok(contract.capabilities.includes('CRM_CERTIFICATION'));
-          assert.equal(crmCert.status, 'INTERNAL_ATTESTED');
-          assert.equal(crmCert.attestation.externalCertificationStatus, 'NOT_ISSUED');
-          assert.equal(crmCert.claims.palantirAffiliationOrEndorsement, false);
-          assert.equal(uap.status, 'BOUND');
-          assert.equal(uap.command, '/glass uap');
-          assert.equal(uap.visibility, 'PRIVATE');
-          assert.equal(contract.invariants.provenanceRequired, true);
+          assert.ok(contract.capabilities.includes('LICENSE_REGISTRY'));
+          assert.ok(contract.capabilities.includes('EXCHANGE_MARKET_DATA'));
+          assert.ok(contract.capabilities.includes('COMPLIANCE_EVIDENCE'));
+          assert.equal(contract.invariants.externalExchangeListingCannotBeSelfDeclared, true);
+          assert.equal(contract.invariants.productionComplianceEvidenceCannotBeInferred, true);
           assert.equal(contract.invariants.automaticFundMovement, false);
+          assert.equal(ontology.architecture, 'OBJECT_PROPERTY_LINK_ACTION_EVIDENCE_DECISION');
+          assert.equal(ontology.invariants.externalListingRequiresExchangeEvidence, true);
+          assert.equal(ontology.invariants.productionComplianceRequiresOperationalEvidence, true);
           console.log('GLASS ONION MACHINE CONTRACT: PASS');
           NODE

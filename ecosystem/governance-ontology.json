@@ -1,0 +1,50 @@
+{
+  "id": "GLASS-ONION-GOVERNANCE-ONTOLOGY",
+  "version": "1.0.0",
+  "command": "/glass ontology governance",
+  "architecture": "OBJECT_PROPERTY_LINK_ACTION_EVIDENCE_DECISION",
+  "objectTypes": [
+    "REPOSITORY",
+    "LICENSE",
+    "TOKEN",
+    "EXCHANGE",
+    "MARKET",
+    "COMPLIANCE_REQUIREMENT",
+    "EVIDENCE",
+    "ASSESSMENT",
+    "ATTESTATION"
+  ],
+  "linkTypes": [
+    "LICENSED_UNDER",
+    "DISCOVERED_ON",
+    "QUOTED_BY",
+    "REQUIRES_EVIDENCE",
+    "SUPPORTED_BY",
+    "SATISFIES",
+    "GOVERNS",
+    "DERIVED_FROM",
+    "BLOCKED_BY"
+  ],
+  "actions": [
+    "VERIFY_LICENSE",
+    "DISCOVER_LISTING",
+    "READ_TICKER",
+    "VALIDATE_LISTING_PACKET",
+    "ATTACH_EVIDENCE",
+    "ASSESS_READINESS",
+    "ISSUE_INTERNAL_ATTESTATION"
+  ],
+  "domains": {
+    "licensing": "ecosystem/licenses.json",
+    "exchanges": "ecosystem/exchange-market.json",
+    "complianceEvidence": "ecosystem/compliance-evidence.json"
+  },
+  "decisions": ["ALLOW", "REVIEW", "BLOCK"],
+  "invariants": {
+    "provenanceRequired": true,
+    "externalListingRequiresExchangeEvidence": true,
+    "productionComplianceRequiresOperationalEvidence": true,
+    "licenseRightsRequireVerifiedLicense": true,
+    "fundMovementBlocked": true
+  }
+}

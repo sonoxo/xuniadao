@@ -2,45 +2,42 @@
 
 # 🧅 XUNIA // GLASS ONION
 
-### Agentic ecosystem registry, ontology, CRM, bulk data porting, and governed execution fabric
+### Agentic ecosystem registry, ontology, CRM, compliance, licensing, live market discovery, and governed execution fabric
 
 **XUNIA → ZYRA → SONOXO / GPT-DOUG-LLM → AlmightySonoxo → VA3LM → GPT-UAP-XO**
 
-`GLASS ONION` · `CRM ACTIVE` · `BULK PORT ACTIVE` · `AIT BOUND` · `VA3LM :8088` · `PROVENANCE REQUIRED` · `HUMAN-GATED MUTATIONS`
-
-[Architecture](#-architecture) · [CRM](#-glass-onion-crm) · [Bulk Port](#-crm-bulk-data-port) · [CRM Certification](#-crm-certification) · [Commands](#-command-surface) · [Development](#-development)
+`GLASS ONION 2.5` · `CRM ACTIVE` · `BULK PORT ACTIVE` · `GDPR/HIPAA CONTROL MODEL` · `LICENSES VERIFIED` · `LIVE EXCHANGE READS` · `AIT BOUND` · `PROVENANCE REQUIRED`
 
 </div>
 
----
+## What this is
 
-## ⚡ What this is
-
-GLASS ONION is the XUNIA cross-repository intelligence and orchestration membrane. It connects six software layers while keeping each repository's history and runtime boundaries separate.
+GLASS ONION is XUNIA's cross-repository routing and evidence membrane. It connects six software layers while preserving repository boundaries, provenance, licensing, and human review for consequential mutations.
 
 | Layer | Mission | Source |
 |---|---|---|
-| **XUNIA / XuniaDAO** | registry, ontology, metadata, governance intelligence, CRM contracts | [`sonoxo/xuniadao`](https://github.com/sonoxo/xuniadao) |
+| **XUNIA / XuniaDAO** | registry, ontology, CRM, compliance, licensing, token metadata | [`sonoxo/xuniadao`](https://github.com/sonoxo/xuniadao) |
 | **ZYRA** | workflows, routing, approvals, bounded execution | [`sonoxo/zyra`](https://github.com/sonoxo/zyra) |
-| **SONOXO / GPT-DOUG-LLM** | model brain, intelligence ontology, defensive automation | [`sonoxo/gpt-doug-llm`](https://github.com/sonoxo/gpt-doug-llm) |
+| **SONOXO / GPT-DOUG-LLM** | model brain, ontology, defensive automation | [`sonoxo/gpt-doug-llm`](https://github.com/sonoxo/gpt-doug-llm) |
 | **AlmightySonoxo** | creative, media, public-facing layer | [`sonoxo/AlmightySonoxo`](https://github.com/sonoxo/AlmightySonoxo) |
 | **VA3LM** | coding/programming command center | [`gpt-doug-llm/va3lm`](https://github.com/sonoxo/gpt-doug-llm/tree/main/va3lm) · `127.0.0.1:8088` |
-| **GPT-UAP-XO** | private local agent runtime with bounded parallel workers | `sonoxo/gpt-uap-xo` |
-
-## 🧅 Architecture
+| **GPT-UAP-XO** | bounded local agent runtime | [`sonoxo/gpt-uap-xo`](https://github.com/sonoxo/gpt-uap-xo) |
 
 ```mermaid
 flowchart TD
-    X[XUNIA / XuniaDAO\nRegistry + Ontology + CRM]
-    Z[ZYRA\nWorkflows + Action Gates]
-    S[SONOXO / GPT-DOUG-LLM\nModel Brain + Intelligence]
-    A[AlmightySonoxo\nCreative + Media]
-    V[VA3LM :8088\nCode + Plan + Verify]
-    U[GPT-UAP-XO\nBounded Local Agents]
-    C[CRM\nAccounts + Contacts + Pipeline]
-    P[CRM Port\nBulk Read + Write + Migration]
-    CERT[CRM Certification Ontology\nControls + Evidence + Attestation]
-    H[Human Command Gate]
+    X[XUNIA / XuniaDAO]
+    Z[ZYRA]
+    S[SONOXO / GPT-DOUG-LLM]
+    A[AlmightySonoxo]
+    V[VA3LM :8088]
+    U[GPT-UAP-XO]
+    C[CRM]
+    P[Bulk Port]
+    G[GDPR + HIPAA Controls]
+    E[Production Evidence]
+    L[License Registry]
+    M[Live Exchange Discovery]
+    H[Human Review]
 
     X --> Z
     X --> S
@@ -49,178 +46,144 @@ flowchart TD
     X --> U
     X --> C
     C --> P
-    C --> CERT
-    P --> Z
-    CERT --> Z
+    C --> G
+    G --> E
+    X --> L
+    X --> M
     S --> V
     V --> Z
     U --> Z
-    H --> X
-    H --> Z
     H --> P
-    H --> CERT
+    H --> E
+    H --> Z
 ```
 
-## 💼 GLASS ONION CRM
+## CRM
 
 Command: **`/glass crm`**
-
-Core relationship model:
 
 ```text
 ACCOUNT → CONTACT → LEAD → OPPORTUNITY → ACTIVITY → TASK → DEAL → CUSTOMER
 ```
 
-Sales stages:
-
-```text
-NEW → QUALIFIED → DISCOVERY → PROPOSAL → NEGOTIATION → WON | LOST
-```
-
-Runtime path:
-
-```text
-CRM_INGEST
-  → AIT_NORMALIZE
-  → CRM_RELATIONSHIP_GRAPH
-  → VA3LM_ANALYZE
-  → ZYRA_WORKFLOW
-  → UAP_AGENT_TASKS
-```
-
-CRM supports accounts, contacts, leads, opportunities, activities, tasks, deals, customers, pipeline metrics, open/won value aggregation, follow-up planning, and relationship graphing.
-
-Documentation: [`docs/CRM.md`](docs/CRM.md)  
-Machine contract: [`ecosystem/crm.json`](ecosystem/crm.json)
-
-## 📦 CRM Bulk Data Port
-
-Command: **`/glass crm port`**
-
-The port layer supports **bulk read, bulk write, and bulk system-to-system migration**.
-
-Formats:
-
-`CSV · JSON · NDJSON · ZIP_BUNDLE`
-
-Import path:
-
-```text
-PORT_INGEST
-  → FORMAT_PARSE
-  → SCHEMA_MAP
-  → DEDUPE
-  → CONSENT_PROVENANCE_CHECK
-  → DRY_RUN
-  → HUMAN_REVIEW
-  → BATCH_WRITE
-  → AUDIT
-  → ROLLBACK_MANIFEST
-```
-
-Capabilities include schema mapping, stable-ID dedupe, configurable dedupe keys, bounded batches, maximum-record limits, dry-run, human-approved writes, insert-only or idempotent upsert strategy, audit events, rollback manifests, consent gates, export filtering, and field redaction.
-
-Documentation: [`docs/CRM_PORT.md`](docs/CRM_PORT.md)  
-Machine contract: [`ecosystem/crm-port.json`](ecosystem/crm-port.json)
-
-## 🛡️ CRM Certification
-
-Command: **`/glass certify crm`**
-
-The repository carries the **XUNIA CRM Internal Control Attestation**:
-
-`XUNIA-CRM-ICA-1`
-
-Current state: **`INTERNAL_ATTESTED`** with software/policy controls marked **ready for external assessment** where applicable.
-
-The certification model uses a Palantir-ontology-aligned structure:
-
-```text
-SYSTEM → CONTROL → EVIDENCE → ASSESSMENT → RISK → ATTESTATION
-```
-
-Objects:
-
-`SYSTEM · CONTROL · EVIDENCE · ASSESSMENT · RISK · ATTESTATION`
-
-Links:
-
-`GOVERNS · SUPPORTED_BY · SATISFIES · BLOCKED_BY · APPLIES_TO · DERIVED_FROM`
-
-Actions:
-
-`ATTACH_EVIDENCE · RUN_CONTROL_CHECK · REQUEST_REVIEW · ISSUE_INTERNAL_ATTESTATION · REVOKE_ATTESTATION`
-
-External SOC 2, HIPAA, GDPR, CCPA, CAN-SPAM, and TCPA status remains readiness/conditional rather than third-party certification unless an independent issuer provides evidence.
-
-Certification details: [`docs/CRM_CERTIFICATION.md`](docs/CRM_CERTIFICATION.md)  
-Readiness: [`docs/CRM_COMPLIANCE_READINESS.md`](docs/CRM_COMPLIANCE_READINESS.md)  
-Machine attestation: [`ecosystem/crm-certification.json`](ecosystem/crm-certification.json)
-
-## 🧠 AIT ontology
-
-Command: **`/glass ait`**
-
-AIT provides typed agents, systems, capabilities, sources, evidence, observations, hypotheses, decisions, workflows, actions, and controls with provenance-bearing relationships and governed promotion.
-
-Contract: [`ecosystem/ait-ontology.json`](ecosystem/ait-ontology.json)
-
-## 🛰️ GPT-UAP-XO
-
-Command: **`/glass uap`**
-
 Pipeline:
 
 ```text
-XUNIA_SCOPE
-  → GPT_UAP_XO_PLAN
-  → GPT_UAP_XO_BOUNDED_WORKERS
-  → PROVENANCE_CHECK
-  → ZYRA_ACTION_GATE
+CRM_INGEST → AIT_NORMALIZE → CRM_RELATIONSHIP_GRAPH → VA3LM_ANALYZE → ZYRA_WORKFLOW → UAP_AGENT_TASKS
 ```
 
-Binding contract: [`ecosystem/gpt-uap-xo.json`](ecosystem/gpt-uap-xo.json)
+Docs: [`docs/CRM.md`](docs/CRM.md) · Contract: [`ecosystem/crm.json`](ecosystem/crm.json)
 
-## 🎛️ Command surface
+## Bulk CRM data port
+
+Command: **`/glass crm port`**
+
+Supports **bulk read, bulk write, export, import, and migration** for `CSV`, `JSON`, `NDJSON`, and `ZIP_BUNDLE`, with schema mapping, dedupe, consent/provenance gates, dry-run, human approval, idempotent upsert, batching, audit, redaction, and rollback manifests.
+
+Docs: [`docs/CRM_PORT.md`](docs/CRM_PORT.md) · Contract: [`ecosystem/crm-port.json`](ecosystem/crm-port.json)
+
+## GDPR + HIPAA control model
+
+Command: **`/glass certify crm`**
+
+The repository implements the GDPR/HIPAA **software and policy control model** and keeps regulator/government certification claims false unless external evidence exists.
+
+GDPR coverage includes principles, transparency, lawful basis, Article 9, data-subject rights, privacy by design, processor contracts, RoPA, security, breach response, DPIA/prior consultation, DPO governance, international transfers, and automated-decision safeguards.
+
+HIPAA coverage includes scope determination, Privacy Rule controls, administrative/physical/technical safeguards, ePHI risk analysis and management, workforce security, contingency/disaster recovery, audit/integrity/authentication/transmission safeguards, BAAs/subcontractor flow-down, breach notification, periodic evaluation, and documentation retention.
+
+Docs: [`docs/GDPR_HIPAA.md`](docs/GDPR_HIPAA.md) · Contract: [`ecosystem/gdpr-hipaa.json`](ecosystem/gdpr-hipaa.json)
+
+## Production compliance evidence
+
+Command: **`/glass evidence`**
+
+The evidence registry tracks real operational artifacts separately from source code and CI. It models GDPR RoPA/lawful-basis/notices/DPIA/transfers/processors/DSR/breach evidence and HIPAA scope/ePHI inventory/risk/access/audit/integrity/physical/contingency/training/BAA/breach/evaluation evidence.
+
+Assessment states are `COMPLETE`, `PARTIAL`, or `MISSING`; code readiness is never automatically promoted to production compliance.
+
+Docs: [`docs/COMPLIANCE_EVIDENCE.md`](docs/COMPLIANCE_EVIDENCE.md) · Contract: [`ecosystem/compliance-evidence.json`](ecosystem/compliance-evidence.json)
+
+## Verified license registry
+
+Command: **`/glass licenses`**
+
+Current repository licenses:
+
+| Repository | License |
+|---|---|
+| `sonoxo/xuniadao` | `Apache-2.0` |
+| `sonoxo/zyra` | `BUSL-1.1` → change license `Apache-2.0` under its stated rule |
+| `sonoxo/gpt-doug-llm` | `MIT` |
+| `sonoxo/AlmightySonoxo` | `MIT` |
+| `sonoxo/gpt-uap-xo` | `Apache-2.0` |
+
+Docs: [`docs/LICENSES.md`](docs/LICENSES.md) · Contract: [`ecosystem/licenses.json`](ecosystem/licenses.json)
+
+## Live exchange market discovery
+
+Command: **`/glass exchanges`**
+
+GLASS ONION provides read-only adapters for Coinbase Exchange and Kraken public market-data APIs. It can discover live products/pairs, read tickers, and derive `LISTED_ACTIVE`, `LISTED_RESTRICTED`, `NOT_LISTED`, or `UNKNOWN` from exchange responses.
+
+A registry entry or listing packet **does not make a token exchange-listed**. A listed claim requires the external exchange to expose/accept the market. The layer does not place orders, move funds, store exchange credentials, or automatically submit listings.
+
+Docs: [`docs/EXCHANGES.md`](docs/EXCHANGES.md) · Contract: [`ecosystem/exchange-market.json`](ecosystem/exchange-market.json)
+
+## AIT ontology
+
+Command: **`/glass ait`**
+
+Typed agents, systems, capabilities, sources, evidence, observations, hypotheses, decisions, workflows, actions, and controls with provenance-bearing relationships.
+
+Contract: [`ecosystem/ait-ontology.json`](ecosystem/ait-ontology.json)
+
+## GPT-UAP-XO
+
+Command: **`/glass uap`**
+
+```text
+XUNIA_SCOPE → GPT_UAP_XO_PLAN → GPT_UAP_XO_BOUNDED_WORKERS → PROVENANCE_CHECK → ZYRA_ACTION_GATE
+```
+
+GPT-UAP-XO is now explicitly licensed under Apache-2.0 and its package metadata is CI-locked.
+
+## Command surface
 
 | Command | Purpose |
 |---|---|
-| `/glass` | GLASS ONION routing surface |
-| `/glass ait` | AIT ontology and intelligence pipeline |
-| `/glass crm` | CRM relationship and pipeline layer |
-| `/glass crm port` | Bulk CRM read/write/migration engine |
-| `/glass certify crm` | CRM control evidence and internal attestation |
-| `/glass uap` | GPT-UAP-XO bounded local-agent route |
+| `/glass` | GLASS ONION router |
+| `/glass ait` | AIT ontology/intelligence |
+| `/glass crm` | CRM relationship/pipeline layer |
+| `/glass crm port` | Bulk CRM read/write/migration |
+| `/glass certify crm` | CRM controls and internal attestation |
+| `/glass evidence` | GDPR/HIPAA production evidence tracking |
+| `/glass licenses` | Verified repository license registry |
+| `/glass exchanges` | Live read-only exchange listing/ticker discovery |
+| `/glass uap` | GPT-UAP-XO bounded-agent route |
 | `/VA3LM-SAGI` | VA3LM guardrail intelligence surface |
 
-## 🔒 Command rules
+## Guardrails
 
 ```text
-Provenance required                 YES
-Human review for mutation           YES
-Bulk CRM write approval             YES
-Automatic fund movement             NO
-Automatic governance voting         NO
-Arbitrary remote shell              NO
+Provenance required                          YES
+Human review for consequential mutation      YES
+Bulk CRM write approval                      YES
+External exchange listing self-declaration   NO
+Exchange order placement                     NO
+Code => production compliance inference      NO
+Automatic fund movement                      NO
+Automatic governance voting                  NO
+Arbitrary remote shell                       NO
 ```
 
-Agents can analyze, plan, parse, map, deduplicate, dry-run, test, and prepare migration batches. Consequential mutations remain human-gated.
+## Package identity and upstream provenance
 
-## 🧬 XuniaDAO / Flow registry
+The npm package metadata now identifies this repository as **`xunia-glass-onion`**, points repository/homepage/bugs to `sonoxo/xuniadao`, uses SPDX `Apache-2.0`, and records the FlowFans token registry as upstream provenance.
 
-This repository also contains a Sonoxo-hosted integration of the community Flow native token registry.
+> The Flow native token-registry code/data originated from the FlowFans community project. XUNIA preserves that provenance and attribution. Token metadata does not itself establish authenticity, safety, value, endorsement, or exchange listing.
 
-> Registry provenance: token-registry code and documentation originate from the FlowFans community project. Token metadata is infrastructure and does not by itself establish safety, value, endorsement, authenticity, or exchange listing.
-
-## 🚀 One-command workspace
-
-```bash
-bash scripts/glass-onion-bootstrap.sh
-```
-
-VA3LM remains bound to `127.0.0.1:8088`. GPT-UAP-XO is a private layer and requires repository access when bootstrapping its source.
-
-## ✅ Development
+## Development
 
 ```bash
 yarn install --frozen-lockfile
@@ -228,15 +191,15 @@ yarn build:main
 yarn test:unit
 ```
 
-GitHub Actions lock the Glass Onion ecosystem, AIT ontology, CRM contract, CRM bulk-port runtime, CRM certification ontology, and command routing before merge. The CRM Port Cloud Fleet runs parser, migration, and governance lanes in parallel cloud jobs.
+GitHub Actions lock the ecosystem, AIT, CRM, CRM bulk port, certification, GDPR/HIPAA controls, licenses, exchange adapters, production-evidence model, and command routing.
 
 ## Technology alignment boundary
 
-The architecture contains integration patterns aligned with model, cloud, ontology, enterprise Linux, and developer-platform ecosystems. Palantir-style ontology alignment refers to the object/property/link/action pattern used in this codebase and does not claim Palantir sponsorship, endorsement, partnership, or a live Foundry deployment.
+Palantir-style ontology alignment means object/property/link/action modeling used in this codebase; it does not claim Palantir sponsorship, endorsement, partnership, or a live Foundry deployment. Likewise, GDPR/HIPAA software controls do not create regulator-issued certification, and exchange adapters do not create exchange listings.
 
 <div align="center">
 
 ### 🧅 GLASS ONION
-**Six connected layers. CRM, bulk migration, and evidence graphs. Human command at the boundary.**
+**Six connected layers. CRM, compliance, licensing, live market verification, and evidence graphs. Human command at the boundary.**
 
 </div>
