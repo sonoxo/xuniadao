@@ -3,6 +3,7 @@ import { getXuniaLayer, XuniaLayerId } from './ecosystem';
 export type GlassOnionCapability =
   | 'INTELLIGENCE_QUERY'
   | 'AIT_ONTOLOGY'
+  | 'CRM'
   | 'CODE_PLAN'
   | 'ONTOLOGY_WORKFLOW'
   | 'MEDIA_WORKFLOW'
@@ -36,65 +37,16 @@ export interface GlassOnionRoute {
 }
 
 const PIPELINES: Readonly<Record<GlassOnionCapability, readonly string[]>> = {
-  INTELLIGENCE_QUERY: [
-    'XUNIA_INGEST',
-    'PROVENANCE_CHECK',
-    'SONOXO_ONTOLOGY',
-    'VA3LM_REASON',
-    'ZYRA_VERIFY',
-  ],
-  AIT_ONTOLOGY: [
-    'AIT_INGEST',
-    'AIT_PROVENANCE_CHECK',
-    'AIT_NORMALIZE',
-    'AIT_CORRELATE',
-    'AIT_ANALYZE',
-    'VA3LM_COMMAND_REVIEW',
-    'ZYRA_ACTION_GATE',
-  ],
-  CODE_PLAN: [
-    'XUNIA_SCOPE',
-    'VA3LM_PLAN',
-    'SONOXO_CODE_INTELLIGENCE',
-    'ZYRA_VALIDATE',
-  ],
-  ONTOLOGY_WORKFLOW: [
-    'XUNIA_OBJECTS',
-    'SONOXO_ONTOLOGY',
-    'VA3LM_FUNCTION_PLAN',
-    'ZYRA_ACTION_GATE',
-  ],
-  MEDIA_WORKFLOW: [
-    'ALMIGHTY_SONOXO_MEDIA',
-    'XUNIA_PROVENANCE',
-    'SONOXO_INDEX',
-    'ZYRA_WORKFLOW',
-  ],
-  QUANTUM_BLUEPRINT: [
-    'XUNIA_SCOPE',
-    'VA3LM_QUANTUM_PLAN',
-    'SONOXO_ONTOLOGY',
-    'ZYRA_VERIFY',
-  ],
-  CADENCE_FLOW: [
-    'XUNIA_CADENCE_INTENT',
-    'VA3LM_PLAN',
-    'ZYRA_TRANSACTION_GATE',
-    'XUNIA_VERIFY',
-  ],
-  UAP_AGENT_RUNTIME: [
-    'XUNIA_SCOPE',
-    'GPT_UAP_XO_PLAN',
-    'GPT_UAP_XO_BOUNDED_WORKERS',
-    'PROVENANCE_CHECK',
-    'ZYRA_ACTION_GATE',
-  ],
-  CI_VALIDATION: [
-    'XUNIA_SCOPE',
-    'ZYRA_CI',
-    'SONOXO_EVIDENCE',
-    'XUNIA_VERIFY',
-  ],
+  INTELLIGENCE_QUERY: ['XUNIA_INGEST', 'PROVENANCE_CHECK', 'SONOXO_ONTOLOGY', 'VA3LM_REASON', 'ZYRA_VERIFY'],
+  AIT_ONTOLOGY: ['AIT_INGEST', 'AIT_PROVENANCE_CHECK', 'AIT_NORMALIZE', 'AIT_CORRELATE', 'AIT_ANALYZE', 'VA3LM_COMMAND_REVIEW', 'ZYRA_ACTION_GATE'],
+  CRM: ['CRM_INGEST', 'AIT_NORMALIZE', 'CRM_RELATIONSHIP_GRAPH', 'VA3LM_ANALYZE', 'ZYRA_WORKFLOW', 'UAP_AGENT_TASKS'],
+  CODE_PLAN: ['XUNIA_SCOPE', 'VA3LM_PLAN', 'SONOXO_CODE_INTELLIGENCE', 'ZYRA_VALIDATE'],
+  ONTOLOGY_WORKFLOW: ['XUNIA_OBJECTS', 'SONOXO_ONTOLOGY', 'VA3LM_FUNCTION_PLAN', 'ZYRA_ACTION_GATE'],
+  MEDIA_WORKFLOW: ['ALMIGHTY_SONOXO_MEDIA', 'XUNIA_PROVENANCE', 'SONOXO_INDEX', 'ZYRA_WORKFLOW'],
+  QUANTUM_BLUEPRINT: ['XUNIA_SCOPE', 'VA3LM_QUANTUM_PLAN', 'SONOXO_ONTOLOGY', 'ZYRA_VERIFY'],
+  CADENCE_FLOW: ['XUNIA_CADENCE_INTENT', 'VA3LM_PLAN', 'ZYRA_TRANSACTION_GATE', 'XUNIA_VERIFY'],
+  UAP_AGENT_RUNTIME: ['XUNIA_SCOPE', 'GPT_UAP_XO_PLAN', 'GPT_UAP_XO_BOUNDED_WORKERS', 'PROVENANCE_CHECK', 'ZYRA_ACTION_GATE'],
+  CI_VALIDATION: ['XUNIA_SCOPE', 'ZYRA_CI', 'SONOXO_EVIDENCE', 'XUNIA_VERIFY'],
 };
 
 const uniqueTargets = (targets: readonly XuniaLayerId[]): XuniaLayerId[] =>
@@ -105,47 +57,24 @@ export const routeGlassOnion = (request: GlassOnionRequest): GlassOnionRoute => 
   const targets = uniqueTargets(request.targets);
 
   if (!request.objective.trim()) {
-    return {
-      codename: 'GLASS ONION',
-      decision: 'BLOCK',
-      humanApprovalRequired: true,
-      targets,
-      pipeline: PIPELINES[request.capability],
-      reasons: ['OBJECTIVE_REQUIRED'],
-    };
+    return { codename: 'GLASS ONION', decision: 'BLOCK', humanApprovalRequired: true, targets, pipeline: PIPELINES[request.capability], reasons: ['OBJECTIVE_REQUIRED'] };
   }
 
   const invalidTarget = targets.find((target) => !getXuniaLayer(target));
   if (invalidTarget || targets.length === 0) {
-    return {
-      codename: 'GLASS ONION',
-      decision: 'BLOCK',
-      humanApprovalRequired: true,
-      targets,
-      pipeline: PIPELINES[request.capability],
-      reasons: ['VALID_TARGET_REQUIRED'],
-    };
+    return { codename: 'GLASS ONION', decision: 'BLOCK', humanApprovalRequired: true, targets, pipeline: PIPELINES[request.capability], reasons: ['VALID_TARGET_REQUIRED'] };
   }
 
   if (request.movesFunds) reasons.push('AUTOMATIC_FUND_MOVEMENT_BLOCKED');
-  if (request.castsGovernanceVote)
-    reasons.push('AUTOMATIC_GOVERNANCE_VOTING_BLOCKED');
-  if (request.arbitraryRemoteShell)
-    reasons.push('ARBITRARY_REMOTE_SHELL_BLOCKED');
+  if (request.castsGovernanceVote) reasons.push('AUTOMATIC_GOVERNANCE_VOTING_BLOCKED');
+  if (request.arbitraryRemoteShell) reasons.push('ARBITRARY_REMOTE_SHELL_BLOCKED');
 
   if (reasons.length > 0) {
-    return {
-      codename: 'GLASS ONION',
-      decision: 'BLOCK',
-      humanApprovalRequired: true,
-      targets,
-      pipeline: PIPELINES[request.capability],
-      reasons,
-    };
+    return { codename: 'GLASS ONION', decision: 'BLOCK', humanApprovalRequired: true, targets, pipeline: PIPELINES[request.capability], reasons };
   }
 
   if (
-    (request.capability === 'INTELLIGENCE_QUERY' || request.capability === 'AIT_ONTOLOGY') &&
+    (request.capability === 'INTELLIGENCE_QUERY' || request.capability === 'AIT_ONTOLOGY' || request.capability === 'CRM') &&
     (!request.provenance || request.provenance.length === 0)
   ) {
     reasons.push('PROVENANCE_REQUIRED_FOR_INTELLIGENCE_PROMOTION');
@@ -171,6 +100,7 @@ export const GLASS_ONION_LAYER = {
   version: '2.2.0',
   command: '/glass',
   aitCommand: '/glass ait',
+  crmCommand: '/glass crm',
   uapCommand: '/glass uap',
   umbrella: 'XUNIA',
   layers: ['xunia', 'zyra', 'sonoxo', 'almighty-sonoxo', 'va3lm', 'gpt-uap-xo'] as readonly XuniaLayerId[],

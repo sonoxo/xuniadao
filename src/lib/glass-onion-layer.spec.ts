@@ -5,6 +5,7 @@ import { GLASS_ONION_LAYER, routeGlassOnion } from './glass-onion-layer';
 test('Glass Onion identity and six-layer membrane are locked', (t) => {
   t.is(GLASS_ONION_LAYER.codename, 'GLASS ONION');
   t.is(GLASS_ONION_LAYER.command, '/glass');
+  t.is(GLASS_ONION_LAYER.crmCommand, '/glass crm');
   t.is(GLASS_ONION_LAYER.uapCommand, '/glass uap');
   t.deepEqual(GLASS_ONION_LAYER.layers, [
     'xunia',
@@ -22,10 +23,32 @@ test('read-only routed work can use the fast path', (t) => {
     capability: 'ONTOLOGY_WORKFLOW',
     targets: ['xunia', 'sonoxo', 'va3lm', 'zyra'],
   });
-
   t.is(route.decision, 'ALLOW');
   t.false(route.humanApprovalRequired);
   t.true(route.pipeline.includes('SONOXO_ONTOLOGY'));
+});
+
+test('CRM routes through relationship graph and workflow agents', (t) => {
+  const route = routeGlassOnion({
+    objective: 'Analyze CRM pipeline and plan follow-ups',
+    capability: 'CRM',
+    targets: ['xunia', 'sonoxo', 'va3lm', 'zyra', 'gpt-uap-xo'],
+    provenance: ['source:crm'],
+  });
+  t.is(route.decision, 'ALLOW');
+  t.true(route.pipeline.includes('CRM_RELATIONSHIP_GRAPH'));
+  t.true(route.pipeline.includes('VA3LM_ANALYZE'));
+  t.true(route.pipeline.includes('UAP_AGENT_TASKS'));
+});
+
+test('CRM without provenance is held for review', (t) => {
+  const route = routeGlassOnion({
+    objective: 'Promote CRM intelligence',
+    capability: 'CRM',
+    targets: ['xunia', 'zyra'],
+  });
+  t.is(route.decision, 'REVIEW');
+  t.true(route.reasons.includes('PROVENANCE_REQUIRED_FOR_INTELLIGENCE_PROMOTION'));
 });
 
 test('GPT-UAP-XO routes bounded agent runtime work through Glass Onion', (t) => {
@@ -35,7 +58,6 @@ test('GPT-UAP-XO routes bounded agent runtime work through Glass Onion', (t) => 
     targets: ['xunia', 'gpt-uap-xo', 'zyra'],
     provenance: ['repo:sonoxo/gpt-uap-xo'],
   });
-
   t.is(route.decision, 'ALLOW');
   t.true(route.pipeline.includes('GPT_UAP_XO_PLAN'));
   t.true(route.pipeline.includes('GPT_UAP_XO_BOUNDED_WORKERS'));
@@ -49,7 +71,6 @@ test('AIT ontology routes through the dedicated intelligence pipeline', (t) => {
     targets: ['xunia', 'sonoxo', 'va3lm', 'zyra'],
     provenance: ['source:test'],
   });
-
   t.is(route.decision, 'ALLOW');
   t.true(route.pipeline.includes('AIT_PROVENANCE_CHECK'));
   t.true(route.pipeline.includes('AIT_CORRELATE'));
@@ -62,7 +83,6 @@ test('intelligence promotion without provenance is held for review', (t) => {
     capability: 'INTELLIGENCE_QUERY',
     targets: ['xunia', 'sonoxo'],
   });
-
   t.is(route.decision, 'REVIEW');
   t.true(route.reasons.includes('PROVENANCE_REQUIRED_FOR_INTELLIGENCE_PROMOTION'));
 });
@@ -73,7 +93,6 @@ test('AIT routing without provenance is held for review', (t) => {
     capability: 'AIT_ONTOLOGY',
     targets: ['xunia', 'sonoxo'],
   });
-
   t.is(route.decision, 'REVIEW');
   t.true(route.reasons.includes('PROVENANCE_REQUIRED_FOR_INTELLIGENCE_PROMOTION'));
 });
@@ -87,7 +106,6 @@ test('repository mutation, transaction signing and production deployment require
     signsTransaction: true,
     deploysProduction: true,
   });
-
   t.is(route.decision, 'REVIEW');
   t.true(route.humanApprovalRequired);
 });
@@ -101,7 +119,6 @@ test('automatic funds, governance votes and arbitrary remote shell are blocked',
     castsGovernanceVote: true,
     arbitraryRemoteShell: true,
   });
-
   t.is(route.decision, 'BLOCK');
   t.true(route.reasons.includes('AUTOMATIC_FUND_MOVEMENT_BLOCKED'));
   t.true(route.reasons.includes('AUTOMATIC_GOVERNANCE_VOTING_BLOCKED'));
