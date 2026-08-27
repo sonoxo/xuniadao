@@ -1,0 +1,102 @@
+name: CRM Certification Ontology Lock
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/lib/crm-certification.ts'
+      - 'src/lib/crm-certification.spec.ts'
+      - 'src/lib/crm.ts'
+      - 'ecosystem/crm.json'
+      - 'ecosystem/crm-certification.json'
+      - 'docs/CRM.md'
+      - 'docs/CRM_CERTIFICATION.md'
+      - 'src/lib/glass-onion-layer.ts'
+      - 'src/lib/glass-onion-layer.spec.ts'
+      - 'src/index.ts'
+      - '.github/workflows/crm-certification.yml'
+  pull_request:
+    paths:
+      - 'src/lib/crm-certification.ts'
+      - 'src/lib/crm-certification.spec.ts'
+      - 'src/lib/crm.ts'
+      - 'ecosystem/crm.json'
+      - 'ecosystem/crm-certification.json'
+      - 'docs/CRM.md'
+      - 'docs/CRM_CERTIFICATION.md'
+      - 'src/lib/glass-onion-layer.ts'
+      - 'src/lib/glass-onion-layer.spec.ts'
+      - 'src/index.ts'
+      - '.github/workflows/crm-certification.yml'
+
+jobs:
+  certification-lock:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: yarn
+      - name: Install
+        run: yarn install --frozen-lockfile
+      - name: Build
+        run: yarn build:main
+      - name: Unit tests
+        run: yarn test:unit
+      - name: Certification ontology lock
+        run: |
+          node <<'NODE'
+          const assert = require('assert');
+          const {
+            CRM_CERTIFICATION_ONTOLOGY,
+            CRM_CERTIFICATION_CONTROLS,
+            CRM_CERTIFICATION_EVIDENCE,
+            CRM_INTERNAL_ATTESTATION,
+            assessCertificationControls,
+            issueInternalCRMAttestation,
+          } = require('./dist/main/lib/crm-certification');
+          const { routeGlassOnion } = require('./dist/main/lib/glass-onion-layer');
+
+          assert.equal(CRM_CERTIFICATION_ONTOLOGY.command, '/glass certify crm');
+          assert.equal(CRM_CERTIFICATION_ONTOLOGY.architecture, 'PALANTIR_ONTOLOGY_ALIGNED');
+          assert.ok(CRM_CERTIFICATION_ONTOLOGY.objectTypes.includes('EVIDENCE'));
+          assert.ok(CRM_CERTIFICATION_ONTOLOGY.relationTypes.includes('SUPPORTED_BY'));
+          assert.ok(CRM_CERTIFICATION_ONTOLOGY.actionModel.includes('ISSUE_INTERNAL_ATTESTATION'));
+
+          const baseline = CRM_CERTIFICATION_CONTROLS.filter(x => x.framework === 'XUNIA_CRM_CONTROL_BASELINE');
+          const assessment = assessCertificationControls(baseline, CRM_CERTIFICATION_EVIDENCE);
+          assert.equal(assessment.result, 'PASS');
+          assert.equal(CRM_INTERNAL_ATTESTATION.status, 'INTERNAL_ATTESTED');
+          assert.equal(CRM_INTERNAL_ATTESTATION.externalCertificationStatus, 'NOT_ISSUED');
+          assert.equal(issueInternalCRMAttestation(baseline, CRM_CERTIFICATION_EVIDENCE, false).status, 'READINESS_ONLY');
+
+          const route = routeGlassOnion({
+            objective: 'CI CRM certification evidence assessment',
+            capability: 'CRM_CERTIFICATION',
+            targets: ['xunia', 'sonoxo', 'va3lm', 'zyra'],
+            provenance: ['repo:sonoxo/xuniadao', 'contract:ecosystem/crm-certification.json']
+          });
+          assert.equal(route.decision, 'ALLOW');
+          assert.ok(route.pipeline.includes('PALANTIR_ONTOLOGY_GRAPH'));
+          assert.ok(route.pipeline.includes('ATTESTATION_GATE'));
+          console.log('CRM CERTIFICATION ONTOLOGY LOCK: PASS');
+          NODE
+      - name: Machine attestation lock
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const assert = require('assert');
+          const cert = JSON.parse(fs.readFileSync('ecosystem/crm-certification.json', 'utf8'));
+          assert.equal(cert.id, 'GLASS-CRM-CERTIFICATION');
+          assert.equal(cert.status, 'INTERNAL_ATTESTED');
+          assert.equal(cert.architecture, 'PALANTIR_ONTOLOGY_ALIGNED');
+          assert.equal(cert.attestation.id, 'XUNIA-CRM-ICA-1');
+          assert.equal(cert.attestation.externalCertificationStatus, 'NOT_ISSUED');
+          assert.equal(cert.claims.internalControlAttestation, true);
+          assert.equal(cert.claims.thirdPartySOC2Certification, false);
+          assert.equal(cert.claims.thirdPartyHIPAACertification, false);
+          assert.equal(cert.claims.thirdPartyGDPRCertification, false);
+          console.log('CRM MACHINE ATTESTATION LOCK: PASS');
+          NODE
