@@ -143,7 +143,7 @@ export const createAITSeed = (): {
   readonly objects: readonly AITObject[];
   readonly relations: readonly AITRelation[];
 } => {
-  const objects: AITObject[] = [
+  const rawObjects: AITObject[] = [
     {
       id: 'ait:system:glass-onion',
       type: 'AIT_SYSTEM',
@@ -182,9 +182,10 @@ export const createAITSeed = (): {
       properties: { requiredForHighImpact: true, automaticFundMovement: false },
       provenance: ['repo:sonoxo/xuniadao'],
     },
-  ].map(validateAITObject);
+  ];
+  const objects = rawObjects.map(validateAITObject);
 
-  const relations: AITRelation[] = [
+  const rawRelations: AITRelation[] = [
     {
       from: 'ait:agent:va3lm',
       to: 'ait:workflow:intelligence-cycle',
@@ -203,7 +204,8 @@ export const createAITSeed = (): {
       type: 'ROUTES_TO',
       provenance: ['repo:sonoxo/xuniadao'],
     },
-  ].map((relation) => linkAITObjects(relation, objects));
+  ];
+  const relations = rawRelations.map((relation) => linkAITObjects(relation, objects));
 
   return { objects, relations };
 };
