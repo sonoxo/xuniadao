@@ -1,0 +1,37 @@
+{
+  "id": "GLASS-EXCHANGE-MARKET",
+  "version": "1.0.0",
+  "command": "/glass exchanges",
+  "status": "LIVE_READ_ONLY_DISCOVERY",
+  "exchanges": {
+    "COINBASE": {
+      "products": "https://api.exchange.coinbase.com/products",
+      "tickerTemplate": "https://api.exchange.coinbase.com/products/{product_id}/ticker",
+      "mode": "PUBLIC_READ_ONLY"
+    },
+    "KRAKEN": {
+      "pairs": "https://api.kraken.com/0/public/AssetPairs",
+      "tickerTemplate": "https://api.kraken.com/0/public/Ticker?pair={pair}",
+      "mode": "PUBLIC_READ_ONLY"
+    }
+  },
+  "capabilities": {
+    "liveProductDiscovery": true,
+    "liveTickerRead": true,
+    "listingStatusDetection": true,
+    "listingPacketValidation": true,
+    "orderPlacement": false,
+    "automaticExchangeSubmission": false
+  },
+  "listingState": {
+    "selfDeclaredListingAllowed": false,
+    "externalExchangeAcceptanceRequired": true,
+    "unverifiedTokensRemainUnlisted": true
+  },
+  "provenance": [
+    "https://docs.cdp.coinbase.com/api-reference/exchange-api/rest-api/products/get-all-known-trading-pairs",
+    "https://docs.cdp.coinbase.com/api-reference/exchange-api/rest-api/products/get-product-ticker",
+    "https://docs.kraken.com/api-reference/market-data/get-tradable-asset-pairs",
+    "https://docs.kraken.com/api-reference/market-data/get-ticker-information"
+  ]
+}
