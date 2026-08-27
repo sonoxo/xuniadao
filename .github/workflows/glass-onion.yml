@@ -1,0 +1,76 @@
+name: Glass Onion Ecosystem Gate
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/lib/ecosystem.ts'
+      - 'src/lib/ecosystem.spec.ts'
+      - 'src/lib/va3lm.ts'
+      - 'src/index.ts'
+      - 'ecosystem/**'
+      - 'scripts/glass-onion-bootstrap.sh'
+      - 'README.md'
+      - '.github/workflows/glass-onion.yml'
+  pull_request:
+    paths:
+      - 'src/lib/ecosystem.ts'
+      - 'src/lib/ecosystem.spec.ts'
+      - 'src/lib/va3lm.ts'
+      - 'src/index.ts'
+      - 'ecosystem/**'
+      - 'scripts/glass-onion-bootstrap.sh'
+      - 'README.md'
+      - '.github/workflows/glass-onion.yml'
+
+jobs:
+  glass-onion:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: yarn
+
+      - name: Install
+        run: yarn install --frozen-lockfile
+
+      - name: TypeScript build
+        run: yarn build:main
+
+      - name: Ecosystem lock
+        run: |
+          node <<'NODE'
+          const assert = require('assert');
+          const { GLASS_ONION, getXuniaLayer } = require('./dist/main/lib/ecosystem');
+          assert.equal(GLASS_ONION.codename, 'GLASS ONION');
+          assert.equal(GLASS_ONION.umbrella, 'XUNIA');
+          assert.deepEqual(GLASS_ONION.layers.map(x => x.id), [
+            'xunia', 'zyra', 'sonoxo', 'almighty-sonoxo', 'va3lm'
+          ]);
+          assert.equal(getXuniaLayer('va3lm').runtime, 'http://127.0.0.1:8088');
+          assert.equal(GLASS_ONION.rules.humanApprovalForMutation, true);
+          assert.equal(GLASS_ONION.rules.automaticFundMovement, false);
+          assert.equal(GLASS_ONION.rules.automaticGovernanceVoting, false);
+          assert.equal(GLASS_ONION.rules.arbitraryRemoteShell, false);
+          assert.equal(GLASS_ONION.rules.provenanceRequired, true);
+          console.log('GLASS ONION ECOSYSTEM LOCK: PASS');
+          NODE
+
+      - name: Manifest lock
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const assert = require('assert');
+          const manifest = JSON.parse(fs.readFileSync('ecosystem/glass-onion.json', 'utf8'));
+          assert.equal(manifest.codename, 'GLASS ONION');
+          assert.equal(manifest.layers.length, 5);
+          assert.equal(manifest.layers.find(x => x.id === 'va3lm').runtime, 'http://127.0.0.1:8088');
+          console.log('GLASS ONION MANIFEST: PASS');
+          NODE
+
+      - name: Bootstrap syntax
+        run: bash -n scripts/glass-onion-bootstrap.sh
