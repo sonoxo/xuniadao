@@ -7,8 +7,14 @@ on:
       - 'src/lib/ecosystem.ts'
       - 'src/lib/ecosystem.spec.ts'
       - 'src/lib/va3lm.ts'
+      - 'src/lib/super-agent.ts'
+      - 'src/lib/sagi.ts'
+      - 'src/lib/sagi.spec.ts'
+      - 'src/lib/quantum-ontology.ts'
       - 'src/index.ts'
+      - 'cadence/**'
       - 'ecosystem/**'
+      - 'docs/VA3LM-SAGI.md'
       - 'scripts/glass-onion-bootstrap.sh'
       - 'README.md'
       - '.github/workflows/glass-onion.yml'
@@ -17,8 +23,14 @@ on:
       - 'src/lib/ecosystem.ts'
       - 'src/lib/ecosystem.spec.ts'
       - 'src/lib/va3lm.ts'
+      - 'src/lib/super-agent.ts'
+      - 'src/lib/sagi.ts'
+      - 'src/lib/sagi.spec.ts'
+      - 'src/lib/quantum-ontology.ts'
       - 'src/index.ts'
+      - 'cadence/**'
       - 'ecosystem/**'
+      - 'docs/VA3LM-SAGI.md'
       - 'scripts/glass-onion-bootstrap.sh'
       - 'README.md'
       - '.github/workflows/glass-onion.yml'
@@ -41,6 +53,9 @@ jobs:
       - name: TypeScript build
         run: yarn build:main
 
+      - name: Unit tests
+        run: yarn test:unit
+
       - name: Ecosystem lock
         run: |
           node <<'NODE'
@@ -60,17 +75,55 @@ jobs:
           console.log('GLASS ONION ECOSYSTEM LOCK: PASS');
           NODE
 
+      - name: SAGI super-agent lock
+        run: |
+          node <<'NODE'
+          const assert = require('assert');
+          const { SAGI, evaluateSAGI } = require('./dist/main/lib/sagi');
+          const { SUPER_AGENT } = require('./dist/main/lib/super-agent');
+          const { buildQuantumOntologySpeedRun } = require('./dist/main/lib/quantum-ontology');
+          assert.equal(SAGI.command, '/VA3LM-SAGI');
+          assert.equal(SAGI.expandedName, 'SUPER ARTIFICIAL GUARDRAIL INTELLIGENCE');
+          assert.equal(SUPER_AGENT.runtime, 'http://127.0.0.1:8088');
+          assert.ok(SUPER_AGENT.capabilities.includes('CADENCE_FLOW'));
+          assert.ok(SUPER_AGENT.capabilities.includes('PALANTIR_ACTION_MODEL'));
+          assert.ok(SUPER_AGENT.capabilities.includes('IBM_QUANTUM_BLUEPRINT'));
+          assert.equal(evaluateSAGI({ capability: 'CODE_GENERATION' }).decision, 'ALLOW');
+          assert.equal(evaluateSAGI({ capability: 'CODE_GENERATION', mutatesRepository: true }).decision, 'REVIEW');
+          assert.equal(evaluateSAGI({ capability: 'CADENCE_FLOW', movesFunds: true }).decision, 'BLOCK');
+          const q = buildQuantumOntologySpeedRun({
+            id: 'ci',
+            primitive: 'SamplerV2',
+            objective: 'CI blueprint',
+            circuitRefs: ['circuit:ci']
+          });
+          assert.equal(q.actionState, 'REVIEW_REQUIRED');
+          assert.equal(q.objects[1].properties.primitive, 'SamplerV2');
+          console.log('VA3LM-SAGI SUPER AGENT LOCK: PASS');
+          NODE
+
       - name: Manifest lock
         run: |
           node <<'NODE'
           const fs = require('fs');
           const assert = require('assert');
           const manifest = JSON.parse(fs.readFileSync('ecosystem/glass-onion.json', 'utf8'));
+          const sagi = JSON.parse(fs.readFileSync('ecosystem/va3lm-sagi.json', 'utf8'));
           assert.equal(manifest.codename, 'GLASS ONION');
           assert.equal(manifest.layers.length, 5);
           assert.equal(manifest.layers.find(x => x.id === 'va3lm').runtime, 'http://127.0.0.1:8088');
-          console.log('GLASS ONION MANIFEST: PASS');
+          assert.equal(sagi.command, '/VA3LM-SAGI');
+          assert.deepEqual(sagi.stack.ibmQuantum.primitives, ['SamplerV2', 'EstimatorV2']);
+          assert.equal(sagi.commandGates.automaticFundMovement, 'BLOCKED');
+          console.log('GLASS ONION + SAGI MANIFEST: PASS');
           NODE
+
+      - name: Cadence lane lock
+        run: |
+          test -f cadence/contracts/XuniaIntent.cdc
+          grep -q 'contract XuniaIntent' cadence/contracts/XuniaIntent.cdc
+          grep -q 'IntentSubmitted' cadence/contracts/XuniaIntent.cdc
+          echo 'CADENCE / FLOW LANE: PASS'
 
       - name: Bootstrap syntax
         run: bash -n scripts/glass-onion-bootstrap.sh

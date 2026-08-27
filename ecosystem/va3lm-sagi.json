@@ -1,0 +1,48 @@
+{
+  "name": "VA3LM-SAGI",
+  "expandedName": "SUPER ARTIFICIAL GUARDRAIL INTELLIGENCE",
+  "command": "/VA3LM-SAGI",
+  "codename": "GLASS ONION",
+  "runtime": "http://127.0.0.1:8088",
+  "stack": {
+    "cadenceFlow": {
+      "language": "Cadence",
+      "extension": ".cdc",
+      "role": "typed Flow intent, contract and transaction blueprint lane"
+    },
+    "palantirSpeedRun": {
+      "role": "ontology objects, links, functions, workflows and reviewable actions",
+      "deploymentState": "ARCHITECTURE_BLUEPRINT"
+    },
+    "ibmQuantum": {
+      "role": "hybrid quantum-classical workload planning",
+      "primitives": ["SamplerV2", "EstimatorV2"],
+      "deploymentState": "WORKLOAD_BLUEPRINT"
+    },
+    "va3lm": {
+      "role": "coding, debugging, testing, explaining and planning",
+      "port": 8088
+    }
+  },
+  "fastPathCapabilities": [
+    "REPO_ANALYSIS",
+    "CODE_GENERATION",
+    "TEST_GENERATION",
+    "CADENCE_FLOW",
+    "ONTOLOGY_BUILD",
+    "WORKFLOW_PLANNING",
+    "PALANTIR_ACTION_MODEL",
+    "IBM_QUANTUM_BLUEPRINT",
+    "VA3LM_8088",
+    "CI_VALIDATION"
+  ],
+  "commandGates": {
+    "repositoryMutation": "HUMAN_REVIEW",
+    "flowTransactionSigning": "HUMAN_REVIEW",
+    "governanceVoting": "HUMAN_REVIEW",
+    "productionDeployment": "HUMAN_REVIEW",
+    "secretAccess": "HUMAN_REVIEW",
+    "automaticFundMovement": "BLOCKED",
+    "arbitraryRemoteShell": "BLOCKED"
+  }
+}
