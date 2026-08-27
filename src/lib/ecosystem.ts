@@ -3,7 +3,8 @@ export type XuniaLayerId =
   | 'zyra'
   | 'sonoxo'
   | 'almighty-sonoxo'
-  | 'va3lm';
+  | 'va3lm'
+  | 'gpt-uap-xo';
 
 export interface XuniaLayer {
   readonly id: XuniaLayerId;
@@ -11,6 +12,7 @@ export interface XuniaLayer {
   readonly role: string;
   readonly repository: string;
   readonly runtime?: string;
+  readonly visibility?: 'PUBLIC' | 'PRIVATE';
   readonly status: 'ACTIVE' | 'EMBEDDED';
 }
 
@@ -26,7 +28,7 @@ export interface TechnologyIntelligenceLayer {
 export const GLASS_ONION = {
   codename: 'GLASS ONION',
   umbrella: 'XUNIA',
-  version: '1.2.0',
+  version: '1.3.0',
   leadership: {
     role: 'Founder / Ecosystem Lead',
     credentialAreas: [
@@ -45,6 +47,7 @@ export const GLASS_ONION = {
       name: 'XUNIA / XuniaDAO',
       role: 'ecosystem registry, DAO metadata, integration and governance data layer',
       repository: 'https://github.com/sonoxo/xuniadao',
+      visibility: 'PUBLIC',
       status: 'ACTIVE',
     },
     {
@@ -52,6 +55,7 @@ export const GLASS_ONION = {
       name: 'ZYRA',
       role: 'agentic orchestration, workflows, command routing and bounded execution',
       repository: 'https://github.com/sonoxo/zyra',
+      visibility: 'PUBLIC',
       status: 'ACTIVE',
     },
     {
@@ -59,6 +63,7 @@ export const GLASS_ONION = {
       name: 'SONOXO / GPT-DOUG-LLM',
       role: 'local model brain, intelligence ontology, defensive automation and agent runtime',
       repository: 'https://github.com/sonoxo/gpt-doug-llm',
+      visibility: 'PUBLIC',
       status: 'ACTIVE',
     },
     {
@@ -66,6 +71,7 @@ export const GLASS_ONION = {
       name: 'AlmightySonoxo',
       role: 'creative, media and public-facing ecosystem layer',
       repository: 'https://github.com/sonoxo/AlmightySonoxo',
+      visibility: 'PUBLIC',
       status: 'ACTIVE',
     },
     {
@@ -74,7 +80,16 @@ export const GLASS_ONION = {
       role: 'Virginia Agentic Large Learning Language Model coding and programming command center',
       repository: 'https://github.com/sonoxo/gpt-doug-llm/tree/main/va3lm',
       runtime: 'http://127.0.0.1:8088',
+      visibility: 'PUBLIC',
       status: 'EMBEDDED',
+    },
+    {
+      id: 'gpt-uap-xo',
+      name: 'GPT-UAP-XO',
+      role: 'private terminal-first local agent runtime for chat, tools, memory, APIs and bounded parallel workers',
+      repository: 'https://github.com/sonoxo/gpt-uap-xo',
+      visibility: 'PRIVATE',
+      status: 'ACTIVE',
     },
   ] as readonly XuniaLayer[],
   technologyIntelligence: [

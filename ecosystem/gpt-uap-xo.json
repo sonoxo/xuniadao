@@ -1,0 +1,30 @@
+{
+  "id": "gpt-uap-xo",
+  "name": "GPT-UAP-XO",
+  "codename": "GLASS ONION",
+  "umbrella": "XUNIA",
+  "status": "BOUND",
+  "visibility": "PRIVATE",
+  "repository": "https://github.com/sonoxo/gpt-uap-xo",
+  "ref": "main",
+  "command": "/glass uap",
+  "runtimeClass": "LOCAL_AGENT_RUNTIME",
+  "capability": "UAP_AGENT_RUNTIME",
+  "entrypoints": ["uap-xo", "uap-xo-api", "uap-xo-swarm"],
+  "pipeline": [
+    "XUNIA_SCOPE",
+    "GPT_UAP_XO_PLAN",
+    "GPT_UAP_XO_BOUNDED_WORKERS",
+    "PROVENANCE_CHECK",
+    "ZYRA_ACTION_GATE"
+  ],
+  "boundaries": {
+    "configuredToolsOnly": true,
+    "boundedParallelWorkers": true,
+    "humanApprovalForMutation": true,
+    "automaticFundMovement": false,
+    "automaticGovernanceVoting": false,
+    "arbitraryRemoteShell": false,
+    "provenanceRequired": true
+  }
+}

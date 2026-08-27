@@ -1,7 +1,8 @@
 {
   "codename": "GLASS ONION",
-  "version": "2.0.0",
+  "version": "2.2.0",
   "command": "/glass",
+  "uapCommand": "/glass uap",
   "umbrella": "XUNIA",
   "purpose": "Cross-repository intelligence and orchestration membrane for the XUNIA ecosystem.",
   "layers": [
@@ -9,16 +10,26 @@
     "zyra",
     "sonoxo",
     "almighty-sonoxo",
-    "va3lm"
+    "va3lm",
+    "gpt-uap-xo"
   ],
   "capabilities": [
     "INTELLIGENCE_QUERY",
+    "AIT_ONTOLOGY",
     "CODE_PLAN",
     "ONTOLOGY_WORKFLOW",
     "MEDIA_WORKFLOW",
     "QUANTUM_BLUEPRINT",
     "CADENCE_FLOW",
+    "UAP_AGENT_RUNTIME",
     "CI_VALIDATION"
+  ],
+  "uapPipeline": [
+    "XUNIA_SCOPE",
+    "GPT_UAP_XO_PLAN",
+    "GPT_UAP_XO_BOUNDED_WORKERS",
+    "PROVENANCE_CHECK",
+    "ZYRA_ACTION_GATE"
   ],
   "pipeline": [
     "INGEST",
