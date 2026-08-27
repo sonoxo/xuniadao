@@ -1,62 +1,115 @@
 <div align="center">
 
-# 🧅 XUNIA // GLASS ONION
+# 🧅 XUNIA // XUNIAVERSE // GLASS ONION
 
-### Agentic ecosystem registry, ontology, CRM, compliance, licensing, live market discovery, and governed execution fabric
+### Main face, root ontology, defensive identity layer, CRM, compliance, licensing, market discovery, and governed execution fabric
 
-**XUNIA → ZYRA → SONOXO / GPT-DOUG-LLM → AlmightySonoxo → VA3LM → GPT-UAP-XO**
+**XuniaDAO is the root and front door of the XUNIAverse.**
 
-`GLASS ONION 2.5` · `CRM ACTIVE` · `BULK PORT ACTIVE` · `GDPR/HIPAA CONTROL MODEL` · `LICENSES VERIFIED` · `LIVE EXCHANGE READS` · `AIT BOUND` · `PROVENANCE REQUIRED`
+**XUNIA → GCPXUNIA → VIRGINIA → VA3LM → ZYRA → SONOXO / GPT-DOUG-LLM → AlmightySonoxo → GPT-UAP-XO**
+
+`GLASS ONION 2.6` · `XUNIAVERSE ROOT` · `AGENT IDENTITY` · `GCPXUNIA DEFENSE` · `VA3LM :8088` · `CRM ACTIVE` · `GDPR/HIPAA CONTROL MODEL` · `TECH PEER ONTOLOGY` · `PROVENANCE REQUIRED`
 
 </div>
 
-## What this is
+## XUNIAverse root
 
-GLASS ONION is XUNIA's cross-repository routing and evidence membrane. It connects six software layers while preserving repository boundaries, provenance, licensing, and human review for consequential mutations.
+Command: **`/glass xuniaverse`**
+
+`sonoxo/xuniadao` is the canonical registry and ontology root for the 53 Sonoxo repositories currently indexed in the XUNIAverse machine graph.
+
+```text
+XUNIA / XuniaDAO
+  ├─ Core runtimes and products
+  ├─ XUNIA extensions
+  ├─ Defensive systems
+  ├─ Product applications
+  └─ Reference/upstream repositories
+```
+
+Every indexed repository keeps its own license, history, ownership, and upstream attribution. XUNIAverse membership does not rewrite an upstream project's ownership or imply vendor affiliation.
+
+Registry: [`ecosystem/xuniaverse.json`](ecosystem/xuniaverse.json)
+
+## Architecture
 
 | Layer | Mission | Source |
 |---|---|---|
-| **XUNIA / XuniaDAO** | registry, ontology, CRM, compliance, licensing, token metadata | [`sonoxo/xuniadao`](https://github.com/sonoxo/xuniadao) |
+| **XUNIA / XuniaDAO** | XUNIAverse root, registry, ontology, governance, CRM, compliance, licensing | [`sonoxo/xuniadao`](https://github.com/sonoxo/xuniadao) |
+| **GCPXUNIA** | agent identity, auth brokering, cloud-defense policy model | [`docs/GCPXUNIA_DEFENSE.md`](docs/GCPXUNIA_DEFENSE.md) |
+| **VIRGINIA** | policy boundary between identity/auth and agent execution | [`ecosystem/gcpxunia-defense.json`](ecosystem/gcpxunia-defense.json) |
+| **VA3LM** | coding/reasoning runtime and defensive command center | [`gpt-doug-llm/va3lm`](https://github.com/sonoxo/gpt-doug-llm/tree/main/va3lm) · `127.0.0.1:8088` |
 | **ZYRA** | workflows, routing, approvals, bounded execution | [`sonoxo/zyra`](https://github.com/sonoxo/zyra) |
 | **SONOXO / GPT-DOUG-LLM** | model brain, ontology, defensive automation | [`sonoxo/gpt-doug-llm`](https://github.com/sonoxo/gpt-doug-llm) |
-| **AlmightySonoxo** | creative, media, public-facing layer | [`sonoxo/AlmightySonoxo`](https://github.com/sonoxo/AlmightySonoxo) |
-| **VA3LM** | coding/programming command center | [`gpt-doug-llm/va3lm`](https://github.com/sonoxo/gpt-doug-llm/tree/main/va3lm) · `127.0.0.1:8088` |
+| **AlmightySonoxo** | creative/media layer | [`sonoxo/AlmightySonoxo`](https://github.com/sonoxo/AlmightySonoxo) |
 | **GPT-UAP-XO** | bounded local agent runtime | [`sonoxo/gpt-uap-xo`](https://github.com/sonoxo/gpt-uap-xo) |
 
 ```mermaid
 flowchart TD
-    X[XUNIA / XuniaDAO]
-    Z[ZYRA]
-    S[SONOXO / GPT-DOUG-LLM]
-    A[AlmightySonoxo]
-    V[VA3LM :8088]
-    U[GPT-UAP-XO]
-    C[CRM]
-    P[Bulk Port]
-    G[GDPR + HIPAA Controls]
-    E[Production Evidence]
-    L[License Registry]
-    M[Live Exchange Discovery]
-    H[Human Review]
+    X[XUNIA / XuniaDAO\nXUNIAverse Root]
+    I[Agent Identity\nSPIFFE + Attestation]
+    G[GCPXUNIA\nAuth Broker]
+    V[VIRGINIA\nPolicy Boundary]
+    A[VA3LM :8088\nReason + Plan]
+    R[Runtime Guardrails]
+    Z[ZYRA\nAction Gate]
+    E[Audit Evidence]
+    P[Technology Peer Graph]
+    C[CRM + Compliance]
 
-    X --> Z
-    X --> S
-    X --> A
-    X --> V
-    X --> U
+    X --> I --> G --> V --> A --> R --> Z --> E
+    X --> P
     X --> C
-    C --> P
-    C --> G
-    G --> E
-    X --> L
-    X --> M
-    S --> V
-    V --> Z
-    U --> Z
-    H --> P
-    H --> E
-    H --> Z
+    C --> Z
 ```
+
+## GCPXUNIA / VIRGINIA / VA3LM defense
+
+Command: **`/glass defense`**  
+Identity route: **`/glass identity`**
+
+```text
+XUNIA_SCOPE
+  → AGENT_IDENTITY_VERIFY
+  → GCPXUNIA_AUTH_BROKER
+  → VIRGINIA_POLICY_BOUNDARY
+  → VA3LM_REASON_AND_PLAN
+  → RUNTIME_GUARDRAIL
+  → ZYRA_ACTION_GATE
+  → AUDIT_EVIDENCE
+```
+
+The defensive model treats governed agents as first-class principals. It prefers SPIFFE-style agent identities, short-lived credentials, DPoP/mTLS token binding, least-privilege scopes, centralized auth brokering, separate user-delegated authority, explicit review for broad grants, runtime guardrails, and evidence logging. Shared or long-lived agent credentials are blocked by policy.
+
+Docs: [`docs/GCPXUNIA_DEFENSE.md`](docs/GCPXUNIA_DEFENSE.md) · Contract: [`ecosystem/gcpxunia-defense.json`](ecosystem/gcpxunia-defense.json)
+
+## Technology peer ontology
+
+Command: **`/glass peers`**
+
+XUNIA maintains an evidence-backed graph of credible technical peer/reference domains. Current references include Google Cloud Security Community, Google Security Operations, Google Threat Intelligence, Security Command Center, Security Validation, Cloud Security Foundation, and Palantir Ontology.
+
+```text
+TECH_PEER → SECURITY_DOMAIN → SOURCE → CREDENTIAL_EVIDENCE → ASSESSMENT
+```
+
+Peer-review/reviewer credentials are represented as evidence objects. Public credential or affiliation claims require evidence; community participation is not automatically promoted to vendor endorsement.
+
+Docs: [`docs/TECH_PEERS.md`](docs/TECH_PEERS.md) · Contract: [`ecosystem/tech-peers.json`](ecosystem/tech-peers.json)
+
+## Governance ontology
+
+Command: **`/glass ontology governance`**
+
+Architecture:
+
+```text
+OBJECT → PROPERTY → LINK → ACTION → EVIDENCE → DECISION
+```
+
+The ontology now spans repositories, licenses, tokens, exchanges, compliance requirements, agent identities, auth providers, access policies, runtimes, guardrails, security events, technology peers, security domains, XUNIAverse nodes, evidence, assessments, and attestations.
+
+Contract: [`ecosystem/governance-ontology.json`](ecosystem/governance-ontology.json)
 
 ## CRM
 
@@ -78,7 +131,7 @@ Docs: [`docs/CRM.md`](docs/CRM.md) · Contract: [`ecosystem/crm.json`](ecosystem
 
 Command: **`/glass crm port`**
 
-Supports **bulk read, bulk write, export, import, and migration** for `CSV`, `JSON`, `NDJSON`, and `ZIP_BUNDLE`, with schema mapping, dedupe, consent/provenance gates, dry-run, human approval, idempotent upsert, batching, audit, redaction, and rollback manifests.
+Supports bulk read, bulk write, export, import, and migration for `CSV`, `JSON`, `NDJSON`, and `ZIP_BUNDLE`, with schema mapping, dedupe, consent/provenance gates, dry-run, human approval, idempotent upsert, batching, audit, redaction, and rollback manifests.
 
 Docs: [`docs/CRM_PORT.md`](docs/CRM_PORT.md) · Contract: [`ecosystem/crm-port.json`](ecosystem/crm-port.json)
 
@@ -86,11 +139,7 @@ Docs: [`docs/CRM_PORT.md`](docs/CRM_PORT.md) · Contract: [`ecosystem/crm-port.j
 
 Command: **`/glass certify crm`**
 
-The repository implements the GDPR/HIPAA **software and policy control model** and keeps regulator/government certification claims false unless external evidence exists.
-
-GDPR coverage includes principles, transparency, lawful basis, Article 9, data-subject rights, privacy by design, processor contracts, RoPA, security, breach response, DPIA/prior consultation, DPO governance, international transfers, and automated-decision safeguards.
-
-HIPAA coverage includes scope determination, Privacy Rule controls, administrative/physical/technical safeguards, ePHI risk analysis and management, workforce security, contingency/disaster recovery, audit/integrity/authentication/transmission safeguards, BAAs/subcontractor flow-down, breach notification, periodic evaluation, and documentation retention.
+The repository implements the GDPR/HIPAA software and policy control model and keeps regulator/government certification claims false unless external operational evidence exists.
 
 Docs: [`docs/GDPR_HIPAA.md`](docs/GDPR_HIPAA.md) · Contract: [`ecosystem/gdpr-hipaa.json`](ecosystem/gdpr-hipaa.json)
 
@@ -98,17 +147,13 @@ Docs: [`docs/GDPR_HIPAA.md`](docs/GDPR_HIPAA.md) · Contract: [`ecosystem/gdpr-h
 
 Command: **`/glass evidence`**
 
-The evidence registry tracks real operational artifacts separately from source code and CI. It models GDPR RoPA/lawful-basis/notices/DPIA/transfers/processors/DSR/breach evidence and HIPAA scope/ePHI inventory/risk/access/audit/integrity/physical/contingency/training/BAA/breach/evaluation evidence.
-
-Assessment states are `COMPLETE`, `PARTIAL`, or `MISSING`; code readiness is never automatically promoted to production compliance.
+The evidence registry tracks real operational artifacts separately from source code and CI. Assessment states are `COMPLETE`, `PARTIAL`, or `MISSING`; code readiness is never automatically promoted to production compliance.
 
 Docs: [`docs/COMPLIANCE_EVIDENCE.md`](docs/COMPLIANCE_EVIDENCE.md) · Contract: [`ecosystem/compliance-evidence.json`](ecosystem/compliance-evidence.json)
 
 ## Verified license registry
 
 Command: **`/glass licenses`**
-
-Current repository licenses:
 
 | Repository | License |
 |---|---|
@@ -124,9 +169,7 @@ Docs: [`docs/LICENSES.md`](docs/LICENSES.md) · Contract: [`ecosystem/licenses.j
 
 Command: **`/glass exchanges`**
 
-GLASS ONION provides read-only adapters for Coinbase Exchange and Kraken public market-data APIs. It can discover live products/pairs, read tickers, and derive `LISTED_ACTIVE`, `LISTED_RESTRICTED`, `NOT_LISTED`, or `UNKNOWN` from exchange responses.
-
-A registry entry or listing packet **does not make a token exchange-listed**. A listed claim requires the external exchange to expose/accept the market. The layer does not place orders, move funds, store exchange credentials, or automatically submit listings.
+GLASS ONION provides read-only adapters for Coinbase Exchange and Kraken public market-data APIs. It does not place orders, move funds, store exchange credentials, or self-declare exchange listings.
 
 Docs: [`docs/EXCHANGES.md`](docs/EXCHANGES.md) · Contract: [`ecosystem/exchange-market.json`](ecosystem/exchange-market.json)
 
@@ -146,29 +189,36 @@ Command: **`/glass uap`**
 XUNIA_SCOPE → GPT_UAP_XO_PLAN → GPT_UAP_XO_BOUNDED_WORKERS → PROVENANCE_CHECK → ZYRA_ACTION_GATE
 ```
 
-GPT-UAP-XO is now explicitly licensed under Apache-2.0 and its package metadata is CI-locked.
-
 ## Command surface
 
 | Command | Purpose |
 |---|---|
 | `/glass` | GLASS ONION router |
+| `/glass xuniaverse` | XUNIAverse repository/root registry |
+| `/glass identity` | agent identity and auth-broker security |
+| `/glass defense` | GCPXUNIA/VIRGINIA/VA3LM defensive pipeline |
+| `/glass peers` | technology peer/source ontology |
+| `/glass ontology governance` | unified governance ontology |
 | `/glass ait` | AIT ontology/intelligence |
 | `/glass crm` | CRM relationship/pipeline layer |
-| `/glass crm port` | Bulk CRM read/write/migration |
+| `/glass crm port` | bulk CRM read/write/migration |
 | `/glass certify crm` | CRM controls and internal attestation |
 | `/glass evidence` | GDPR/HIPAA production evidence tracking |
-| `/glass licenses` | Verified repository license registry |
-| `/glass exchanges` | Live read-only exchange listing/ticker discovery |
+| `/glass licenses` | verified repository license registry |
+| `/glass exchanges` | live read-only exchange listing/ticker discovery |
 | `/glass uap` | GPT-UAP-XO bounded-agent route |
 | `/VA3LM-SAGI` | VA3LM guardrail intelligence surface |
 
 ## Guardrails
 
 ```text
+XuniaDAO is XUNIAverse root                 YES
+Agent identity before brokered auth         YES
+Short-lived agent credentials               YES
+Shared/long-lived agent credentials         NO
+Broad agent grants without review           NO
 Provenance required                          YES
 Human review for consequential mutation      YES
-Bulk CRM write approval                      YES
 External exchange listing self-declaration   NO
 Exchange order placement                     NO
 Code => production compliance inference      NO
@@ -176,12 +226,6 @@ Automatic fund movement                      NO
 Automatic governance voting                  NO
 Arbitrary remote shell                       NO
 ```
-
-## Package identity and upstream provenance
-
-The npm package metadata now identifies this repository as **`xunia-glass-onion`**, points repository/homepage/bugs to `sonoxo/xuniadao`, uses SPDX `Apache-2.0`, and records the FlowFans token registry as upstream provenance.
-
-> The Flow native token-registry code/data originated from the FlowFans community project. XUNIA preserves that provenance and attribution. Token metadata does not itself establish authenticity, safety, value, endorsement, or exchange listing.
 
 ## Development
 
@@ -191,15 +235,17 @@ yarn build:main
 yarn test:unit
 ```
 
-GitHub Actions lock the ecosystem, AIT, CRM, CRM bulk port, certification, GDPR/HIPAA controls, licenses, exchange adapters, production-evidence model, and command routing.
+GitHub Actions lock the XUNIAverse root registry, GCPXUNIA defense model, agent identity rules, technology peer ontology, ecosystem governance, CRM, compliance, licensing, exchange discovery, and evidence contracts.
 
-## Technology alignment boundary
+## Source and affiliation boundary
 
-Palantir-style ontology alignment means object/property/link/action modeling used in this codebase; it does not claim Palantir sponsorship, endorsement, partnership, or a live Foundry deployment. Likewise, GDPR/HIPAA software controls do not create regulator-issued certification, and exchange adapters do not create exchange listings.
+The agent-identity/auth model is derived from public Google Cloud IAM and Google Cloud Security Community guidance. Palantir-style ontology alignment means object/property/link/action/function/governance modeling based on public Palantir documentation. These references do not claim Google or Palantir sponsorship, endorsement, partnership, or a live vendor deployment.
+
+The Flow native token-registry code/data originated from the FlowFans community project. XUNIA preserves that provenance and attribution.
 
 <div align="center">
 
-### 🧅 GLASS ONION
-**Six connected layers. CRM, compliance, licensing, live market verification, and evidence graphs. Human command at the boundary.**
+### 🧅 XUNIAverse
+**XuniaDAO at the root. Identity first. Evidence everywhere. Human command at the boundary.**
 
 </div>
