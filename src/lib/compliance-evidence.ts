@@ -1,9 +1,9 @@
-export type ComplianceFramework = 'GDPR' | 'HIPAA';
+export type EvidenceFramework = 'GDPR' | 'HIPAA';
 export type EvidenceStatus = 'PRESENT' | 'MISSING' | 'EXPIRED' | 'NOT_APPLICABLE';
 
 export interface ComplianceEvidenceRequirement {
   readonly id: string;
-  readonly framework: ComplianceFramework;
+  readonly framework: EvidenceFramework;
   readonly title: string;
   readonly description: string;
   readonly requiredWhen: string;
@@ -68,7 +68,7 @@ export const validateComplianceEvidenceArtifact = (artifact: ComplianceEvidenceA
 };
 
 export const assessComplianceEvidence = (
-  framework: ComplianceFramework,
+  framework: EvidenceFramework,
   artifacts: readonly ComplianceEvidenceArtifact[],
   applicableRequirementIds?: readonly string[],
 ): ComplianceEvidenceAssessment => {
@@ -105,7 +105,7 @@ export const COMPLIANCE_EVIDENCE = {
   version: '1.0.0',
   command: '/glass evidence',
   status: 'COLLECTION_FRAMEWORK_ACTIVE',
-  frameworks: ['GDPR', 'HIPAA'] as readonly ComplianceFramework[],
+  frameworks: ['GDPR', 'HIPAA'] as readonly EvidenceFramework[],
   controls: {
     provenanceRequired: true,
     sourceRequired: true,
