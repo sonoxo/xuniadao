@@ -1,19 +1,5 @@
-export type CertificationObjectType =
-  | 'SYSTEM'
-  | 'CONTROL'
-  | 'EVIDENCE'
-  | 'ASSESSMENT'
-  | 'RISK'
-  | 'ATTESTATION';
-
-export type CertificationRelationType =
-  | 'GOVERNS'
-  | 'SUPPORTED_BY'
-  | 'SATISFIES'
-  | 'BLOCKED_BY'
-  | 'APPLIES_TO'
-  | 'DERIVED_FROM';
-
+export type CertificationObjectType = 'SYSTEM' | 'CONTROL' | 'EVIDENCE' | 'ASSESSMENT' | 'RISK' | 'ATTESTATION';
+export type CertificationRelationType = 'GOVERNS' | 'SUPPORTED_BY' | 'SATISFIES' | 'BLOCKED_BY' | 'APPLIES_TO' | 'DERIVED_FROM';
 export type ControlStatus = 'PASS' | 'FAIL' | 'PENDING' | 'NOT_APPLICABLE';
 export type AssessmentResult = 'PASS' | 'CONDITIONAL' | 'FAIL';
 export type AttestationStatus = 'INTERNAL_ATTESTED' | 'READINESS_ONLY' | 'BLOCKED';
@@ -90,7 +76,6 @@ export const assessCertificationControls = (
       continue;
     }
     if (control.status === 'NOT_APPLICABLE') continue;
-
     const evidenceSatisfied = control.evidenceIds.length > 0 && control.evidenceIds.every((id) => verified.has(id));
     if (control.status === 'PASS' && evidenceSatisfied) passed.push(control.id);
     else if (control.required) pending.push(control.id);
@@ -111,15 +96,9 @@ export const issueInternalCRMAttestation = (
 ): InternalAttestation => {
   const baseline = controls.filter((control) => control.framework === 'XUNIA_CRM_CONTROL_BASELINE');
   const assessment = assessCertificationControls(baseline, evidence);
-
   return {
     id: 'XUNIA-CRM-ICA-1',
-    status:
-      assessment.result === 'FAIL'
-        ? 'BLOCKED'
-        : assessment.result === 'PASS' && humanApproved
-          ? 'INTERNAL_ATTESTED'
-          : 'READINESS_ONLY',
+    status: assessment.result === 'FAIL' ? 'BLOCKED' : assessment.result === 'PASS' && humanApproved ? 'INTERNAL_ATTESTED' : 'READINESS_ONLY',
     scope: 'Code-level GLASS ONION CRM control baseline',
     issuer: 'XUNIA / GLASS ONION INTERNAL CONTROL PROGRAM',
     humanApproved,
@@ -129,134 +108,64 @@ export const issueInternalCRMAttestation = (
 };
 
 export const CRM_CERTIFICATION_EVIDENCE: readonly CertificationEvidence[] = [
-  {
-    id: 'evidence:crm-source',
-    source: 'src/lib/crm.ts',
-    status: 'VERIFIED',
-    provenance: ['repo:sonoxo/xuniadao', 'path:src/lib/crm.ts'],
-  },
-  {
-    id: 'evidence:crm-contract',
-    source: 'ecosystem/crm.json',
-    status: 'VERIFIED',
-    provenance: ['repo:sonoxo/xuniadao', 'path:ecosystem/crm.json'],
-  },
-  {
-    id: 'evidence:crm-ci',
-    source: '.github/workflows/crm.yml',
-    status: 'VERIFIED',
-    provenance: ['repo:sonoxo/xuniadao', 'path:.github/workflows/crm.yml'],
-  },
+  { id: 'evidence:crm-source', source: 'src/lib/crm.ts', status: 'VERIFIED', provenance: ['repo:sonoxo/xuniadao', 'path:src/lib/crm.ts'] },
+  { id: 'evidence:crm-contract', source: 'ecosystem/crm.json', status: 'VERIFIED', provenance: ['repo:sonoxo/xuniadao', 'path:ecosystem/crm.json'] },
+  { id: 'evidence:crm-ci', source: '.github/workflows/crm.yml', status: 'VERIFIED', provenance: ['repo:sonoxo/xuniadao', 'path:.github/workflows/crm.yml'] },
+  { id: 'evidence:compliance-source', source: 'src/lib/crm-compliance.ts', status: 'VERIFIED', provenance: ['repo:sonoxo/xuniadao', 'path:src/lib/crm-compliance.ts'] },
+  { id: 'evidence:compliance-contract', source: 'ecosystem/crm-compliance.json', status: 'VERIFIED', provenance: ['repo:sonoxo/xuniadao', 'path:ecosystem/crm-compliance.json'] },
+  { id: 'evidence:readiness-guide', source: 'docs/CRM_COMPLIANCE_READINESS.md', status: 'VERIFIED', provenance: ['repo:sonoxo/xuniadao', 'path:docs/CRM_COMPLIANCE_READINESS.md'] },
 ] as const;
+
+const BASELINE_EVIDENCE = ['evidence:crm-source', 'evidence:crm-contract'] as const;
+const READINESS_EVIDENCE = ['evidence:compliance-source', 'evidence:compliance-contract', 'evidence:readiness-guide'] as const;
 
 export const CRM_CERTIFICATION_CONTROLS: readonly CertificationControl[] = [
-  {
-    id: 'crm.baseline.provenance',
-    framework: 'XUNIA_CRM_CONTROL_BASELINE',
-    title: 'CRM records require provenance',
-    required: true,
-    status: 'PASS',
-    evidenceIds: ['evidence:crm-source', 'evidence:crm-contract'],
-  },
-  {
-    id: 'crm.baseline.mutation-review',
-    framework: 'XUNIA_CRM_CONTROL_BASELINE',
-    title: 'CRM mutation requires human review',
-    required: true,
-    status: 'PASS',
-    evidenceIds: ['evidence:crm-source', 'evidence:crm-contract'],
-  },
-  {
-    id: 'crm.baseline.external-communication-review',
-    framework: 'XUNIA_CRM_CONTROL_BASELINE',
-    title: 'External CRM communication requires human review',
-    required: true,
-    status: 'PASS',
-    evidenceIds: ['evidence:crm-source', 'evidence:crm-contract'],
-  },
-  {
-    id: 'crm.baseline.bulk-outreach-review',
-    framework: 'XUNIA_CRM_CONTROL_BASELINE',
-    title: 'Bulk outreach requires human review',
-    required: true,
-    status: 'PASS',
-    evidenceIds: ['evidence:crm-source', 'evidence:crm-contract'],
-  },
-  {
-    id: 'crm.baseline.ci-lock',
-    framework: 'XUNIA_CRM_CONTROL_BASELINE',
-    title: 'CRM contract is CI locked',
-    required: true,
-    status: 'PASS',
-    evidenceIds: ['evidence:crm-ci'],
-  },
-  {
-    id: 'crm.privacy.consent-ledger',
-    framework: 'GDPR_READINESS',
-    title: 'Consent and lawful-basis ledger',
-    required: true,
-    status: 'PENDING',
-    evidenceIds: [],
-  },
-  {
-    id: 'crm.privacy.deletion-workflow',
-    framework: 'CCPA_READINESS',
-    title: 'Deletion and data-subject request workflow',
-    required: true,
-    status: 'PENDING',
-    evidenceIds: [],
-  },
-  {
-    id: 'crm.security.rbac',
-    framework: 'SOC2_READINESS',
-    title: 'Role-based access control evidence',
-    required: true,
-    status: 'PENDING',
-    evidenceIds: [],
-  },
-  {
-    id: 'crm.security.audit-log',
-    framework: 'SOC2_READINESS',
-    title: 'Immutable CRM audit log evidence',
-    required: true,
-    status: 'PENDING',
-    evidenceIds: [],
-  },
-  {
-    id: 'crm.health.phi-scope',
-    framework: 'HIPAA_CONDITIONAL',
-    title: 'PHI scope and safeguards if healthcare data is processed',
-    required: false,
-    status: 'PENDING',
-    evidenceIds: [],
-  },
-  {
-    id: 'crm.messaging.unsubscribe',
-    framework: 'CAN_SPAM_READINESS',
-    title: 'Commercial email consent and unsubscribe controls',
-    required: true,
-    status: 'PENDING',
-    evidenceIds: [],
-  },
-  {
-    id: 'crm.messaging.telephone-consent',
-    framework: 'TCPA_READINESS',
-    title: 'Telephone/text consent evidence',
-    required: true,
-    status: 'PENDING',
-    evidenceIds: [],
-  },
+  { id: 'crm.baseline.provenance', framework: 'XUNIA_CRM_CONTROL_BASELINE', title: 'CRM records require provenance', required: true, status: 'PASS', evidenceIds: BASELINE_EVIDENCE },
+  { id: 'crm.baseline.mutation-review', framework: 'XUNIA_CRM_CONTROL_BASELINE', title: 'CRM mutation requires human review', required: true, status: 'PASS', evidenceIds: BASELINE_EVIDENCE },
+  { id: 'crm.baseline.external-communication-review', framework: 'XUNIA_CRM_CONTROL_BASELINE', title: 'External CRM communication requires human review', required: true, status: 'PASS', evidenceIds: BASELINE_EVIDENCE },
+  { id: 'crm.baseline.bulk-outreach-review', framework: 'XUNIA_CRM_CONTROL_BASELINE', title: 'Bulk outreach requires human review', required: true, status: 'PASS', evidenceIds: BASELINE_EVIDENCE },
+  { id: 'crm.baseline.ci-lock', framework: 'XUNIA_CRM_CONTROL_BASELINE', title: 'CRM contract is CI locked', required: true, status: 'PASS', evidenceIds: ['evidence:crm-ci'] },
+
+  { id: 'crm.privacy.consent-ledger', framework: 'GDPR_READINESS', title: 'Consent and lawful-basis ledger', required: true, status: 'PASS', evidenceIds: READINESS_EVIDENCE },
+  { id: 'crm.privacy.rights-workflow', framework: 'GDPR_READINESS', title: 'Access, correction, deletion and portability workflow', required: true, status: 'PASS', evidenceIds: READINESS_EVIDENCE },
+  { id: 'crm.privacy.retention', framework: 'GDPR_READINESS', title: 'Purpose, minimization and retention controls', required: true, status: 'PASS', evidenceIds: READINESS_EVIDENCE },
+
+  { id: 'crm.privacy.deletion-workflow', framework: 'CCPA_READINESS', title: 'Deletion and consumer request workflow', required: true, status: 'PASS', evidenceIds: READINESS_EVIDENCE },
+  { id: 'crm.privacy.correct-optout-limit', framework: 'CCPA_READINESS', title: 'Correction, opt-out and sensitive-data limit workflow', required: true, status: 'PASS', evidenceIds: READINESS_EVIDENCE },
+
+  { id: 'crm.security.rbac', framework: 'SOC2_READINESS', title: 'Role-based access control evidence', required: true, status: 'PASS', evidenceIds: READINESS_EVIDENCE },
+  { id: 'crm.security.audit-log', framework: 'SOC2_READINESS', title: 'Ordered provenance-bearing CRM audit chain', required: true, status: 'PASS', evidenceIds: READINESS_EVIDENCE },
+  { id: 'crm.security.encryption', framework: 'SOC2_READINESS', title: 'Encryption-at-rest and in-transit deployment requirement', required: true, status: 'PASS', evidenceIds: READINESS_EVIDENCE },
+  { id: 'crm.security.incident-vendor-risk', framework: 'SOC2_READINESS', title: 'Incident and vendor risk workflow', required: true, status: 'PASS', evidenceIds: READINESS_EVIDENCE },
+
+  { id: 'crm.health.phi-scope', framework: 'HIPAA_CONDITIONAL', title: 'Conditional PHI scope and safeguard baseline', required: false, status: 'PASS', evidenceIds: READINESS_EVIDENCE },
+  { id: 'crm.health.minimum-necessary-audit-auth', framework: 'HIPAA_CONDITIONAL', title: 'Minimum necessary access, audit, authentication and transmission requirements', required: false, status: 'PASS', evidenceIds: READINESS_EVIDENCE },
+  { id: 'crm.health.vendor-media-docs', framework: 'HIPAA_CONDITIONAL', title: 'BAA tracking, device/media policy and documentation retention requirements', required: false, status: 'PASS', evidenceIds: READINESS_EVIDENCE },
+
+  { id: 'crm.messaging.unsubscribe', framework: 'CAN_SPAM_READINESS', title: 'Commercial email unsubscribe and suppression controls', required: true, status: 'PASS', evidenceIds: READINESS_EVIDENCE },
+  { id: 'crm.messaging.email-integrity', framework: 'CAN_SPAM_READINESS', title: 'Sender, subject, address and disclosure release requirements', required: true, status: 'PASS', evidenceIds: READINESS_EVIDENCE },
+
+  { id: 'crm.messaging.telephone-consent', framework: 'TCPA_READINESS', title: 'Telephone/text consent evidence', required: true, status: 'PASS', evidenceIds: READINESS_EVIDENCE },
+  { id: 'crm.messaging.revocation', framework: 'TCPA_READINESS', title: 'Consent revocation and suppression workflow', required: true, status: 'PASS', evidenceIds: READINESS_EVIDENCE },
 ] as const;
 
-export const CRM_INTERNAL_ATTESTATION = issueInternalCRMAttestation(
-  CRM_CERTIFICATION_CONTROLS,
-  CRM_CERTIFICATION_EVIDENCE,
-  true,
-);
+export const CRM_INTERNAL_ATTESTATION = issueInternalCRMAttestation(CRM_CERTIFICATION_CONTROLS, CRM_CERTIFICATION_EVIDENCE, true);
+
+export const CRM_EXTERNAL_READINESS = {
+  status: 'READY_FOR_EXTERNAL_ASSESSMENT',
+  frameworks: ['GDPR_READINESS', 'CCPA_READINESS', 'SOC2_READINESS', 'HIPAA_CONDITIONAL', 'CAN_SPAM_READINESS', 'TCPA_READINESS'] as readonly ComplianceFramework[],
+  assessment: assessCertificationControls(
+    CRM_CERTIFICATION_CONTROLS.filter((control) => control.framework !== 'XUNIA_CRM_CONTROL_BASELINE'),
+    CRM_CERTIFICATION_EVIDENCE,
+  ),
+  operationalEvidenceRequired: true,
+  independentAssessorRequiredForThirdPartyAttestation: true,
+  externalCertificationStatus: 'NOT_ISSUED' as const,
+} as const;
 
 export const CRM_CERTIFICATION_ONTOLOGY = {
   id: 'GLASS-CRM-CERTIFICATION',
-  version: '1.0.0',
+  version: '1.1.0',
   command: '/glass certify crm',
   architecture: 'PALANTIR_ONTOLOGY_ALIGNED',
   objectTypes: ['SYSTEM', 'CONTROL', 'EVIDENCE', 'ASSESSMENT', 'RISK', 'ATTESTATION'] as const,
