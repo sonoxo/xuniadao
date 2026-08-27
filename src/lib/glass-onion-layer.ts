@@ -13,6 +13,7 @@ export type GlassOnionCapability =
   | 'GCPXUNIA_DEFENSE'
   | 'TECH_PEER_ONTOLOGY'
   | 'XUNIAVERSE_REGISTRY'
+  | 'MISSION_TELEMETRY'
   | 'CODE_PLAN'
   | 'ONTOLOGY_WORKFLOW'
   | 'MEDIA_WORKFLOW'
@@ -58,6 +59,7 @@ const PIPELINES: Readonly<Record<GlassOnionCapability, readonly string[]>> = {
   GCPXUNIA_DEFENSE: ['XUNIA_SCOPE', 'AGENT_IDENTITY_VERIFY', 'GCPXUNIA_AUTH_BROKER', 'VIRGINIA_POLICY_BOUNDARY', 'VA3LM_REASON_AND_PLAN', 'RUNTIME_GUARDRAIL', 'ZYRA_ACTION_GATE', 'AUDIT_EVIDENCE'],
   TECH_PEER_ONTOLOGY: ['PEER_SOURCE_DISCOVERY', 'PRIMARY_SOURCE_VERIFY', 'DOMAIN_MAP', 'ONTOLOGY_LINK', 'CREDENTIAL_EVIDENCE_CHECK', 'ALIGNMENT_ASSESSMENT'],
   XUNIAVERSE_REGISTRY: ['REPOSITORY_DISCOVERY', 'UPSTREAM_PROVENANCE', 'NODE_ROLE_MAP', 'XUNIADAO_ROOT_LINK', 'LICENSE_BOUNDARY', 'REGISTRY_EVIDENCE'],
+  MISSION_TELEMETRY: ['PUBLIC_MISSION_DATA', 'FPRIME_SIM_TELEMETRY', 'PROVENANCE_NORMALIZE', 'XUNIA_ONTOLOGY', 'VIRGINIA_QUERY', 'VA3LM_REASON', 'ZYRA_VERIFY', 'HUMAN_REVIEW'],
   CODE_PLAN: ['XUNIA_SCOPE', 'VA3LM_PLAN', 'SONOXO_CODE_INTELLIGENCE', 'ZYRA_VALIDATE'],
   ONTOLOGY_WORKFLOW: ['XUNIA_OBJECTS', 'SONOXO_ONTOLOGY', 'VA3LM_FUNCTION_PLAN', 'ZYRA_ACTION_GATE'],
   MEDIA_WORKFLOW: ['ALMIGHTY_SONOXO_MEDIA', 'XUNIA_PROVENANCE', 'SONOXO_INDEX', 'ZYRA_WORKFLOW'],
@@ -80,6 +82,7 @@ const PROVENANCE_CAPABILITIES: readonly GlassOnionCapability[] = [
   'GCPXUNIA_DEFENSE',
   'TECH_PEER_ONTOLOGY',
   'XUNIAVERSE_REGISTRY',
+  'MISSION_TELEMETRY',
 ];
 
 const uniqueTargets = (targets: readonly XuniaLayerId[]): XuniaLayerId[] =>
@@ -127,7 +130,7 @@ export const routeGlassOnion = (request: GlassOnionRequest): GlassOnionRoute => 
 
 export const GLASS_ONION_LAYER = {
   codename: 'GLASS ONION',
-  version: '2.6.0',
+  version: '2.7.0',
   command: '/glass',
   aitCommand: '/glass ait',
   crmCommand: '/glass crm',
@@ -140,6 +143,7 @@ export const GLASS_ONION_LAYER = {
   defenseCommand: '/glass defense',
   peersCommand: '/glass peers',
   xuniaverseCommand: '/glass xuniaverse',
+  missionCommand: '/glass mission',
   uapCommand: '/glass uap',
   umbrella: 'XUNIA',
   face: 'XUNIA / XuniaDAO',
@@ -153,6 +157,9 @@ export const GLASS_ONION_LAYER = {
     sharedAgentCredentialsBlocked: true,
     longLivedAgentCredentialsBlocked: true,
     exchangeMarketDataReadOnly: true,
+    missionTelemetryReadOrSimulationOnly: true,
+    realWorldFlightControl: false,
+    telecommandTransmission: false,
     externalExchangeListingCannotBeSelfDeclared: true,
     productionComplianceEvidenceCannotBeInferred: true,
     automaticFundMovement: false,
