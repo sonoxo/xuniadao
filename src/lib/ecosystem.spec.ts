@@ -3,12 +3,12 @@ import test from 'ava';
 import { GLASS_ONION, getXuniaLayer } from './ecosystem';
 import { VA3LMClient } from './va3lm';
 
-test('Glass Onion locks the five XUNIA layers', (t) => {
+test('Glass Onion locks the six XUNIA layers', (t) => {
   t.is(GLASS_ONION.codename, 'GLASS ONION');
   t.is(GLASS_ONION.umbrella, 'XUNIA');
   t.deepEqual(
     GLASS_ONION.layers.map((layer) => layer.id),
-    ['xunia', 'zyra', 'sonoxo', 'almighty-sonoxo', 'va3lm']
+    ['xunia', 'zyra', 'sonoxo', 'almighty-sonoxo', 'va3lm', 'gpt-uap-xo']
   );
 });
 
@@ -17,6 +17,14 @@ test('VA3LM remains the 8088 coding command layer', (t) => {
   t.truthy(va3lm);
   t.is(va3lm?.runtime, 'http://127.0.0.1:8088');
   t.true(va3lm?.repository.includes('/gpt-doug-llm/tree/main/va3lm'));
+});
+
+test('GPT-UAP-XO is registered as the private bounded agent runtime', (t) => {
+  const uap = getXuniaLayer('gpt-uap-xo');
+  t.truthy(uap);
+  t.is(uap?.repository, 'https://github.com/sonoxo/gpt-uap-xo');
+  t.is(uap?.visibility, 'PRIVATE');
+  t.true(uap?.role.includes('bounded parallel workers'));
 });
 
 test('mutating DAO and governance actions remain human gated', (t) => {
