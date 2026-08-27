@@ -1,0 +1,42 @@
+{
+  "id": "xunia-authenticated-browser",
+  "name": "XUNIA Authenticated Browser",
+  "version": "1.0.0",
+  "status": "ACTIVE",
+  "command": "/glass browse",
+  "runtime": "sonoxo/zyra",
+  "mode": "LOCAL_MANAGED_PROFILE",
+  "pipeline": [
+    "LOCAL_PROFILE_IMPORT",
+    "CHROME_SESSION_REUSE",
+    "HTTP_HTTPS_NAVIGATION",
+    "AUTHENTICATED_PAGE_READ",
+    "PROVENANCE_CAPTURE",
+    "VA3LM_REASON",
+    "ZYRA_ACTION_GATE"
+  ],
+  "profile": {
+    "managedCopy": true,
+    "sameMachineOnly": true,
+    "chromeOwnsCredentialDecryption": true,
+    "manualSignInFallback": true,
+    "credentialExport": false,
+    "rawCookieExport": false,
+    "passwordExtraction": false
+  },
+  "navigation": {
+    "http": true,
+    "https": true,
+    "file": false,
+    "javascript": false,
+    "authenticatedRead": true
+  },
+  "controls": {
+    "provenanceRequired": true,
+    "humanApprovalForConsequentialActions": true,
+    "automaticPurchases": false,
+    "automaticExternalMessaging": false,
+    "arbitraryRemoteShell": false,
+    "automaticFundMovement": false
+  }
+}
