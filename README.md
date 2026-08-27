@@ -16,7 +16,7 @@
 
 Command: **`/glass xuniaverse`**
 
-`sonoxo/xuniadao` is the canonical registry and ontology root for the 54 Sonoxo repositories currently indexed in the XUNIAverse machine graph.
+`sonoxo/xuniadao` is the canonical registry and ontology root for the 57 Sonoxo repositories currently indexed in the XUNIAverse machine graph.
 
 ```text
 XUNIA / XuniaDAO
@@ -181,6 +181,14 @@ XUNIA registers [`sonoxo/xrpl-dev-portalXUNIA`](https://github.com/sonoxo/xrpl-d
 
 Docs: [`docs/XRPL_INTEGRATION.md`](docs/XRPL_INTEGRATION.md) · Contract: [`ecosystem/xrpl-documentation.json`](ecosystem/xrpl-documentation.json)
 
+## XRPL token and wallet pathways
+
+Command: **`/glass xrpl pathways`**
+
+XUNIA connects standards ([`XRPL-StandardsXUNIA-`](https://github.com/sonoxo/XRPL-StandardsXUNIA-)), the TypeScript client ([`xrpl.jsXUNIA`](https://github.com/sonoxo/xrpl.jsXUNIA)), and the ledger node ([`rippledXUNIA`](https://github.com/sonoxo/rippledXUNIA)) through a governed token-and-wallet ontology. Public validated-ledger reads are allowed. Transaction construction is unsigned; signing and submission require human approval and a user-controlled external wallet. Seeds and private keys are blocked from repository and audit storage.
+
+Docs: [`docs/XRPL_TOKEN_WALLET_PATHWAYS.md`](docs/XRPL_TOKEN_WALLET_PATHWAYS.md) · Contract: [`ecosystem/xrpl-token-wallet.json`](ecosystem/xrpl-token-wallet.json)
+
 ## AIT ontology
 
 Command: **`/glass ait`**
@@ -215,6 +223,7 @@ XUNIA_SCOPE → GPT_UAP_XO_PLAN → GPT_UAP_XO_BOUNDED_WORKERS → PROVENANCE_CH
 | `/glass licenses` | verified repository license registry |
 | `/glass exchanges` | live read-only exchange listing/ticker discovery |
 | `/glass xrpl` | governed XRPL documentation and upstream source resolution |
+| `/glass xrpl pathways` | token, wallet, client, node, approval and audit ontology |
 | `/glass uap` | GPT-UAP-XO bounded-agent route |
 | `/VA3LM-SAGI` | VA3LM guardrail intelligence surface |
 
