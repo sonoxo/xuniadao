@@ -1,0 +1,45 @@
+{
+  "codename": "GLASS ONION",
+  "version": "2.0.0",
+  "command": "/glass",
+  "umbrella": "XUNIA",
+  "purpose": "Cross-repository intelligence and orchestration membrane for the XUNIA ecosystem.",
+  "layers": [
+    "xunia",
+    "zyra",
+    "sonoxo",
+    "almighty-sonoxo",
+    "va3lm"
+  ],
+  "capabilities": [
+    "INTELLIGENCE_QUERY",
+    "CODE_PLAN",
+    "ONTOLOGY_WORKFLOW",
+    "MEDIA_WORKFLOW",
+    "QUANTUM_BLUEPRINT",
+    "CADENCE_FLOW",
+    "CI_VALIDATION"
+  ],
+  "pipeline": [
+    "INGEST",
+    "PROVENANCE_CHECK",
+    "NORMALIZE",
+    "ONTOLOGY",
+    "PLAN",
+    "GUARDRAIL",
+    "EXECUTE_OR_REVIEW",
+    "VERIFY"
+  ],
+  "decisions": [
+    "ALLOW",
+    "REVIEW",
+    "BLOCK"
+  ],
+  "invariants": {
+    "provenanceRequired": true,
+    "humanApprovalForMutation": true,
+    "automaticFundMovement": false,
+    "automaticGovernanceVoting": false,
+    "arbitraryRemoteShell": false
+  }
+}
