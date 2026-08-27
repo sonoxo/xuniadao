@@ -6,6 +6,7 @@ test('Glass Onion identity and six-layer membrane are locked', (t) => {
   t.is(GLASS_ONION_LAYER.codename, 'GLASS ONION');
   t.is(GLASS_ONION_LAYER.command, '/glass');
   t.is(GLASS_ONION_LAYER.crmCommand, '/glass crm');
+  t.is(GLASS_ONION_LAYER.crmCertificationCommand, '/glass certify crm');
   t.is(GLASS_ONION_LAYER.uapCommand, '/glass uap');
   t.deepEqual(GLASS_ONION_LAYER.layers, [
     'xunia',
@@ -41,11 +42,34 @@ test('CRM routes through relationship graph and workflow agents', (t) => {
   t.true(route.pipeline.includes('UAP_AGENT_TASKS'));
 });
 
+test('CRM certification routes evidence through ontology and attestation gates', (t) => {
+  const route = routeGlassOnion({
+    objective: 'Assess CRM internal control attestation evidence',
+    capability: 'CRM_CERTIFICATION',
+    targets: ['xunia', 'sonoxo', 'va3lm', 'zyra'],
+    provenance: ['repo:sonoxo/xuniadao', 'contract:ecosystem/crm-certification.json'],
+  });
+  t.is(route.decision, 'ALLOW');
+  t.true(route.pipeline.includes('PALANTIR_ONTOLOGY_GRAPH'));
+  t.true(route.pipeline.includes('EVIDENCE_VERIFICATION'));
+  t.true(route.pipeline.includes('ATTESTATION_GATE'));
+});
+
 test('CRM without provenance is held for review', (t) => {
   const route = routeGlassOnion({
     objective: 'Promote CRM intelligence',
     capability: 'CRM',
     targets: ['xunia', 'zyra'],
+  });
+  t.is(route.decision, 'REVIEW');
+  t.true(route.reasons.includes('PROVENANCE_REQUIRED_FOR_INTELLIGENCE_PROMOTION'));
+});
+
+test('CRM certification without provenance is held for review', (t) => {
+  const route = routeGlassOnion({
+    objective: 'Promote CRM certification claim',
+    capability: 'CRM_CERTIFICATION',
+    targets: ['xunia'],
   });
   t.is(route.decision, 'REVIEW');
   t.true(route.reasons.includes('PROVENANCE_REQUIRED_FOR_INTELLIGENCE_PROMOTION'));
