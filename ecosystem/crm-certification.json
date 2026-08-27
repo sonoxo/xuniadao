@@ -1,0 +1,51 @@
+{
+  "id": "GLASS-CRM-CERTIFICATION",
+  "version": "1.0.0",
+  "command": "/glass certify crm",
+  "umbrella": "XUNIA",
+  "layer": "GLASS ONION",
+  "architecture": "PALANTIR_ONTOLOGY_ALIGNED",
+  "status": "INTERNAL_ATTESTED",
+  "attestation": {
+    "id": "XUNIA-CRM-ICA-1",
+    "issuer": "XUNIA / GLASS ONION INTERNAL CONTROL PROGRAM",
+    "scope": "Code-level GLASS ONION CRM control baseline",
+    "humanApproved": true,
+    "externalCertificationStatus": "NOT_ISSUED"
+  },
+  "ontology": {
+    "objects": ["SYSTEM", "CONTROL", "EVIDENCE", "ASSESSMENT", "RISK", "ATTESTATION"],
+    "links": ["GOVERNS", "SUPPORTED_BY", "SATISFIES", "BLOCKED_BY", "APPLIES_TO", "DERIVED_FROM"],
+    "actions": ["ATTACH_EVIDENCE", "RUN_CONTROL_CHECK", "REQUEST_REVIEW", "ISSUE_INTERNAL_ATTESTATION", "REVOKE_ATTESTATION"]
+  },
+  "baselineControls": {
+    "provenanceRequired": "PASS",
+    "mutationHumanReview": "PASS",
+    "externalCommunicationHumanReview": "PASS",
+    "bulkOutreachHumanReview": "PASS",
+    "crmCiLock": "PASS"
+  },
+  "readinessTargets": {
+    "GDPR": "PENDING_EVIDENCE",
+    "CCPA": "PENDING_EVIDENCE",
+    "SOC2": "PENDING_EVIDENCE",
+    "HIPAA": "CONDITIONAL_SCOPE",
+    "CAN_SPAM": "PENDING_EVIDENCE",
+    "TCPA": "PENDING_EVIDENCE"
+  },
+  "evidence": [
+    "src/lib/crm.ts",
+    "ecosystem/crm.json",
+    ".github/workflows/crm.yml",
+    "src/lib/crm-certification.ts",
+    "src/lib/crm-certification.spec.ts"
+  ],
+  "claims": {
+    "internalControlAttestation": true,
+    "palantirOntologyAlignedArchitecture": true,
+    "palantirAffiliationOrEndorsement": false,
+    "thirdPartySOC2Certification": false,
+    "thirdPartyHIPAACertification": false,
+    "thirdPartyGDPRCertification": false
+  }
+}
