@@ -2,15 +2,17 @@ import test from 'ava';
 
 import { GLASS_ONION_LAYER, routeGlassOnion } from './glass-onion-layer';
 
-test('Glass Onion identity and five-layer membrane are locked', (t) => {
+test('Glass Onion identity and six-layer membrane are locked', (t) => {
   t.is(GLASS_ONION_LAYER.codename, 'GLASS ONION');
   t.is(GLASS_ONION_LAYER.command, '/glass');
+  t.is(GLASS_ONION_LAYER.uapCommand, '/glass uap');
   t.deepEqual(GLASS_ONION_LAYER.layers, [
     'xunia',
     'zyra',
     'sonoxo',
     'almighty-sonoxo',
     'va3lm',
+    'gpt-uap-xo',
   ]);
 });
 
@@ -24,6 +26,20 @@ test('read-only routed work can use the fast path', (t) => {
   t.is(route.decision, 'ALLOW');
   t.false(route.humanApprovalRequired);
   t.true(route.pipeline.includes('SONOXO_ONTOLOGY'));
+});
+
+test('GPT-UAP-XO routes bounded agent runtime work through Glass Onion', (t) => {
+  const route = routeGlassOnion({
+    objective: 'Run bounded parallel agents against a local task',
+    capability: 'UAP_AGENT_RUNTIME',
+    targets: ['xunia', 'gpt-uap-xo', 'zyra'],
+    provenance: ['repo:sonoxo/gpt-uap-xo'],
+  });
+
+  t.is(route.decision, 'ALLOW');
+  t.true(route.pipeline.includes('GPT_UAP_XO_PLAN'));
+  t.true(route.pipeline.includes('GPT_UAP_XO_BOUNDED_WORKERS'));
+  t.true(route.pipeline.includes('ZYRA_ACTION_GATE'));
 });
 
 test('AIT ontology routes through the dedicated intelligence pipeline', (t) => {
