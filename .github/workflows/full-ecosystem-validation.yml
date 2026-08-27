@@ -1,0 +1,62 @@
+name: Full Ecosystem Validation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  full-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: yarn
+      - run: yarn install --frozen-lockfile
+      - run: yarn build:main
+      - run: yarn test:unit
+      - name: Validate all current machine contracts
+        run: |
+          node <<'NODE'
+          const assert = require('assert');
+          const fs = require('fs');
+          const glass = require('./dist/main/lib/glass-onion-layer');
+          const licenses = require('./dist/main/lib/licenses');
+          const exchange = require('./dist/main/lib/exchange-market');
+          const evidence = require('./dist/main/lib/compliance-evidence');
+          const ontology = require('./dist/main/lib/ecosystem-governance-ontology');
+          const gdprHipaa = JSON.parse(fs.readFileSync('ecosystem/gdpr-hipaa.json','utf8'));
+          const crm = JSON.parse(fs.readFileSync('ecosystem/crm.json','utf8'));
+          const crmPort = JSON.parse(fs.readFileSync('ecosystem/crm-port.json','utf8'));
+          const crmCert = JSON.parse(fs.readFileSync('ecosystem/crm-certification.json','utf8'));
+          const glassContract = JSON.parse(fs.readFileSync('ecosystem/glass-onion-layer.json','utf8'));
+          const exchangeContract = JSON.parse(fs.readFileSync('ecosystem/exchange-market.json','utf8'));
+          const evidenceContract = JSON.parse(fs.readFileSync('ecosystem/compliance-evidence.json','utf8'));
+          const governanceContract = JSON.parse(fs.readFileSync('ecosystem/governance-ontology.json','utf8'));
+          const pkg = JSON.parse(fs.readFileSync('package.json','utf8'));
+
+          assert.equal(pkg.name, 'xunia-glass-onion');
+          assert.equal(pkg.license, 'Apache-2.0');
+          assert.equal(glass.GLASS_ONION_LAYER.version, '2.5.0');
+          assert.equal(glassContract.version, '2.5.0');
+          assert.equal(glass.GLASS_ONION_LAYER.licensesCommand, '/glass licenses');
+          assert.equal(glass.GLASS_ONION_LAYER.exchangesCommand, '/glass exchanges');
+          assert.equal(glass.GLASS_ONION_LAYER.evidenceCommand, '/glass evidence');
+          assert.equal(licenses.validateEcosystemLicenses().length, 0);
+          assert.equal(licenses.getRepositoryLicense('sonoxo/gpt-uap-xo').licenseId, 'Apache-2.0');
+          assert.equal(exchange.EXCHANGE_MARKET.capabilities.orderPlacement, false);
+          assert.equal(exchangeContract.listingState.selfDeclaredListingAllowed, false);
+          assert.equal(evidence.COMPLIANCE_EVIDENCE.controls.productionEvidenceCannotBeInferredFromCode, true);
+          assert.equal(evidenceContract.productionEvidenceState, 'REQUIRED');
+          assert.equal(ontology.ECOSYSTEM_GOVERNANCE_ONTOLOGY.architecture, 'OBJECT_PROPERTY_LINK_ACTION_EVIDENCE_DECISION');
+          assert.equal(governanceContract.invariants.externalListingRequiresExchangeEvidence, true);
+          assert.equal(governanceContract.invariants.productionComplianceRequiresOperationalEvidence, true);
+          assert.equal(gdprHipaa.status, 'SOFTWARE_POLICY_CONTROLS_COMPLETE');
+          assert.equal(crm.status, 'ACTIVE');
+          assert.equal(crmPort.status, 'ACTIVE');
+          assert.equal(crmCert.status, 'INTERNAL_ATTESTED');
+          console.log('FULL ECOSYSTEM VALIDATION: PASS');
+          NODE
