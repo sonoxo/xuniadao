@@ -1,0 +1,77 @@
+name: AIT Ontology Lock
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/lib/ait-ontology.ts'
+      - 'src/lib/ait-ontology.spec.ts'
+      - 'src/lib/glass-onion-layer.ts'
+      - 'src/index.ts'
+      - 'ecosystem/ait-ontology.json'
+      - 'docs/AIT_ONTOLOGY.md'
+      - '.github/workflows/ait-ontology.yml'
+  pull_request:
+    paths:
+      - 'src/lib/ait-ontology.ts'
+      - 'src/lib/ait-ontology.spec.ts'
+      - 'src/lib/glass-onion-layer.ts'
+      - 'src/index.ts'
+      - 'ecosystem/ait-ontology.json'
+      - 'docs/AIT_ONTOLOGY.md'
+      - '.github/workflows/ait-ontology.yml'
+
+jobs:
+  ait-ontology:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: yarn
+      - name: Install
+        run: yarn install --frozen-lockfile
+      - name: Build
+        run: yarn build:main
+      - name: Unit tests
+        run: yarn test:unit
+      - name: AIT ontology contract lock
+        run: |
+          node <<'NODE'
+          const assert = require('assert');
+          const { AIT_ONTOLOGY, createAITSeed, evaluateAITAction } = require('./dist/main/lib/ait-ontology');
+          const { GLASS_ONION_LAYER, routeGlassOnion } = require('./dist/main/lib/glass-onion-layer');
+          assert.equal(AIT_ONTOLOGY.command, '/glass ait');
+          assert.ok(AIT_ONTOLOGY.objectTypes.includes('AIT_EVIDENCE'));
+          assert.ok(AIT_ONTOLOGY.relationTypes.includes('CORROBORATES'));
+          const seed = createAITSeed();
+          assert.equal(seed.objects.length, 4);
+          assert.equal(seed.relations.length, 3);
+          assert.equal(evaluateAITAction({ action: 'ANALYZE', objectIds: ['ait:system:glass-onion'] }).decision, 'ALLOW');
+          assert.equal(evaluateAITAction({ action: 'MOVE', objectIds: ['ait:action:test'], movesFunds: true }).decision, 'BLOCK');
+          assert.ok(GLASS_ONION_LAYER.capabilities.includes('AIT_ONTOLOGY'));
+          const route = routeGlassOnion({
+            objective: 'Route AIT intelligence',
+            capability: 'AIT_ONTOLOGY',
+            targets: ['xunia', 'sonoxo', 'va3lm', 'zyra'],
+            provenance: ['source:ci']
+          });
+          assert.equal(route.decision, 'ALLOW');
+          assert.ok(route.pipeline.includes('AIT_CORRELATE'));
+          console.log('AIT ONTOLOGY LOCK: PASS');
+          NODE
+      - name: Machine contract lock
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const assert = require('assert');
+          const contract = JSON.parse(fs.readFileSync('ecosystem/ait-ontology.json', 'utf8'));
+          assert.equal(contract.id, 'AIT-ONTOLOGY');
+          assert.equal(contract.command, '/glass ait');
+          assert.deepEqual(contract.decisionStates, ['ALLOW', 'REVIEW', 'BLOCK']);
+          assert.equal(contract.invariants.provenanceRequired, true);
+          assert.equal(contract.invariants.automaticFundMovement, false);
+          console.log('AIT MACHINE CONTRACT: PASS');
+          NODE
