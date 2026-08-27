@@ -9,6 +9,10 @@ export type GlassOnionCapability =
   | 'LICENSE_REGISTRY'
   | 'EXCHANGE_MARKET_DATA'
   | 'COMPLIANCE_EVIDENCE'
+  | 'AGENT_IDENTITY_SECURITY'
+  | 'GCPXUNIA_DEFENSE'
+  | 'TECH_PEER_ONTOLOGY'
+  | 'XUNIAVERSE_REGISTRY'
   | 'CODE_PLAN'
   | 'ONTOLOGY_WORKFLOW'
   | 'MEDIA_WORKFLOW'
@@ -50,6 +54,10 @@ const PIPELINES: Readonly<Record<GlassOnionCapability, readonly string[]>> = {
   LICENSE_REGISTRY: ['REPOSITORY_DISCOVERY', 'LICENSE_FILE_VERIFY', 'SPDX_VALIDATE', 'OBLIGATION_EVALUATE', 'ATTRIBUTION_EVIDENCE'],
   EXCHANGE_MARKET_DATA: ['TOKEN_SCOPE', 'LISTING_PACKET_VALIDATE', 'LIVE_EXCHANGE_DISCOVERY', 'LISTING_STATUS_VERIFY', 'READ_ONLY_TICKER'],
   COMPLIANCE_EVIDENCE: ['FRAMEWORK_SCOPE', 'REQUIREMENT_MAP', 'EVIDENCE_INGEST', 'PROVENANCE_VERIFY', 'EXPIRY_CHECK', 'READINESS_ASSESSMENT'],
+  AGENT_IDENTITY_SECURITY: ['AGENT_INVENTORY', 'SPIFFE_IDENTITY_VERIFY', 'AGENT_ATTESTATION', 'AUTH_MANAGER_BROKER', 'LEAST_PRIVILEGE_POLICY', 'DPOP_OR_MTLS_BINDING', 'AUDIT_EVIDENCE'],
+  GCPXUNIA_DEFENSE: ['XUNIA_SCOPE', 'AGENT_IDENTITY_VERIFY', 'GCPXUNIA_AUTH_BROKER', 'VIRGINIA_POLICY_BOUNDARY', 'VA3LM_REASON_AND_PLAN', 'RUNTIME_GUARDRAIL', 'ZYRA_ACTION_GATE', 'AUDIT_EVIDENCE'],
+  TECH_PEER_ONTOLOGY: ['PEER_SOURCE_DISCOVERY', 'PRIMARY_SOURCE_VERIFY', 'DOMAIN_MAP', 'ONTOLOGY_LINK', 'CREDENTIAL_EVIDENCE_CHECK', 'ALIGNMENT_ASSESSMENT'],
+  XUNIAVERSE_REGISTRY: ['REPOSITORY_DISCOVERY', 'UPSTREAM_PROVENANCE', 'NODE_ROLE_MAP', 'XUNIADAO_ROOT_LINK', 'LICENSE_BOUNDARY', 'REGISTRY_EVIDENCE'],
   CODE_PLAN: ['XUNIA_SCOPE', 'VA3LM_PLAN', 'SONOXO_CODE_INTELLIGENCE', 'ZYRA_VALIDATE'],
   ONTOLOGY_WORKFLOW: ['XUNIA_OBJECTS', 'SONOXO_ONTOLOGY', 'VA3LM_FUNCTION_PLAN', 'ZYRA_ACTION_GATE'],
   MEDIA_WORKFLOW: ['ALMIGHTY_SONOXO_MEDIA', 'XUNIA_PROVENANCE', 'SONOXO_INDEX', 'ZYRA_WORKFLOW'],
@@ -68,6 +76,10 @@ const PROVENANCE_CAPABILITIES: readonly GlassOnionCapability[] = [
   'LICENSE_REGISTRY',
   'EXCHANGE_MARKET_DATA',
   'COMPLIANCE_EVIDENCE',
+  'AGENT_IDENTITY_SECURITY',
+  'GCPXUNIA_DEFENSE',
+  'TECH_PEER_ONTOLOGY',
+  'XUNIAVERSE_REGISTRY',
 ];
 
 const uniqueTargets = (targets: readonly XuniaLayerId[]): XuniaLayerId[] =>
@@ -115,7 +127,7 @@ export const routeGlassOnion = (request: GlassOnionRequest): GlassOnionRoute => 
 
 export const GLASS_ONION_LAYER = {
   codename: 'GLASS ONION',
-  version: '2.5.0',
+  version: '2.6.0',
   command: '/glass',
   aitCommand: '/glass ait',
   crmCommand: '/glass crm',
@@ -124,13 +136,22 @@ export const GLASS_ONION_LAYER = {
   licensesCommand: '/glass licenses',
   exchangesCommand: '/glass exchanges',
   evidenceCommand: '/glass evidence',
+  identityCommand: '/glass identity',
+  defenseCommand: '/glass defense',
+  peersCommand: '/glass peers',
+  xuniaverseCommand: '/glass xuniaverse',
   uapCommand: '/glass uap',
   umbrella: 'XUNIA',
+  face: 'XUNIA / XuniaDAO',
   layers: ['xunia', 'zyra', 'sonoxo', 'almighty-sonoxo', 'va3lm', 'gpt-uap-xo'] as readonly XuniaLayerId[],
   capabilities: Object.keys(PIPELINES) as readonly GlassOnionCapability[],
   invariants: {
+    xuniadaoIsXuniaverseRoot: true,
     provenanceRequired: true,
     humanApprovalForMutation: true,
+    agentIdentityRequiredForBrokeredAuth: true,
+    sharedAgentCredentialsBlocked: true,
+    longLivedAgentCredentialsBlocked: true,
     exchangeMarketDataReadOnly: true,
     externalExchangeListingCannotBeSelfDeclared: true,
     productionComplianceEvidenceCannotBeInferred: true,
