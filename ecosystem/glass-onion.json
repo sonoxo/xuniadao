@@ -1,0 +1,52 @@
+{
+  "codename": "GLASS ONION",
+  "umbrella": "XUNIA",
+  "version": "1.0.0",
+  "layers": [
+    {
+      "id": "xunia",
+      "name": "XUNIA / XuniaDAO",
+      "repository": "https://github.com/sonoxo/xuniadao",
+      "role": "ecosystem registry, DAO metadata, integration and governance intelligence"
+    },
+    {
+      "id": "zyra",
+      "name": "ZYRA",
+      "repository": "https://github.com/sonoxo/zyra",
+      "role": "agentic orchestration, workflows and bounded command execution"
+    },
+    {
+      "id": "sonoxo",
+      "name": "SONOXO / GPT-DOUG-LLM",
+      "repository": "https://github.com/sonoxo/gpt-doug-llm",
+      "role": "model brain, intelligence ontology and defensive agent runtime"
+    },
+    {
+      "id": "almighty-sonoxo",
+      "name": "AlmightySonoxo",
+      "repository": "https://github.com/sonoxo/AlmightySonoxo",
+      "role": "creative, media and public-facing ecosystem layer"
+    },
+    {
+      "id": "va3lm",
+      "name": "VA3LM",
+      "repository": "https://github.com/sonoxo/gpt-doug-llm/tree/main/va3lm",
+      "runtime": "http://127.0.0.1:8088",
+      "role": "Virginia Agentic Large Learning Language Model coding and programming command center"
+    }
+  ],
+  "technologyIntelligence": [
+    "Anthropic / Claude",
+    "Google",
+    "Palantir",
+    "IBM / Red Hat",
+    "AWS"
+  ],
+  "commandRules": {
+    "humanApprovalForMutation": true,
+    "automaticFundMovement": false,
+    "automaticGovernanceVoting": false,
+    "arbitraryRemoteShell": false,
+    "provenanceRequired": true
+  }
+}
