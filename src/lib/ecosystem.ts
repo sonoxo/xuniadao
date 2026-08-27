@@ -26,7 +26,19 @@ export interface TechnologyIntelligenceLayer {
 export const GLASS_ONION = {
   codename: 'GLASS ONION',
   umbrella: 'XUNIA',
-  version: '1.1.0',
+  version: '1.2.0',
+  leadership: {
+    role: 'Founder / Ecosystem Lead',
+    credentialAreas: [
+      'Anthropic / Claude',
+      'Google',
+      'Palantir',
+      'IBM / Red Hat',
+      'AWS',
+    ],
+    statement:
+      'XUNIA is led by a founder with certifications and credentials spanning these technology ecosystems.',
+  },
   layers: [
     {
       id: 'xunia',
@@ -93,7 +105,7 @@ export const GLASS_ONION = {
     },
   ] as readonly TechnologyIntelligenceLayer[],
   affiliationBoundary:
-    'Technology compatibility or architecture alignment does not itself imply sponsorship, investment, partnership, endorsement, or government affiliation.',
+    'Leadership certifications and technology compatibility do not by themselves imply sponsorship, investment, partnership, endorsement, or government affiliation.',
   rules: {
     humanApprovalForMutation: true,
     automaticFundMovement: false,
