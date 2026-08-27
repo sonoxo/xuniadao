@@ -19,6 +19,11 @@ clone_or_update "https://github.com/sonoxo/zyra.git" "$ROOT/zyra"
 clone_or_update "https://github.com/sonoxo/gpt-doug-llm.git" "$ROOT/sonoxo"
 clone_or_update "https://github.com/sonoxo/AlmightySonoxo.git" "$ROOT/almighty-sonoxo"
 
+UAP="$ROOT/gpt-uap-xo"
+if [ "${GLASS_ONION_INCLUDE_PRIVATE:-0}" = "1" ]; then
+  clone_or_update "https://github.com/sonoxo/gpt-uap-xo.git" "$UAP"
+fi
+
 VA3LM="$ROOT/sonoxo/va3lm"
 if [ ! -d "$VA3LM" ]; then
   echo "VA3LM was not found at $VA3LM" >&2
@@ -33,4 +38,5 @@ SONOXO:          $ROOT/sonoxo
 ALMIGHTY SONOXO: $ROOT/almighty-sonoxo
 VA3LM:           $VA3LM
 VA3LM PORT:      8088
+GPT-UAP-XO:      ${UAP} (private; clone with GLASS_ONION_INCLUDE_PRIVATE=1 and GitHub access)
 EOF
