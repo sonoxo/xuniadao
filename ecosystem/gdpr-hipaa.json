@@ -1,0 +1,79 @@
+{
+  "id": "GLASS-GDPR-HIPAA",
+  "version": "1.0.0",
+  "command": "/glass certify crm",
+  "status": "SOFTWARE_POLICY_CONTROLS_COMPLETE",
+  "architecture": "PALANTIR_ONTOLOGY_ALIGNED",
+  "gdpr": {
+    "principlesArticle5": "READY",
+    "transparencyArticles12to14": "READY",
+    "lawfulBasisArticle6": "READY",
+    "specialCategoryArticle9": "READY",
+    "dataSubjectRightsChapterIII": "READY",
+    "privacyByDesignArticle25": "READY",
+    "processorContractsArticle28": "READY",
+    "recordsOfProcessingArticle30": "READY",
+    "securityArticle32": "READY",
+    "breachArticles33to34": "READY",
+    "dpiaArticle35": "READY",
+    "priorConsultationArticle36": "READY",
+    "dpoArticles37to39": "READY",
+    "internationalTransfersChapterV": "READY",
+    "automatedDecisionSafeguardsArticle22": "READY"
+  },
+  "hipaa": {
+    "scopeDetermination": "READY",
+    "privacyRuleMinimumNecessary": "READY",
+    "privacyRuleIndividualRights": "READY",
+    "privacyRuleAuthorizationAndDisclosure": "READY",
+    "securityRuleAdministrativeSafeguards": "READY",
+    "securityRulePhysicalSafeguards": "READY",
+    "securityRuleTechnicalSafeguards": "READY",
+    "securityRiskAnalysis": "READY",
+    "riskManagement": "READY",
+    "securityOfficial": "READY",
+    "workforceSecurityAndTraining": "READY",
+    "contingencyAndDisasterRecovery": "READY",
+    "incidentResponse": "READY",
+    "auditControls": "READY",
+    "integrityAndAuthentication": "READY",
+    "transmissionSecurity": "READY",
+    "businessAssociateAgreements": "READY",
+    "subcontractorFlowDown": "READY",
+    "breachNotificationRule": "READY",
+    "periodicEvaluation": "READY",
+    "sixYearDocumentationRetention": "READY"
+  },
+  "operationalEvidenceRequired": {
+    "gdpr": [
+      "approved record of processing activities reflecting actual production data flows",
+      "deployed privacy notices and DPO/contact details where required",
+      "executed processor agreements and subprocessor inventory",
+      "actual lawful-basis and Article 9 determinations per processing purpose",
+      "completed DPIAs and supervisory consultation where required",
+      "actual transfer mechanisms and transfer impact assessments",
+      "production security evidence and breach exercise records",
+      "data subject request execution logs and response evidence"
+    ],
+    "hipaa": [
+      "documented determination that the organization is a covered entity or business associate when applicable",
+      "complete production ePHI inventory and security risk analysis",
+      "implemented access control, MFA/authentication, audit logging, integrity and transmission safeguards",
+      "facility, workstation, device and media procedures with operational evidence",
+      "tested backup, disaster recovery and emergency-mode procedures",
+      "security awareness and workforce authorization/training records",
+      "executed BAAs and subcontractor flow-down agreements",
+      "incident and breach notification exercise/evidence",
+      "periodic technical and non-technical evaluations",
+      "six-year retention of required HIPAA policies, procedures and assessment documentation"
+    ]
+  },
+  "claims": {
+    "softwarePolicyControlsComplete": true,
+    "readyForProductionEvidenceCollection": true,
+    "gdprRegulatorCertificationIssued": false,
+    "hipaaGovernmentCertificationIssued": false,
+    "independentLegalDeterminationIssued": false,
+    "palantirEndorsement": false
+  }
+}
