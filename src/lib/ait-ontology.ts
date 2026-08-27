@@ -26,6 +26,19 @@ export type AITRelationType =
 
 export type AITDecision = 'ALLOW' | 'REVIEW' | 'BLOCK';
 
+export interface AITSourceBinding {
+  readonly status: 'BOUND';
+  readonly sourceId: string;
+  readonly bindingType: 'CONTROLLED_REPOSITORY_CONTRACT';
+  readonly repository: string;
+  readonly ref: string;
+  readonly baselineCommit: string;
+  readonly contractPath: string;
+  readonly implementationPath: string;
+  readonly verificationWorkflow: string;
+  readonly provenance: readonly string[];
+}
+
 export interface AITObject {
   readonly id: string;
   readonly type: AITObjectType;
@@ -63,6 +76,42 @@ export interface AITActionDecision {
 
 const requiredText = (value: string, label: string): void => {
   if (!value.trim()) throw new Error(`${label}_REQUIRED`);
+};
+
+export const AIT_SOURCE_BINDING: AITSourceBinding = {
+  status: 'BOUND',
+  sourceId: 'xunia:glass-onion:ait',
+  bindingType: 'CONTROLLED_REPOSITORY_CONTRACT',
+  repository: 'sonoxo/xuniadao',
+  ref: 'main',
+  baselineCommit: '041dcc38b4a2f751b0b9e2c8d2488931ddeb6f5e',
+  contractPath: 'ecosystem/ait-ontology.json',
+  implementationPath: 'src/lib/ait-ontology.ts',
+  verificationWorkflow: '.github/workflows/ait-ontology.yml',
+  provenance: [
+    'repo:sonoxo/xuniadao',
+    'commit:041dcc38b4a2f751b0b9e2c8d2488931ddeb6f5e',
+    'contract:ecosystem/ait-ontology.json',
+  ],
+};
+
+export const validateAITSourceBinding = (
+  binding: AITSourceBinding,
+): AITSourceBinding => {
+  requiredText(binding.sourceId, 'AIT_SOURCE_ID');
+  requiredText(binding.repository, 'AIT_SOURCE_REPOSITORY');
+  requiredText(binding.ref, 'AIT_SOURCE_REF');
+  requiredText(binding.baselineCommit, 'AIT_SOURCE_BASELINE_COMMIT');
+  requiredText(binding.contractPath, 'AIT_SOURCE_CONTRACT_PATH');
+  requiredText(binding.implementationPath, 'AIT_SOURCE_IMPLEMENTATION_PATH');
+  requiredText(binding.verificationWorkflow, 'AIT_SOURCE_VERIFICATION_WORKFLOW');
+  if (!/^[0-9a-f]{40}$/.test(binding.baselineCommit)) {
+    throw new Error('AIT_SOURCE_BASELINE_COMMIT_INVALID');
+  }
+  if (binding.provenance.length === 0) {
+    throw new Error('AIT_SOURCE_PROVENANCE_REQUIRED');
+  }
+  return binding;
 };
 
 export const validateAITObject = (object: AITObject): AITObject => {
@@ -143,20 +192,35 @@ export const createAITSeed = (): {
   readonly objects: readonly AITObject[];
   readonly relations: readonly AITRelation[];
 } => {
+  const binding = validateAITSourceBinding(AIT_SOURCE_BINDING);
+  const sourceProvenance = [...binding.provenance];
   const rawObjects: AITObject[] = [
     {
       id: 'ait:system:glass-onion',
       type: 'AIT_SYSTEM',
       name: 'GLASS ONION',
-      properties: { command: '/glass ait', umbrella: 'XUNIA', version: '1.0.0' },
-      provenance: ['repo:sonoxo/xuniadao'],
+      properties: { command: '/glass ait', umbrella: 'XUNIA', version: '1.1.0' },
+      provenance: sourceProvenance,
+    },
+    {
+      id: 'ait:source:xunia-binding',
+      type: 'AIT_INTEL_SOURCE',
+      name: 'XUNIA AIT Source Binding',
+      properties: {
+        sourceId: binding.sourceId,
+        repository: binding.repository,
+        ref: binding.ref,
+        baselineCommit: binding.baselineCommit,
+        status: binding.status,
+      },
+      provenance: sourceProvenance,
     },
     {
       id: 'ait:agent:va3lm',
       type: 'AIT_AGENT',
       name: 'VA3LM-SAGI',
       properties: { role: 'guardrailed intelligence and engineering planner' },
-      provenance: ['repo:sonoxo/xuniadao'],
+      provenance: sourceProvenance,
     },
     {
       id: 'ait:workflow:intelligence-cycle',
@@ -173,36 +237,42 @@ export const createAITSeed = (): {
           'ACTION_GATE',
         ],
       },
-      provenance: ['repo:sonoxo/xuniadao'],
+      provenance: sourceProvenance,
     },
     {
       id: 'ait:control:human-review',
       type: 'AIT_CONTROL',
       name: 'Human Command Review',
       properties: { requiredForHighImpact: true, automaticFundMovement: false },
-      provenance: ['repo:sonoxo/xuniadao'],
+      provenance: sourceProvenance,
     },
   ];
   const objects = rawObjects.map(validateAITObject);
 
   const rawRelations: AITRelation[] = [
     {
+      from: 'ait:source:xunia-binding',
+      to: 'ait:system:glass-onion',
+      type: 'SUPPORTED_BY',
+      provenance: sourceProvenance,
+    },
+    {
       from: 'ait:agent:va3lm',
       to: 'ait:workflow:intelligence-cycle',
       type: 'OPERATES',
-      provenance: ['repo:sonoxo/xuniadao'],
+      provenance: sourceProvenance,
     },
     {
       from: 'ait:control:human-review',
       to: 'ait:workflow:intelligence-cycle',
       type: 'GOVERNS',
-      provenance: ['repo:sonoxo/xuniadao'],
+      provenance: sourceProvenance,
     },
     {
       from: 'ait:workflow:intelligence-cycle',
       to: 'ait:system:glass-onion',
       type: 'ROUTES_TO',
-      provenance: ['repo:sonoxo/xuniadao'],
+      provenance: sourceProvenance,
     },
   ];
   const relations = rawRelations.map((relation) => linkAITObjects(relation, objects));
@@ -212,9 +282,9 @@ export const createAITSeed = (): {
 
 export const AIT_ONTOLOGY = {
   id: 'AIT-ONTOLOGY',
-  version: '1.0.0',
+  version: '1.1.0',
   command: '/glass ait',
-  sourceBinding: 'INTERNAL_GLASS_ONION_CONTRACT',
+  sourceBinding: AIT_SOURCE_BINDING,
   objectTypes: [
     'AIT_AGENT',
     'AIT_SYSTEM',
@@ -243,6 +313,7 @@ export const AIT_ONTOLOGY = {
   ] as readonly AITRelationType[],
   invariants: {
     provenanceRequired: true,
+    sourceBindingRequired: true,
     humanReviewForPromotion: true,
     humanReviewForHighImpact: true,
     automaticFundMovement: false,
