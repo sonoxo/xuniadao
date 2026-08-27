@@ -5,6 +5,15 @@ export type GovernanceObjectType =
   | 'EXCHANGE'
   | 'MARKET'
   | 'COMPLIANCE_REQUIREMENT'
+  | 'AGENT_IDENTITY'
+  | 'AUTH_PROVIDER'
+  | 'ACCESS_POLICY'
+  | 'RUNTIME'
+  | 'GUARDRAIL'
+  | 'SECURITY_EVENT'
+  | 'TECH_PEER'
+  | 'SECURITY_DOMAIN'
+  | 'XUNIAVERSE_NODE'
   | 'EVIDENCE'
   | 'ASSESSMENT'
   | 'ATTESTATION';
@@ -18,7 +27,17 @@ export type GovernanceLinkType =
   | 'SATISFIES'
   | 'GOVERNS'
   | 'DERIVED_FROM'
-  | 'BLOCKED_BY';
+  | 'BLOCKED_BY'
+  | 'ROOTS'
+  | 'IDENTIFIES'
+  | 'AUTHORIZES'
+  | 'BROKERS_AUTH_FOR'
+  | 'ENFORCES'
+  | 'PROTECTS'
+  | 'BENCHMARKS_AGAINST'
+  | 'LEARNS_FROM'
+  | 'MODELS_AFTER'
+  | 'VALIDATES_WITH';
 
 export type GovernanceAction =
   | 'VERIFY_LICENSE'
@@ -27,7 +46,12 @@ export type GovernanceAction =
   | 'VALIDATE_LISTING_PACKET'
   | 'ATTACH_EVIDENCE'
   | 'ASSESS_READINESS'
-  | 'ISSUE_INTERNAL_ATTESTATION';
+  | 'ISSUE_INTERNAL_ATTESTATION'
+  | 'VERIFY_AGENT_IDENTITY'
+  | 'BROKER_AGENT_AUTH'
+  | 'REVOKE_AGENT_ACCESS'
+  | 'VERIFY_PEER_SOURCE'
+  | 'REGISTER_XUNIAVERSE_NODE';
 
 export interface GovernanceObject {
   readonly id: string;
@@ -52,6 +76,9 @@ export interface GovernanceActionRequest {
   readonly externalListingClaim?: boolean;
   readonly productionComplianceClaim?: boolean;
   readonly movesFunds?: boolean;
+  readonly sharedAgentCredential?: boolean;
+  readonly longLivedAgentCredential?: boolean;
+  readonly broadAgentGrant?: boolean;
 }
 
 export type GovernanceDecision = 'ALLOW' | 'REVIEW' | 'BLOCK';
@@ -72,8 +99,10 @@ export const validateGovernanceLink = (link: GovernanceLink, objects: readonly G
 export const evaluateGovernanceAction = (request: GovernanceActionRequest): GovernanceDecision => {
   if (request.objectIds.length === 0 || request.provenance.length === 0) return 'BLOCK';
   if (request.movesFunds) return 'BLOCK';
+  if (request.sharedAgentCredential || request.longLivedAgentCredential) return 'BLOCK';
   if (request.externalListingClaim) return 'REVIEW';
   if (request.productionComplianceClaim) return 'REVIEW';
+  if (request.broadAgentGrant) return 'REVIEW';
   if (request.mutatesRepository) return 'REVIEW';
   return 'ALLOW';
 };
@@ -82,7 +111,31 @@ export const createGovernanceSeed = (): { readonly objects: readonly GovernanceO
   const objects: GovernanceObject[] = [
     {
       id: 'repo:xuniadao', type: 'REPOSITORY', name: 'sonoxo/xuniadao',
-      properties: { role: 'GLASS_ONION_REGISTRY' }, provenance: ['repo:sonoxo/xuniadao'],
+      properties: { role: 'XUNIAVERSE_ROOT' }, provenance: ['repo:sonoxo/xuniadao'],
+    },
+    {
+      id: 'node:xuniaverse', type: 'XUNIAVERSE_NODE', name: 'XUNIAverse Root',
+      properties: { face: 'XUNIA / XuniaDAO', repositoryCount: 53 }, provenance: ['contract:ecosystem/xuniaverse.json'],
+    },
+    {
+      id: 'runtime:va3lm', type: 'RUNTIME', name: 'VA3LM',
+      properties: { port: 8088, boundary: 'VIRGINIA' }, provenance: ['repo:sonoxo/gpt-doug-llm', 'path:va3lm'],
+    },
+    {
+      id: 'identity:va3lm-agent', type: 'AGENT_IDENTITY', name: 'VA3LM Agent Identity',
+      properties: { identityFormat: 'SPIFFE', credentialMode: 'SHORT_LIVED' }, provenance: ['contract:ecosystem/gcpxunia-defense.json'],
+    },
+    {
+      id: 'auth:gcpxunia', type: 'AUTH_PROVIDER', name: 'GCPXUNIA Auth Broker',
+      properties: { mode: 'CENTRAL_BROKER', sharedCredentials: false }, provenance: ['contract:ecosystem/gcpxunia-defense.json'],
+    },
+    {
+      id: 'peer:gcp-security-community', type: 'TECH_PEER', name: 'Google Cloud Security Community',
+      properties: { relation: 'LEARNS_FROM', affiliationClaim: false }, provenance: ['https://security.googlecloudcommunity.com/'],
+    },
+    {
+      id: 'peer:palantir-ontology', type: 'TECH_PEER', name: 'Palantir Ontology',
+      properties: { relation: 'MODELS_AFTER', affiliationClaim: false }, provenance: ['https://www.palantir.com/docs/foundry/ontology/overview'],
     },
     {
       id: 'license:apache-2.0', type: 'LICENSE', name: 'Apache License 2.0',
@@ -109,7 +162,12 @@ export const createGovernanceSeed = (): { readonly objects: readonly GovernanceO
   objects.forEach(validateGovernanceObject);
 
   const links: GovernanceLink[] = [
+    { from: 'repo:xuniadao', to: 'node:xuniaverse', type: 'ROOTS', provenance: ['contract:ecosystem/xuniaverse.json'] },
     { from: 'repo:xuniadao', to: 'license:apache-2.0', type: 'LICENSED_UNDER', provenance: ['path:LICENSE'] },
+    { from: 'identity:va3lm-agent', to: 'runtime:va3lm', type: 'IDENTIFIES', provenance: ['contract:ecosystem/gcpxunia-defense.json'] },
+    { from: 'auth:gcpxunia', to: 'identity:va3lm-agent', type: 'BROKERS_AUTH_FOR', provenance: ['contract:ecosystem/gcpxunia-defense.json'] },
+    { from: 'repo:xuniadao', to: 'peer:gcp-security-community', type: 'LEARNS_FROM', provenance: ['https://security.googlecloudcommunity.com/'] },
+    { from: 'repo:xuniadao', to: 'peer:palantir-ontology', type: 'MODELS_AFTER', provenance: ['https://www.palantir.com/docs/foundry/ontology/overview'] },
     { from: 'requirement:gdpr-production-evidence', to: 'repo:xuniadao', type: 'GOVERNS', provenance: ['path:src/lib/compliance-evidence.ts'] },
     { from: 'requirement:hipaa-production-evidence', to: 'repo:xuniadao', type: 'GOVERNS', provenance: ['path:src/lib/compliance-evidence.ts'] },
   ];
@@ -120,17 +178,36 @@ export const createGovernanceSeed = (): { readonly objects: readonly GovernanceO
 
 export const ECOSYSTEM_GOVERNANCE_ONTOLOGY = {
   id: 'GLASS-ONION-GOVERNANCE-ONTOLOGY',
-  version: '1.0.0',
+  version: '1.1.0',
   command: '/glass ontology governance',
   architecture: 'OBJECT_PROPERTY_LINK_ACTION_EVIDENCE_DECISION',
-  objectTypes: ['REPOSITORY', 'LICENSE', 'TOKEN', 'EXCHANGE', 'MARKET', 'COMPLIANCE_REQUIREMENT', 'EVIDENCE', 'ASSESSMENT', 'ATTESTATION'] as readonly GovernanceObjectType[],
-  linkTypes: ['LICENSED_UNDER', 'DISCOVERED_ON', 'QUOTED_BY', 'REQUIRES_EVIDENCE', 'SUPPORTED_BY', 'SATISFIES', 'GOVERNS', 'DERIVED_FROM', 'BLOCKED_BY'] as readonly GovernanceLinkType[],
-  actions: ['VERIFY_LICENSE', 'DISCOVER_LISTING', 'READ_TICKER', 'VALIDATE_LISTING_PACKET', 'ATTACH_EVIDENCE', 'ASSESS_READINESS', 'ISSUE_INTERNAL_ATTESTATION'] as readonly GovernanceAction[],
+  objectTypes: [
+    'REPOSITORY', 'LICENSE', 'TOKEN', 'EXCHANGE', 'MARKET', 'COMPLIANCE_REQUIREMENT',
+    'AGENT_IDENTITY', 'AUTH_PROVIDER', 'ACCESS_POLICY', 'RUNTIME', 'GUARDRAIL', 'SECURITY_EVENT',
+    'TECH_PEER', 'SECURITY_DOMAIN', 'XUNIAVERSE_NODE', 'EVIDENCE', 'ASSESSMENT', 'ATTESTATION',
+  ] as readonly GovernanceObjectType[],
+  linkTypes: [
+    'LICENSED_UNDER', 'DISCOVERED_ON', 'QUOTED_BY', 'REQUIRES_EVIDENCE', 'SUPPORTED_BY',
+    'SATISFIES', 'GOVERNS', 'DERIVED_FROM', 'BLOCKED_BY', 'ROOTS', 'IDENTIFIES', 'AUTHORIZES',
+    'BROKERS_AUTH_FOR', 'ENFORCES', 'PROTECTS', 'BENCHMARKS_AGAINST', 'LEARNS_FROM', 'MODELS_AFTER', 'VALIDATES_WITH',
+  ] as readonly GovernanceLinkType[],
+  actions: [
+    'VERIFY_LICENSE', 'DISCOVER_LISTING', 'READ_TICKER', 'VALIDATE_LISTING_PACKET', 'ATTACH_EVIDENCE',
+    'ASSESS_READINESS', 'ISSUE_INTERNAL_ATTESTATION', 'VERIFY_AGENT_IDENTITY', 'BROKER_AGENT_AUTH',
+    'REVOKE_AGENT_ACCESS', 'VERIFY_PEER_SOURCE', 'REGISTER_XUNIAVERSE_NODE',
+  ] as readonly GovernanceAction[],
+  domains: ['LICENSES', 'EXCHANGES', 'GDPR_HIPAA_EVIDENCE', 'AGENT_IDENTITY', 'GCPXUNIA_DEFENSE', 'TECH_PEERS', 'XUNIAVERSE'] as const,
   invariants: {
     provenanceRequired: true,
     externalListingRequiresExchangeEvidence: true,
     productionComplianceRequiresOperationalEvidence: true,
     licenseRightsRequireVerifiedLicense: true,
+    agentIdentityRequiredForBrokeredAuth: true,
+    sharedAgentCredentialsBlocked: true,
+    longLivedAgentCredentialsBlocked: true,
+    broadAgentGrantRequiresReview: true,
+    peerClaimsRequireEvidence: true,
+    xuniadaoIsXuniaverseRoot: true,
     fundMovementBlocked: true,
   },
 } as const;
