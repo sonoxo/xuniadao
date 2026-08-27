@@ -1,0 +1,55 @@
+name: Mission Telemetry Ontology Lock
+
+on:
+  pull_request:
+    paths:
+      - 'src/lib/mission-telemetry.ts'
+      - 'src/lib/mission-telemetry.spec.ts'
+      - 'src/lib/glass-onion-layer.ts'
+      - 'src/index.ts'
+      - 'ecosystem/mission-telemetry.json'
+      - 'ecosystem/glass-onion-layer.json'
+      - 'docs/MISSION_TELEMETRY.md'
+      - '.github/workflows/mission-telemetry.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'src/lib/mission-telemetry.ts'
+      - 'src/lib/mission-telemetry.spec.ts'
+      - 'src/lib/glass-onion-layer.ts'
+      - 'src/index.ts'
+      - 'ecosystem/mission-telemetry.json'
+      - 'ecosystem/glass-onion-layer.json'
+      - 'docs/MISSION_TELEMETRY.md'
+
+jobs:
+  mission-lock:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: yarn
+      - run: yarn install --frozen-lockfile
+      - run: yarn build:main
+      - run: yarn test:unit
+      - name: Verify mission control boundary
+        run: |
+          node <<'NODE'
+          const assert = require('assert');
+          const fs = require('fs');
+          const mission = require('./dist/main/lib/mission-telemetry');
+          const glass = require('./dist/main/lib/glass-onion-layer');
+          const contract = JSON.parse(fs.readFileSync('ecosystem/mission-telemetry.json','utf8'));
+          assert.equal(mission.MISSION_TELEMETRY_ONTOLOGY.command, '/glass mission');
+          assert.equal(mission.evaluateMissionTelemetryAction('READ_PUBLIC_MISSION_DATA').decision, 'ALLOW');
+          assert.equal(mission.evaluateMissionTelemetryAction('SIMULATE_TELEMETRY').decision, 'ALLOW');
+          assert.equal(mission.evaluateMissionTelemetryAction('FLIGHT_COMMAND').decision, 'BLOCK');
+          assert.equal(mission.evaluateMissionTelemetryAction('ACTUATE').decision, 'BLOCK');
+          assert.equal(glass.GLASS_ONION_LAYER.missionCommand, '/glass mission');
+          assert.equal(contract.controls.realWorldFlightControl, false);
+          assert.equal(contract.controls.telecommandTransmission, false);
+          console.log('MISSION TELEMETRY ONTOLOGY LOCK: PASS');
+          NODE
