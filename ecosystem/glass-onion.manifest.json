@@ -1,0 +1,51 @@
+{
+  "codename": "GLASS ONION",
+  "umbrella": "XUNIA",
+  "version": "1.0.0",
+  "modules": [
+    {
+      "id": "xunia",
+      "name": "XUNIA / XuniaDAO",
+      "repository": "https://github.com/sonoxo/xuniadao",
+      "defaultBranch": "main",
+      "workspacePath": "modules/xunia"
+    },
+    {
+      "id": "zyra",
+      "name": "ZYRA",
+      "repository": "https://github.com/sonoxo/zyra",
+      "defaultBranch": "main",
+      "workspacePath": "modules/zyra"
+    },
+    {
+      "id": "sonoxo",
+      "name": "SONOXO / GPT-DOUG-LLM",
+      "repository": "https://github.com/sonoxo/gpt-doug-llm",
+      "defaultBranch": "main",
+      "workspacePath": "modules/sonoxo"
+    },
+    {
+      "id": "almighty-sonoxo",
+      "name": "AlmightySonoxo",
+      "repository": "https://github.com/sonoxo/AlmightySonoxo",
+      "defaultBranch": "main",
+      "workspacePath": "modules/almighty-sonoxo"
+    },
+    {
+      "id": "va3lm",
+      "name": "VA3LM",
+      "repository": "https://github.com/sonoxo/gpt-doug-llm",
+      "defaultBranch": "main",
+      "subpath": "va3lm",
+      "workspacePath": "modules/va3lm"
+    }
+  ],
+  "technologyIntelligence": [
+    "Anthropic / Claude",
+    "Google",
+    "Palantir",
+    "IBM / Red Hat",
+    "AWS"
+  ],
+  "boundary": "Compatibility and architecture alignment do not imply sponsorship, investment, partnership, endorsement, or government affiliation."
+}
