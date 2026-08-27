@@ -1,0 +1,73 @@
+name: GDPR HIPAA Control Lock
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/lib/gdpr-hipaa.ts'
+      - 'src/lib/gdpr-hipaa.spec.ts'
+      - 'src/index.ts'
+      - 'ecosystem/gdpr-hipaa.json'
+      - 'ecosystem/crm-compliance.json'
+      - 'docs/GDPR_HIPAA.md'
+      - '.github/workflows/gdpr-hipaa.yml'
+  pull_request:
+    paths:
+      - 'src/lib/gdpr-hipaa.ts'
+      - 'src/lib/gdpr-hipaa.spec.ts'
+      - 'src/index.ts'
+      - 'ecosystem/gdpr-hipaa.json'
+      - 'ecosystem/crm-compliance.json'
+      - 'docs/GDPR_HIPAA.md'
+      - '.github/workflows/gdpr-hipaa.yml'
+
+jobs:
+  gdpr-hipaa-lock:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: yarn
+      - name: Install
+        run: yarn install --frozen-lockfile
+      - name: Build
+        run: yarn build:main
+      - name: Unit tests
+        run: yarn test:unit
+      - name: GDPR HIPAA runtime lock
+        run: |
+          node <<'NODE'
+          const assert = require('assert');
+          const controls = require('./dist/main/lib/gdpr-hipaa');
+          assert.equal(controls.GDPR_HIPAA_CONTROL_MATRIX.command, '/glass certify crm');
+          assert.equal(controls.GDPR_HIPAA_CONTROL_MATRIX.gdpr.recordsOfProcessingArticle30, true);
+          assert.equal(controls.GDPR_HIPAA_CONTROL_MATRIX.gdpr.breachArticles33to34, true);
+          assert.equal(controls.GDPR_HIPAA_CONTROL_MATRIX.gdpr.dpiaArticle35, true);
+          assert.equal(controls.GDPR_HIPAA_CONTROL_MATRIX.hipaa.administrativeSafeguards, true);
+          assert.equal(controls.GDPR_HIPAA_CONTROL_MATRIX.hipaa.physicalSafeguards, true);
+          assert.equal(controls.GDPR_HIPAA_CONTROL_MATRIX.hipaa.technicalSafeguards, true);
+          assert.equal(controls.GDPR_HIPAA_CONTROL_MATRIX.hipaa.breachNotification, true);
+          assert.equal(controls.GDPR_HIPAA_CONTROL_MATRIX.boundary.softwarePolicyControlsComplete, true);
+          assert.equal(controls.GDPR_HIPAA_CONTROL_MATRIX.boundary.externalLegalDeterminationIssued, false);
+          console.log('GDPR HIPAA CONTROL LOCK: PASS');
+          NODE
+      - name: Machine contract lock
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const assert = require('assert');
+          const contract = JSON.parse(fs.readFileSync('ecosystem/gdpr-hipaa.json', 'utf8'));
+          assert.equal(contract.status, 'SOFTWARE_POLICY_CONTROLS_COMPLETE');
+          assert.equal(contract.gdpr.recordsOfProcessingArticle30, 'READY');
+          assert.equal(contract.gdpr.dpiaArticle35, 'READY');
+          assert.equal(contract.hipaa.securityRuleAdministrativeSafeguards, 'READY');
+          assert.equal(contract.hipaa.securityRulePhysicalSafeguards, 'READY');
+          assert.equal(contract.hipaa.securityRuleTechnicalSafeguards, 'READY');
+          assert.equal(contract.hipaa.breachNotificationRule, 'READY');
+          assert.equal(contract.claims.gdprRegulatorCertificationIssued, false);
+          assert.equal(contract.claims.hipaaGovernmentCertificationIssued, false);
+          console.log('GDPR HIPAA MACHINE CONTRACT: PASS');
+          NODE
