@@ -26,10 +26,35 @@ test('read-only routed work can use the fast path', (t) => {
   t.true(route.pipeline.includes('SONOXO_ONTOLOGY'));
 });
 
+test('AIT ontology routes through the dedicated intelligence pipeline', (t) => {
+  const route = routeGlassOnion({
+    objective: 'Correlate AIT intelligence with provenance',
+    capability: 'AIT_ONTOLOGY',
+    targets: ['xunia', 'sonoxo', 'va3lm', 'zyra'],
+    provenance: ['source:test'],
+  });
+
+  t.is(route.decision, 'ALLOW');
+  t.true(route.pipeline.includes('AIT_PROVENANCE_CHECK'));
+  t.true(route.pipeline.includes('AIT_CORRELATE'));
+  t.true(route.pipeline.includes('VA3LM_COMMAND_REVIEW'));
+});
+
 test('intelligence promotion without provenance is held for review', (t) => {
   const route = routeGlassOnion({
     objective: 'Correlate cross-repo intelligence',
     capability: 'INTELLIGENCE_QUERY',
+    targets: ['xunia', 'sonoxo'],
+  });
+
+  t.is(route.decision, 'REVIEW');
+  t.true(route.reasons.includes('PROVENANCE_REQUIRED_FOR_INTELLIGENCE_PROMOTION'));
+});
+
+test('AIT routing without provenance is held for review', (t) => {
+  const route = routeGlassOnion({
+    objective: 'Promote AIT intelligence',
+    capability: 'AIT_ONTOLOGY',
     targets: ['xunia', 'sonoxo'],
   });
 
