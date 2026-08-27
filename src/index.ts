@@ -1,6 +1,7 @@
 export * from './lib/ait-ontology';
 export * from './lib/crm';
 export * from './lib/crm-certification';
+export * from './lib/crm-compliance';
 export * from './lib/ecosystem';
 export * from './lib/glass-onion-layer';
 export * from './lib/quantum-ontology';
