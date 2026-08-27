@@ -6,6 +6,8 @@ on:
     paths:
       - 'src/lib/ecosystem.ts'
       - 'src/lib/ecosystem.spec.ts'
+      - 'src/lib/glass-onion-layer.ts'
+      - 'src/lib/glass-onion-layer.spec.ts'
       - 'src/lib/va3lm.ts'
       - 'src/lib/super-agent.ts'
       - 'src/lib/sagi.ts'
@@ -14,8 +16,7 @@ on:
       - 'src/index.ts'
       - 'cadence/**'
       - 'ecosystem/**'
-      - 'docs/VA3LM-SAGI.md'
-      - 'docs/GOOD_FIRST_ISSUES.md'
+      - 'docs/**'
       - 'CONTRIBUTING.md'
       - 'CONTRIBUTORS.md'
       - '.github/PULL_REQUEST_TEMPLATE.md'
@@ -26,6 +27,8 @@ on:
     paths:
       - 'src/lib/ecosystem.ts'
       - 'src/lib/ecosystem.spec.ts'
+      - 'src/lib/glass-onion-layer.ts'
+      - 'src/lib/glass-onion-layer.spec.ts'
       - 'src/lib/va3lm.ts'
       - 'src/lib/super-agent.ts'
       - 'src/lib/sagi.ts'
@@ -34,8 +37,7 @@ on:
       - 'src/index.ts'
       - 'cadence/**'
       - 'ecosystem/**'
-      - 'docs/VA3LM-SAGI.md'
-      - 'docs/GOOD_FIRST_ISSUES.md'
+      - 'docs/**'
       - 'CONTRIBUTING.md'
       - 'CONTRIBUTORS.md'
       - '.github/PULL_REQUEST_TEMPLATE.md'
@@ -72,15 +74,37 @@ jobs:
           assert.equal(GLASS_ONION.codename, 'GLASS ONION');
           assert.equal(GLASS_ONION.umbrella, 'XUNIA');
           assert.deepEqual(GLASS_ONION.layers.map(x => x.id), [
-            'xunia', 'zyra', 'sonoxo', 'almighty-sonoxo', 'va3lm'
+            'xunia', 'zyra', 'sonoxo', 'almighty-sonoxo', 'va3lm', 'gpt-uap-xo'
           ]);
           assert.equal(getXuniaLayer('va3lm').runtime, 'http://127.0.0.1:8088');
+          assert.equal(getXuniaLayer('gpt-uap-xo').repository, 'https://github.com/sonoxo/gpt-uap-xo');
+          assert.equal(getXuniaLayer('gpt-uap-xo').visibility, 'PRIVATE');
           assert.equal(GLASS_ONION.rules.humanApprovalForMutation, true);
           assert.equal(GLASS_ONION.rules.automaticFundMovement, false);
           assert.equal(GLASS_ONION.rules.automaticGovernanceVoting, false);
           assert.equal(GLASS_ONION.rules.arbitraryRemoteShell, false);
           assert.equal(GLASS_ONION.rules.provenanceRequired, true);
           console.log('GLASS ONION ECOSYSTEM LOCK: PASS');
+          NODE
+
+      - name: GPT-UAP-XO route lock
+        run: |
+          node <<'NODE'
+          const assert = require('assert');
+          const { GLASS_ONION_LAYER, routeGlassOnion } = require('./dist/main/lib/glass-onion-layer');
+          assert.equal(GLASS_ONION_LAYER.uapCommand, '/glass uap');
+          assert.ok(GLASS_ONION_LAYER.layers.includes('gpt-uap-xo'));
+          assert.ok(GLASS_ONION_LAYER.capabilities.includes('UAP_AGENT_RUNTIME'));
+          const route = routeGlassOnion({
+            objective: 'Run bounded local agent workers',
+            capability: 'UAP_AGENT_RUNTIME',
+            targets: ['xunia', 'gpt-uap-xo', 'zyra'],
+            provenance: ['repo:sonoxo/gpt-uap-xo']
+          });
+          assert.equal(route.decision, 'ALLOW');
+          assert.ok(route.pipeline.includes('GPT_UAP_XO_BOUNDED_WORKERS'));
+          assert.ok(route.pipeline.includes('ZYRA_ACTION_GATE'));
+          console.log('GPT-UAP-XO GLASS ONION ROUTE: PASS');
           NODE
 
       - name: SAGI super-agent lock
@@ -118,8 +142,10 @@ jobs:
           const manifest = JSON.parse(fs.readFileSync('ecosystem/glass-onion.json', 'utf8'));
           const sagi = JSON.parse(fs.readFileSync('ecosystem/va3lm-sagi.json', 'utf8'));
           assert.equal(manifest.codename, 'GLASS ONION');
-          assert.equal(manifest.layers.length, 5);
+          assert.equal(manifest.layers.length, 6);
           assert.equal(manifest.layers.find(x => x.id === 'va3lm').runtime, 'http://127.0.0.1:8088');
+          assert.equal(manifest.layers.find(x => x.id === 'gpt-uap-xo').visibility, 'PRIVATE');
+          assert.ok(manifest.routing.uapAgentRuntime.includes('GPT_UAP_XO_BOUNDED_WORKERS'));
           assert.equal(sagi.command, '/VA3LM-SAGI');
           assert.deepEqual(sagi.stack.ibmQuantum.primitives, ['SamplerV2', 'EstimatorV2']);
           assert.equal(sagi.commandGates.automaticFundMovement, 'BLOCKED');
