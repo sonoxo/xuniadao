@@ -1,6 +1,6 @@
 {
   "codename": "GLASS ONION",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "command": "/glass",
   "aitCommand": "/glass ait",
   "crmCommand": "/glass crm",
@@ -9,18 +9,16 @@
   "licensesCommand": "/glass licenses",
   "exchangesCommand": "/glass exchanges",
   "evidenceCommand": "/glass evidence",
+  "identityCommand": "/glass identity",
+  "defenseCommand": "/glass defense",
+  "peersCommand": "/glass peers",
+  "xuniaverseCommand": "/glass xuniaverse",
   "governanceOntologyCommand": "/glass ontology governance",
   "uapCommand": "/glass uap",
   "umbrella": "XUNIA",
-  "purpose": "Cross-repository intelligence, ontology, licensing, compliance evidence, market discovery, and governed orchestration membrane for the XUNIA ecosystem.",
-  "layers": [
-    "xunia",
-    "zyra",
-    "sonoxo",
-    "almighty-sonoxo",
-    "va3lm",
-    "gpt-uap-xo"
-  ],
+  "face": "XUNIA / XuniaDAO",
+  "purpose": "Root ontology, cross-repository intelligence, agent identity security, defensive cloud governance, licensing, compliance evidence, market discovery, and governed orchestration for the XUNIAverse.",
+  "layers": ["xunia", "zyra", "sonoxo", "almighty-sonoxo", "va3lm", "gpt-uap-xo"],
   "capabilities": [
     "INTELLIGENCE_QUERY",
     "AIT_ONTOLOGY",
@@ -30,6 +28,10 @@
     "LICENSE_REGISTRY",
     "EXCHANGE_MARKET_DATA",
     "COMPLIANCE_EVIDENCE",
+    "AGENT_IDENTITY_SECURITY",
+    "GCPXUNIA_DEFENSE",
+    "TECH_PEER_ONTOLOGY",
+    "XUNIAVERSE_REGISTRY",
     "CODE_PLAN",
     "ONTOLOGY_WORKFLOW",
     "MEDIA_WORKFLOW",
@@ -41,17 +43,25 @@
   "governanceOntology": {
     "contract": "ecosystem/governance-ontology.json",
     "architecture": "OBJECT_PROPERTY_LINK_ACTION_EVIDENCE_DECISION",
-    "domains": ["LICENSES", "EXCHANGES", "GDPR_HIPAA_EVIDENCE"]
+    "domains": ["LICENSES", "EXCHANGES", "GDPR_HIPAA_EVIDENCE", "AGENT_IDENTITY", "GCPXUNIA_DEFENSE", "TECH_PEERS", "XUNIAVERSE"]
   },
   "pipelines": {
     "LICENSE_REGISTRY": ["REPOSITORY_DISCOVERY", "LICENSE_FILE_VERIFY", "SPDX_VALIDATE", "OBLIGATION_EVALUATE", "ATTRIBUTION_EVIDENCE"],
     "EXCHANGE_MARKET_DATA": ["TOKEN_SCOPE", "LISTING_PACKET_VALIDATE", "LIVE_EXCHANGE_DISCOVERY", "LISTING_STATUS_VERIFY", "READ_ONLY_TICKER"],
-    "COMPLIANCE_EVIDENCE": ["FRAMEWORK_SCOPE", "REQUIREMENT_MAP", "EVIDENCE_INGEST", "PROVENANCE_VERIFY", "EXPIRY_CHECK", "READINESS_ASSESSMENT"]
+    "COMPLIANCE_EVIDENCE": ["FRAMEWORK_SCOPE", "REQUIREMENT_MAP", "EVIDENCE_INGEST", "PROVENANCE_VERIFY", "EXPIRY_CHECK", "READINESS_ASSESSMENT"],
+    "AGENT_IDENTITY_SECURITY": ["AGENT_INVENTORY", "SPIFFE_IDENTITY_VERIFY", "AGENT_ATTESTATION", "AUTH_MANAGER_BROKER", "LEAST_PRIVILEGE_POLICY", "DPOP_OR_MTLS_BINDING", "AUDIT_EVIDENCE"],
+    "GCPXUNIA_DEFENSE": ["XUNIA_SCOPE", "AGENT_IDENTITY_VERIFY", "GCPXUNIA_AUTH_BROKER", "VIRGINIA_POLICY_BOUNDARY", "VA3LM_REASON_AND_PLAN", "RUNTIME_GUARDRAIL", "ZYRA_ACTION_GATE", "AUDIT_EVIDENCE"],
+    "TECH_PEER_ONTOLOGY": ["PEER_SOURCE_DISCOVERY", "PRIMARY_SOURCE_VERIFY", "DOMAIN_MAP", "ONTOLOGY_LINK", "CREDENTIAL_EVIDENCE_CHECK", "ALIGNMENT_ASSESSMENT"],
+    "XUNIAVERSE_REGISTRY": ["REPOSITORY_DISCOVERY", "UPSTREAM_PROVENANCE", "NODE_ROLE_MAP", "XUNIADAO_ROOT_LINK", "LICENSE_BOUNDARY", "REGISTRY_EVIDENCE"]
   },
   "decisions": ["ALLOW", "REVIEW", "BLOCK"],
   "invariants": {
+    "xuniadaoIsXuniaverseRoot": true,
     "provenanceRequired": true,
     "humanApprovalForMutation": true,
+    "agentIdentityRequiredForBrokeredAuth": true,
+    "sharedAgentCredentialsBlocked": true,
+    "longLivedAgentCredentialsBlocked": true,
     "exchangeMarketDataReadOnly": true,
     "externalExchangeListingCannotBeSelfDeclared": true,
     "productionComplianceEvidenceCannotBeInferred": true,
