@@ -1,0 +1,68 @@
+import test from 'ava';
+
+import { GLASS_ONION_LAYER, routeGlassOnion } from './glass-onion-layer';
+
+test('Glass Onion identity and five-layer membrane are locked', (t) => {
+  t.is(GLASS_ONION_LAYER.codename, 'GLASS ONION');
+  t.is(GLASS_ONION_LAYER.command, '/glass');
+  t.deepEqual(GLASS_ONION_LAYER.layers, [
+    'xunia',
+    'zyra',
+    'sonoxo',
+    'almighty-sonoxo',
+    'va3lm',
+  ]);
+});
+
+test('read-only routed work can use the fast path', (t) => {
+  const route = routeGlassOnion({
+    objective: 'Build a typed ontology workflow plan',
+    capability: 'ONTOLOGY_WORKFLOW',
+    targets: ['xunia', 'sonoxo', 'va3lm', 'zyra'],
+  });
+
+  t.is(route.decision, 'ALLOW');
+  t.false(route.humanApprovalRequired);
+  t.true(route.pipeline.includes('SONOXO_ONTOLOGY'));
+});
+
+test('intelligence promotion without provenance is held for review', (t) => {
+  const route = routeGlassOnion({
+    objective: 'Correlate cross-repo intelligence',
+    capability: 'INTELLIGENCE_QUERY',
+    targets: ['xunia', 'sonoxo'],
+  });
+
+  t.is(route.decision, 'REVIEW');
+  t.true(route.reasons.includes('PROVENANCE_REQUIRED_FOR_INTELLIGENCE_PROMOTION'));
+});
+
+test('repository mutation, transaction signing and production deployment require review', (t) => {
+  const route = routeGlassOnion({
+    objective: 'Prepare and deploy a Cadence integration',
+    capability: 'CADENCE_FLOW',
+    targets: ['xunia', 'zyra', 'va3lm'],
+    mutatesRepository: true,
+    signsTransaction: true,
+    deploysProduction: true,
+  });
+
+  t.is(route.decision, 'REVIEW');
+  t.true(route.humanApprovalRequired);
+});
+
+test('automatic funds, governance votes and arbitrary remote shell are blocked', (t) => {
+  const route = routeGlassOnion({
+    objective: 'Attempt prohibited autonomous action',
+    capability: 'CADENCE_FLOW',
+    targets: ['xunia'],
+    movesFunds: true,
+    castsGovernanceVote: true,
+    arbitraryRemoteShell: true,
+  });
+
+  t.is(route.decision, 'BLOCK');
+  t.true(route.reasons.includes('AUTOMATIC_FUND_MOVEMENT_BLOCKED'));
+  t.true(route.reasons.includes('AUTOMATIC_GOVERNANCE_VOTING_BLOCKED'));
+  t.true(route.reasons.includes('ARBITRARY_REMOTE_SHELL_BLOCKED'));
+});
