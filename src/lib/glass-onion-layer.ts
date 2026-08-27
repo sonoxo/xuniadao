@@ -6,6 +6,9 @@ export type GlassOnionCapability =
   | 'CRM'
   | 'CRM_PORT'
   | 'CRM_CERTIFICATION'
+  | 'LICENSE_REGISTRY'
+  | 'EXCHANGE_MARKET_DATA'
+  | 'COMPLIANCE_EVIDENCE'
   | 'CODE_PLAN'
   | 'ONTOLOGY_WORKFLOW'
   | 'MEDIA_WORKFLOW'
@@ -44,6 +47,9 @@ const PIPELINES: Readonly<Record<GlassOnionCapability, readonly string[]>> = {
   CRM: ['CRM_INGEST', 'AIT_NORMALIZE', 'CRM_RELATIONSHIP_GRAPH', 'VA3LM_ANALYZE', 'ZYRA_WORKFLOW', 'UAP_AGENT_TASKS'],
   CRM_PORT: ['PORT_INGEST', 'FORMAT_PARSE', 'SCHEMA_MAP', 'DEDUPE', 'CONSENT_PROVENANCE_CHECK', 'DRY_RUN', 'HUMAN_REVIEW', 'BATCH_WRITE_OR_EXPORT', 'AUDIT', 'ROLLBACK_MANIFEST'],
   CRM_CERTIFICATION: ['CRM_CONTROL_SCOPE', 'PALANTIR_ONTOLOGY_GRAPH', 'EVIDENCE_VERIFICATION', 'CONTROL_ASSESSMENT', 'RISK_CHECK', 'ATTESTATION_GATE'],
+  LICENSE_REGISTRY: ['REPOSITORY_DISCOVERY', 'LICENSE_FILE_VERIFY', 'SPDX_VALIDATE', 'OBLIGATION_EVALUATE', 'ATTRIBUTION_EVIDENCE'],
+  EXCHANGE_MARKET_DATA: ['TOKEN_SCOPE', 'LISTING_PACKET_VALIDATE', 'LIVE_EXCHANGE_DISCOVERY', 'LISTING_STATUS_VERIFY', 'READ_ONLY_TICKER'],
+  COMPLIANCE_EVIDENCE: ['FRAMEWORK_SCOPE', 'REQUIREMENT_MAP', 'EVIDENCE_INGEST', 'PROVENANCE_VERIFY', 'EXPIRY_CHECK', 'READINESS_ASSESSMENT'],
   CODE_PLAN: ['XUNIA_SCOPE', 'VA3LM_PLAN', 'SONOXO_CODE_INTELLIGENCE', 'ZYRA_VALIDATE'],
   ONTOLOGY_WORKFLOW: ['XUNIA_OBJECTS', 'SONOXO_ONTOLOGY', 'VA3LM_FUNCTION_PLAN', 'ZYRA_ACTION_GATE'],
   MEDIA_WORKFLOW: ['ALMIGHTY_SONOXO_MEDIA', 'XUNIA_PROVENANCE', 'SONOXO_INDEX', 'ZYRA_WORKFLOW'],
@@ -52,6 +58,17 @@ const PIPELINES: Readonly<Record<GlassOnionCapability, readonly string[]>> = {
   UAP_AGENT_RUNTIME: ['XUNIA_SCOPE', 'GPT_UAP_XO_PLAN', 'GPT_UAP_XO_BOUNDED_WORKERS', 'PROVENANCE_CHECK', 'ZYRA_ACTION_GATE'],
   CI_VALIDATION: ['XUNIA_SCOPE', 'ZYRA_CI', 'SONOXO_EVIDENCE', 'XUNIA_VERIFY'],
 };
+
+const PROVENANCE_CAPABILITIES: readonly GlassOnionCapability[] = [
+  'INTELLIGENCE_QUERY',
+  'AIT_ONTOLOGY',
+  'CRM',
+  'CRM_PORT',
+  'CRM_CERTIFICATION',
+  'LICENSE_REGISTRY',
+  'EXCHANGE_MARKET_DATA',
+  'COMPLIANCE_EVIDENCE',
+];
 
 const uniqueTargets = (targets: readonly XuniaLayerId[]): XuniaLayerId[] =>
   targets.filter((target, index) => targets.indexOf(target) === index);
@@ -77,16 +94,7 @@ export const routeGlassOnion = (request: GlassOnionRequest): GlassOnionRoute => 
     return { codename: 'GLASS ONION', decision: 'BLOCK', humanApprovalRequired: true, targets, pipeline: PIPELINES[request.capability], reasons };
   }
 
-  if (
-    (
-      request.capability === 'INTELLIGENCE_QUERY' ||
-      request.capability === 'AIT_ONTOLOGY' ||
-      request.capability === 'CRM' ||
-      request.capability === 'CRM_PORT' ||
-      request.capability === 'CRM_CERTIFICATION'
-    ) &&
-    (!request.provenance || request.provenance.length === 0)
-  ) {
+  if (PROVENANCE_CAPABILITIES.includes(request.capability) && (!request.provenance || request.provenance.length === 0)) {
     reasons.push('PROVENANCE_REQUIRED_FOR_INTELLIGENCE_PROMOTION');
   }
 
@@ -107,12 +115,15 @@ export const routeGlassOnion = (request: GlassOnionRequest): GlassOnionRoute => 
 
 export const GLASS_ONION_LAYER = {
   codename: 'GLASS ONION',
-  version: '2.4.0',
+  version: '2.5.0',
   command: '/glass',
   aitCommand: '/glass ait',
   crmCommand: '/glass crm',
   crmPortCommand: '/glass crm port',
   crmCertificationCommand: '/glass certify crm',
+  licensesCommand: '/glass licenses',
+  exchangesCommand: '/glass exchanges',
+  evidenceCommand: '/glass evidence',
   uapCommand: '/glass uap',
   umbrella: 'XUNIA',
   layers: ['xunia', 'zyra', 'sonoxo', 'almighty-sonoxo', 'va3lm', 'gpt-uap-xo'] as readonly XuniaLayerId[],
@@ -120,6 +131,9 @@ export const GLASS_ONION_LAYER = {
   invariants: {
     provenanceRequired: true,
     humanApprovalForMutation: true,
+    exchangeMarketDataReadOnly: true,
+    externalExchangeListingCannotBeSelfDeclared: true,
+    productionComplianceEvidenceCannotBeInferred: true,
     automaticFundMovement: false,
     automaticGovernanceVoting: false,
     arbitraryRemoteShell: false,
