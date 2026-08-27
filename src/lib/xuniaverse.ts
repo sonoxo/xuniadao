@@ -33,6 +33,9 @@ export const XUNIAVERSE_REPOSITORIES: readonly XuniaverseRepositoryNode[] = [
   node('sonoxo/plandev-uiXUNIA', 'XUNIA_EXTENSION'),
   node('sonoxo/aip-community-registry-zyra', 'XUNIA_EXTENSION'),
   node('sonoxo/xrpl-dev-portalXUNIA', 'XUNIA_EXTENSION'),
+  node('sonoxo/XRPL-StandardsXUNIA-', 'XUNIA_EXTENSION'),
+  node('sonoxo/xrpl.jsXUNIA', 'XUNIA_EXTENSION'),
+  node('sonoxo/rippledXUNIA', 'XUNIA_EXTENSION'),
   node('sonoxo/feelingcheck-companion', 'PRODUCT'),
   node('sonoxo/soundcloudopen', 'PRODUCT'),
   node('sonoxo/distroprep', 'PRODUCT'),
@@ -73,7 +76,7 @@ export const XUNIAVERSE_REPOSITORIES: readonly XuniaverseRepositoryNode[] = [
 
 export const XUNIAVERSE = {
   id: 'XUNIAVERSE',
-  version: '1.1.0',
+  version: '1.2.0',
   rootRepository: 'sonoxo/xuniadao',
   face: 'XUNIA / XuniaDAO',
   nodeCount: XUNIAVERSE_REPOSITORIES.length,
