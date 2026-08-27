@@ -1,0 +1,79 @@
+name: Glass Onion CRM Lock
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/lib/crm.ts'
+      - 'src/lib/crm.spec.ts'
+      - 'src/lib/glass-onion-layer.ts'
+      - 'src/lib/glass-onion-layer.spec.ts'
+      - 'src/index.ts'
+      - 'ecosystem/crm.json'
+      - 'docs/CRM.md'
+      - '.github/workflows/crm.yml'
+  pull_request:
+    paths:
+      - 'src/lib/crm.ts'
+      - 'src/lib/crm.spec.ts'
+      - 'src/lib/glass-onion-layer.ts'
+      - 'src/lib/glass-onion-layer.spec.ts'
+      - 'src/index.ts'
+      - 'ecosystem/crm.json'
+      - 'docs/CRM.md'
+      - '.github/workflows/crm.yml'
+
+jobs:
+  crm-lock:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: yarn
+      - name: Install
+        run: yarn install --frozen-lockfile
+      - name: Build
+        run: yarn build:main
+      - name: Unit tests
+        run: yarn test:unit
+      - name: CRM contract lock
+        run: |
+          node <<'NODE'
+          const assert = require('assert');
+          const { CRM, buildCRMPipeline, evaluateCRMAction } = require('./dist/main/lib/crm');
+          const { GLASS_ONION_LAYER, routeGlassOnion } = require('./dist/main/lib/glass-onion-layer');
+          assert.equal(CRM.command, '/glass crm');
+          assert.equal(GLASS_ONION_LAYER.crmCommand, '/glass crm');
+          assert.ok(CRM.entityTypes.includes('CUSTOMER'));
+          const result = buildCRMPipeline([
+            { id: 'opp:ci', type: 'OPPORTUNITY', name: 'CI', stage: 'PROPOSAL', value: 100, provenance: ['source:ci'] }
+          ]);
+          assert.equal(result.metrics.openValue, 100);
+          assert.equal(evaluateCRMAction({ action: 'READ', recordIds: ['opp:ci'] }).decision, 'ALLOW');
+          assert.equal(evaluateCRMAction({ action: 'UPDATE', recordIds: ['opp:ci'], mutatesData: true }).decision, 'REVIEW');
+          const route = routeGlassOnion({
+            objective: 'CRM CI route',
+            capability: 'CRM',
+            targets: ['xunia', 'zyra', 'gpt-uap-xo'],
+            provenance: ['source:ci']
+          });
+          assert.equal(route.decision, 'ALLOW');
+          assert.ok(route.pipeline.includes('CRM_RELATIONSHIP_GRAPH'));
+          console.log('GLASS ONION CRM LOCK: PASS');
+          NODE
+      - name: Machine contract lock
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const assert = require('assert');
+          const contract = JSON.parse(fs.readFileSync('ecosystem/crm.json', 'utf8'));
+          assert.equal(contract.status, 'ACTIVE');
+          assert.equal(contract.command, '/glass crm');
+          assert.equal(contract.features.accounts, true);
+          assert.equal(contract.features.pipelineMetrics, true);
+          assert.equal(contract.controls.provenanceRequired, true);
+          console.log('CRM MACHINE CONTRACT: PASS');
+          NODE
