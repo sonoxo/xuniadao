@@ -4,6 +4,7 @@ export type GlassOnionCapability =
   | 'INTELLIGENCE_QUERY'
   | 'AIT_ONTOLOGY'
   | 'CRM'
+  | 'CRM_CERTIFICATION'
   | 'CODE_PLAN'
   | 'ONTOLOGY_WORKFLOW'
   | 'MEDIA_WORKFLOW'
@@ -40,6 +41,7 @@ const PIPELINES: Readonly<Record<GlassOnionCapability, readonly string[]>> = {
   INTELLIGENCE_QUERY: ['XUNIA_INGEST', 'PROVENANCE_CHECK', 'SONOXO_ONTOLOGY', 'VA3LM_REASON', 'ZYRA_VERIFY'],
   AIT_ONTOLOGY: ['AIT_INGEST', 'AIT_PROVENANCE_CHECK', 'AIT_NORMALIZE', 'AIT_CORRELATE', 'AIT_ANALYZE', 'VA3LM_COMMAND_REVIEW', 'ZYRA_ACTION_GATE'],
   CRM: ['CRM_INGEST', 'AIT_NORMALIZE', 'CRM_RELATIONSHIP_GRAPH', 'VA3LM_ANALYZE', 'ZYRA_WORKFLOW', 'UAP_AGENT_TASKS'],
+  CRM_CERTIFICATION: ['CRM_CONTROL_SCOPE', 'PALANTIR_ONTOLOGY_GRAPH', 'EVIDENCE_VERIFICATION', 'CONTROL_ASSESSMENT', 'RISK_CHECK', 'ATTESTATION_GATE'],
   CODE_PLAN: ['XUNIA_SCOPE', 'VA3LM_PLAN', 'SONOXO_CODE_INTELLIGENCE', 'ZYRA_VALIDATE'],
   ONTOLOGY_WORKFLOW: ['XUNIA_OBJECTS', 'SONOXO_ONTOLOGY', 'VA3LM_FUNCTION_PLAN', 'ZYRA_ACTION_GATE'],
   MEDIA_WORKFLOW: ['ALMIGHTY_SONOXO_MEDIA', 'XUNIA_PROVENANCE', 'SONOXO_INDEX', 'ZYRA_WORKFLOW'],
@@ -74,7 +76,12 @@ export const routeGlassOnion = (request: GlassOnionRequest): GlassOnionRoute => 
   }
 
   if (
-    (request.capability === 'INTELLIGENCE_QUERY' || request.capability === 'AIT_ONTOLOGY' || request.capability === 'CRM') &&
+    (
+      request.capability === 'INTELLIGENCE_QUERY' ||
+      request.capability === 'AIT_ONTOLOGY' ||
+      request.capability === 'CRM' ||
+      request.capability === 'CRM_CERTIFICATION'
+    ) &&
     (!request.provenance || request.provenance.length === 0)
   ) {
     reasons.push('PROVENANCE_REQUIRED_FOR_INTELLIGENCE_PROMOTION');
@@ -97,10 +104,11 @@ export const routeGlassOnion = (request: GlassOnionRequest): GlassOnionRoute => 
 
 export const GLASS_ONION_LAYER = {
   codename: 'GLASS ONION',
-  version: '2.2.0',
+  version: '2.3.0',
   command: '/glass',
   aitCommand: '/glass ait',
   crmCommand: '/glass crm',
+  crmCertificationCommand: '/glass certify crm',
   uapCommand: '/glass uap',
   umbrella: 'XUNIA',
   layers: ['xunia', 'zyra', 'sonoxo', 'almighty-sonoxo', 'va3lm', 'gpt-uap-xo'] as readonly XuniaLayerId[],
