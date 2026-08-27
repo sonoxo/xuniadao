@@ -1,0 +1,76 @@
+{
+  "id": "GLASS-CRM-COMPLIANCE",
+  "version": "1.0.0",
+  "status": "READY_FOR_EXTERNAL_ASSESSMENT",
+  "command": "/glass certify crm",
+  "architecture": "PALANTIR_ONTOLOGY_ALIGNED",
+  "domains": {
+    "privacy": {
+      "purposeLimitation": true,
+      "dataMinimization": true,
+      "retention": true,
+      "consentLedger": true,
+      "privacyRightsWorkflow": ["ACCESS", "KNOW", "DELETE", "CORRECT", "OPT_OUT", "LIMIT", "PORTABILITY"]
+    },
+    "security": {
+      "rbac": true,
+      "auditChain": true,
+      "encryptionInTransitRequired": true,
+      "encryptionAtRestRequired": true,
+      "incidentWorkflow": true,
+      "vendorRiskTracking": true,
+      "securityOwnerRequired": true,
+      "periodicRiskAssessmentRequired": true,
+      "workforceTrainingRequired": true
+    },
+    "marketing": {
+      "truthfulHeadersRequired": true,
+      "truthfulSubjectsRequired": true,
+      "physicalAddressRequired": true,
+      "unsubscribeRequired": true,
+      "suppressionListRequired": true,
+      "smsVoiceConsentLedger": true,
+      "revocationHonored": true
+    },
+    "hipaaConditional": {
+      "enabledOnlyWhenPHIProcessed": true,
+      "minimumNecessaryAccess": true,
+      "auditControls": true,
+      "authenticationRequired": true,
+      "transmissionSecurityRequired": true,
+      "deviceMediaPolicyRequired": true,
+      "businessAssociateAgreementTracking": true,
+      "sixYearDocumentationRetentionRequired": true
+    }
+  },
+  "frameworkReadiness": {
+    "GDPR": "SOFTWARE_POLICY_CONTROLS_READY",
+    "CCPA": "SOFTWARE_POLICY_CONTROLS_READY",
+    "SOC2": "SOFTWARE_POLICY_CONTROLS_READY",
+    "CAN_SPAM": "SOFTWARE_POLICY_CONTROLS_READY",
+    "TCPA": "SOFTWARE_POLICY_CONTROLS_READY",
+    "HIPAA": "CONDITIONAL_SOFTWARE_POLICY_CONTROLS_READY"
+  },
+  "externalEvidenceStillRequired": [
+    "production encryption and key management",
+    "identity provider MFA and access reviews",
+    "production audit log exports and retention",
+    "incident response exercise",
+    "risk assessment and remediation register",
+    "workforce training records",
+    "vendor agreements and BAAs when applicable",
+    "deployed privacy notices and request channels",
+    "marketing unsubscribe and suppression evidence",
+    "SMS/voice consent records",
+    "backup restore availability and change management evidence when in scope",
+    "independent assessor report where formal attestation is required"
+  ],
+  "claims": {
+    "readyForExternalAssessment": true,
+    "thirdPartySOC2Attestation": false,
+    "regulatorIssuedGDPRCertification": false,
+    "regulatorIssuedCCPACertification": false,
+    "hipaaCertificationIssued": false,
+    "palantirEndorsement": false
+  }
+}

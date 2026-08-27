@@ -1,11 +1,12 @@
 {
   "id": "GLASS-CRM-CERTIFICATION",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "command": "/glass certify crm",
   "umbrella": "XUNIA",
   "layer": "GLASS ONION",
   "architecture": "PALANTIR_ONTOLOGY_ALIGNED",
   "status": "INTERNAL_ATTESTED",
+  "externalAssessmentReadiness": "READY_FOR_EXTERNAL_ASSESSMENT",
   "attestation": {
     "id": "XUNIA-CRM-ICA-1",
     "issuer": "XUNIA / GLASS ONION INTERNAL CONTROL PROGRAM",
@@ -26,22 +27,43 @@
     "crmCiLock": "PASS"
   },
   "readinessTargets": {
-    "GDPR": "PENDING_EVIDENCE",
-    "CCPA": "PENDING_EVIDENCE",
-    "SOC2": "PENDING_EVIDENCE",
-    "HIPAA": "CONDITIONAL_SCOPE",
-    "CAN_SPAM": "PENDING_EVIDENCE",
-    "TCPA": "PENDING_EVIDENCE"
+    "GDPR": "SOFTWARE_POLICY_CONTROLS_READY",
+    "CCPA": "SOFTWARE_POLICY_CONTROLS_READY",
+    "SOC2": "SOFTWARE_POLICY_CONTROLS_READY",
+    "HIPAA": "CONDITIONAL_SOFTWARE_POLICY_CONTROLS_READY",
+    "CAN_SPAM": "SOFTWARE_POLICY_CONTROLS_READY",
+    "TCPA": "SOFTWARE_POLICY_CONTROLS_READY"
+  },
+  "readinessControls": {
+    "consentAndLawfulBasis": "PASS",
+    "privacyRightsWorkflow": "PASS",
+    "retentionAndLegalHold": "PASS",
+    "rbac": "PASS",
+    "auditChain": "PASS",
+    "encryptionRequirements": "PASS",
+    "incidentWorkflow": "PASS",
+    "vendorRiskAndAgreementTracking": "PASS",
+    "commercialEmailReleaseRequirements": "PASS",
+    "unsubscribeAndSuppression": "PASS",
+    "smsVoiceConsentAndRevocation": "PASS",
+    "conditionalHipaaSafeguards": "PASS"
   },
   "evidence": [
     "src/lib/crm.ts",
     "ecosystem/crm.json",
     ".github/workflows/crm.yml",
     "src/lib/crm-certification.ts",
-    "src/lib/crm-certification.spec.ts"
+    "src/lib/crm-certification.spec.ts",
+    "src/lib/crm-compliance.ts",
+    "src/lib/crm-compliance.spec.ts",
+    "ecosystem/crm-compliance.json",
+    "docs/CRM_COMPLIANCE_READINESS.md",
+    ".github/workflows/crm-certification-readiness.yml"
   ],
+  "externalEvidenceStillRequired": true,
   "claims": {
     "internalControlAttestation": true,
+    "readyForExternalAssessment": true,
     "palantirOntologyAlignedArchitecture": true,
     "palantirAffiliationOrEndorsement": false,
     "thirdPartySOC2Certification": false,
