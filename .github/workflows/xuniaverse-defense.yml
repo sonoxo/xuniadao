@@ -17,10 +17,13 @@ on:
       - 'src/index.ts'
       - 'src/lib/xrpl-documentation.ts'
       - 'src/lib/xrpl-documentation.spec.ts'
+      - 'src/lib/xrpl-token-wallet-ontology.ts'
+      - 'src/lib/xrpl-token-wallet-ontology.spec.ts'
       - 'ecosystem/gcpxunia-defense.json'
       - 'ecosystem/tech-peers.json'
       - 'ecosystem/xuniaverse.json'
       - 'ecosystem/xrpl-documentation.json'
+      - 'ecosystem/xrpl-token-wallet.json'
       - 'ecosystem/governance-ontology.json'
       - 'ecosystem/glass-onion-layer.json'
       - 'ecosystem/mission-telemetry.json'
@@ -28,6 +31,7 @@ on:
       - 'docs/TECH_PEERS.md'
       - 'docs/MISSION_TELEMETRY.md'
       - 'docs/XRPL_INTEGRATION.md'
+      - 'docs/XRPL_TOKEN_WALLET_PATHWAYS.md'
       - 'README.md'
       - '.github/workflows/xuniaverse-defense.yml'
   pull_request:
@@ -45,10 +49,13 @@ on:
       - 'src/index.ts'
       - 'src/lib/xrpl-documentation.ts'
       - 'src/lib/xrpl-documentation.spec.ts'
+      - 'src/lib/xrpl-token-wallet-ontology.ts'
+      - 'src/lib/xrpl-token-wallet-ontology.spec.ts'
       - 'ecosystem/gcpxunia-defense.json'
       - 'ecosystem/tech-peers.json'
       - 'ecosystem/xuniaverse.json'
       - 'ecosystem/xrpl-documentation.json'
+      - 'ecosystem/xrpl-token-wallet.json'
       - 'ecosystem/governance-ontology.json'
       - 'ecosystem/glass-onion-layer.json'
       - 'ecosystem/mission-telemetry.json'
@@ -56,6 +63,7 @@ on:
       - 'docs/TECH_PEERS.md'
       - 'docs/MISSION_TELEMETRY.md'
       - 'docs/XRPL_INTEGRATION.md'
+      - 'docs/XRPL_TOKEN_WALLET_PATHWAYS.md'
       - 'README.md'
       - '.github/workflows/xuniaverse-defense.yml'
 
@@ -82,11 +90,13 @@ jobs:
           const universe = require('./dist/main/lib/xuniaverse');
           const layer = require('./dist/main/lib/glass-onion-layer');
           const mission = require('./dist/main/lib/mission-telemetry');
+          const xrpl = require('./dist/main/lib/xrpl-token-wallet-ontology');
           const defenseContract = JSON.parse(fs.readFileSync('ecosystem/gcpxunia-defense.json', 'utf8'));
           const peerContract = JSON.parse(fs.readFileSync('ecosystem/tech-peers.json', 'utf8'));
           const universeContract = JSON.parse(fs.readFileSync('ecosystem/xuniaverse.json', 'utf8'));
           const governance = JSON.parse(fs.readFileSync('ecosystem/governance-ontology.json', 'utf8'));
           const missionContract = JSON.parse(fs.readFileSync('ecosystem/mission-telemetry.json', 'utf8'));
+          const xrplContract = JSON.parse(fs.readFileSync('ecosystem/xrpl-token-wallet.json', 'utf8'));
           assert.equal(defense.GCPXUNIA_DEFENSE_ONTOLOGY.command, '/glass defense');
           assert.equal(defenseContract.controls.shortLivedCredentialsRequired, true);
           assert.equal(defenseContract.controls.sharedAgentCredentialsBlocked, true);
@@ -95,6 +105,13 @@ jobs:
           assert.equal(universe.XUNIAVERSE.rootRepository, 'sonoxo/xuniadao');
           assert.equal(universe.XUNIAVERSE_REPOSITORIES.length, universeContract.repositoryCount);
           assert.ok(universeContract.repositories.includes('sonoxo/xrpl-dev-portalXUNIA'));
+          assert.ok(universeContract.repositories.includes('sonoxo/XRPL-StandardsXUNIA-'));
+          assert.ok(universeContract.repositories.includes('sonoxo/xrpl.jsXUNIA'));
+          assert.ok(universeContract.repositories.includes('sonoxo/rippledXUNIA'));
+          assert.equal(xrpl.XRPL_TOKEN_WALLET_ONTOLOGY.command, '/glass xrpl pathways');
+          assert.equal(xrplContract.controls.humanApprovalRequiredForSigning, true);
+          assert.equal(xrplContract.controls.privateKeyStorage, false);
+          assert.equal(xrplContract.controls.automaticFundMovement, false);
           assert.ok(governance.objectTypes.includes('AGENT_IDENTITY'));
           assert.ok(governance.objectTypes.includes('TECH_PEER'));
           assert.ok(governance.objectTypes.includes('XUNIAVERSE_NODE'));
