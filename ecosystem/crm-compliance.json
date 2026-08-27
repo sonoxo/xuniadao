@@ -1,16 +1,22 @@
 {
   "id": "GLASS-CRM-COMPLIANCE",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "status": "READY_FOR_EXTERNAL_ASSESSMENT",
   "command": "/glass certify crm",
   "architecture": "PALANTIR_ONTOLOGY_ALIGNED",
+  "detailedControlMatrix": "ecosystem/gdpr-hipaa.json",
   "domains": {
     "privacy": {
       "purposeLimitation": true,
       "dataMinimization": true,
       "retention": true,
       "consentLedger": true,
-      "privacyRightsWorkflow": ["ACCESS", "KNOW", "DELETE", "CORRECT", "OPT_OUT", "LIMIT", "PORTABILITY"]
+      "privacyRightsWorkflow": ["ACCESS", "KNOW", "DELETE", "CORRECT", "OPT_OUT", "LIMIT", "PORTABILITY"],
+      "gdprRoPA": true,
+      "gdprDPIA": true,
+      "gdprTransferAssessment": true,
+      "gdprBreach72HourWorkflow": true,
+      "gdprAutomatedDecisionHumanReview": true
     },
     "security": {
       "rbac": true,
@@ -34,43 +40,63 @@
     },
     "hipaaConditional": {
       "enabledOnlyWhenPHIProcessed": true,
+      "scopeDetermination": true,
       "minimumNecessaryAccess": true,
+      "privacyRuleIndividualRights": true,
+      "administrativeSafeguards": true,
+      "physicalSafeguards": true,
+      "technicalSafeguards": true,
+      "riskAnalysis": true,
+      "riskManagement": true,
+      "securityOfficial": true,
+      "workforceSecurityAndTraining": true,
+      "contingencyPlan": true,
       "auditControls": true,
+      "integrityControls": true,
       "authenticationRequired": true,
       "transmissionSecurityRequired": true,
       "deviceMediaPolicyRequired": true,
       "businessAssociateAgreementTracking": true,
+      "subcontractorFlowDown": true,
+      "breachNotificationWorkflow": true,
+      "periodicEvaluation": true,
       "sixYearDocumentationRetentionRequired": true
     }
   },
   "frameworkReadiness": {
-    "GDPR": "SOFTWARE_POLICY_CONTROLS_READY",
+    "GDPR": "SOFTWARE_POLICY_CONTROLS_COMPLETE",
     "CCPA": "SOFTWARE_POLICY_CONTROLS_READY",
     "SOC2": "SOFTWARE_POLICY_CONTROLS_READY",
     "CAN_SPAM": "SOFTWARE_POLICY_CONTROLS_READY",
     "TCPA": "SOFTWARE_POLICY_CONTROLS_READY",
-    "HIPAA": "CONDITIONAL_SOFTWARE_POLICY_CONTROLS_READY"
+    "HIPAA": "CONDITIONAL_SOFTWARE_POLICY_CONTROLS_COMPLETE"
   },
   "externalEvidenceStillRequired": [
     "production encryption and key management",
     "identity provider MFA and access reviews",
     "production audit log exports and retention",
-    "incident response exercise",
+    "actual GDPR RoPA, lawful-basis, Article 9, DPIA and transfer records for production processing",
+    "deployed GDPR privacy notices and DPO/contact governance where applicable",
+    "complete production ePHI inventory and HIPAA security risk analysis when HIPAA applies",
+    "facility, workstation, device and media safeguard evidence when HIPAA applies",
+    "tested backup, disaster recovery and emergency mode operations evidence",
+    "incident response and breach notification exercise",
     "risk assessment and remediation register",
-    "workforce training records",
-    "vendor agreements and BAAs when applicable",
-    "deployed privacy notices and request channels",
-    "marketing unsubscribe and suppression evidence",
-    "SMS/voice consent records",
-    "backup restore availability and change management evidence when in scope",
-    "independent assessor report where formal attestation is required"
+    "workforce authorization and training records",
+    "executed processor agreements, vendor agreements and BAAs when applicable",
+    "data-subject and HIPAA individual-rights request execution logs",
+    "six-year HIPAA documentation retention evidence",
+    "independent legal or assessor determination where required by the intended claim"
   ],
   "claims": {
     "readyForExternalAssessment": true,
+    "gdprSoftwarePolicyControlsComplete": true,
+    "hipaaConditionalSoftwarePolicyControlsComplete": true,
     "thirdPartySOC2Attestation": false,
     "regulatorIssuedGDPRCertification": false,
     "regulatorIssuedCCPACertification": false,
-    "hipaaCertificationIssued": false,
+    "hipaaGovernmentCertificationIssued": false,
+    "independentLegalDeterminationIssued": false,
     "palantirEndorsement": false
   }
 }
