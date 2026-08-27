@@ -1,0 +1,23 @@
+{
+  "id": "XUNIA-XRPL-DOCUMENTATION-BRIDGE",
+  "version": "1.0.0",
+  "command": "/glass xrpl",
+  "xuniaRoot": "sonoxo/xuniadao",
+  "xuniaRepository": "sonoxo/xrpl-dev-portalXUNIA",
+  "authoritativeUpstream": "XRPLF/xrpl-dev-portal",
+  "canonicalDocumentation": "https://xrpl.org",
+  "integrationMode": "FEDERATED_READ_ONLY",
+  "capabilities": [
+    "DOCUMENTATION_DISCOVERY",
+    "SOURCE_ATTRIBUTION",
+    "UPSTREAM_LINK_RESOLUTION"
+  ],
+  "boundaries": {
+    "preserveRepositoryHistory": true,
+    "preserveUpstreamOwnership": true,
+    "claimXRPLFEndorsement": false,
+    "walletSeedStorage": false,
+    "transactionSigning": false,
+    "fundMovement": false
+  }
+}

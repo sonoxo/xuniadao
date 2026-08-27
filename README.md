@@ -16,7 +16,7 @@
 
 Command: **`/glass xuniaverse`**
 
-`sonoxo/xuniadao` is the canonical registry and ontology root for the 53 Sonoxo repositories currently indexed in the XUNIAverse machine graph.
+`sonoxo/xuniadao` is the canonical registry and ontology root for the 54 Sonoxo repositories currently indexed in the XUNIAverse machine graph.
 
 ```text
 XUNIA / XuniaDAO
@@ -173,6 +173,14 @@ GLASS ONION provides read-only adapters for Coinbase Exchange and Kraken public 
 
 Docs: [`docs/EXCHANGES.md`](docs/EXCHANGES.md) · Contract: [`ecosystem/exchange-market.json`](ecosystem/exchange-market.json)
 
+## XRPL documentation bridge
+
+Command: **`/glass xrpl`**
+
+XUNIA registers [`sonoxo/xrpl-dev-portalXUNIA`](https://github.com/sonoxo/xrpl-dev-portalXUNIA) as a federated, read-only documentation extension while preserving [`XRPLF/xrpl-dev-portal`](https://github.com/XRPLF/xrpl-dev-portal) as the authoritative upstream. This integration provides provenance and source resolution; it does not imply XRPLF endorsement and does not sign transactions, store wallet seeds, or move funds.
+
+Docs: [`docs/XRPL_INTEGRATION.md`](docs/XRPL_INTEGRATION.md) · Contract: [`ecosystem/xrpl-documentation.json`](ecosystem/xrpl-documentation.json)
+
 ## AIT ontology
 
 Command: **`/glass ait`**
@@ -206,6 +214,7 @@ XUNIA_SCOPE → GPT_UAP_XO_PLAN → GPT_UAP_XO_BOUNDED_WORKERS → PROVENANCE_CH
 | `/glass evidence` | GDPR/HIPAA production evidence tracking |
 | `/glass licenses` | verified repository license registry |
 | `/glass exchanges` | live read-only exchange listing/ticker discovery |
+| `/glass xrpl` | governed XRPL documentation and upstream source resolution |
 | `/glass uap` | GPT-UAP-XO bounded-agent route |
 | `/VA3LM-SAGI` | VA3LM guardrail intelligence surface |
 

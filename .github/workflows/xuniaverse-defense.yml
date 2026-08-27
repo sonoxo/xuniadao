@@ -15,15 +15,19 @@ on:
       - 'src/lib/glass-onion-layer.spec.ts'
       - 'src/lib/mission-telemetry.ts'
       - 'src/index.ts'
+      - 'src/lib/xrpl-documentation.ts'
+      - 'src/lib/xrpl-documentation.spec.ts'
       - 'ecosystem/gcpxunia-defense.json'
       - 'ecosystem/tech-peers.json'
       - 'ecosystem/xuniaverse.json'
+      - 'ecosystem/xrpl-documentation.json'
       - 'ecosystem/governance-ontology.json'
       - 'ecosystem/glass-onion-layer.json'
       - 'ecosystem/mission-telemetry.json'
       - 'docs/GCPXUNIA_DEFENSE.md'
       - 'docs/TECH_PEERS.md'
       - 'docs/MISSION_TELEMETRY.md'
+      - 'docs/XRPL_INTEGRATION.md'
       - 'README.md'
       - '.github/workflows/xuniaverse-defense.yml'
   pull_request:
@@ -39,15 +43,19 @@ on:
       - 'src/lib/glass-onion-layer.spec.ts'
       - 'src/lib/mission-telemetry.ts'
       - 'src/index.ts'
+      - 'src/lib/xrpl-documentation.ts'
+      - 'src/lib/xrpl-documentation.spec.ts'
       - 'ecosystem/gcpxunia-defense.json'
       - 'ecosystem/tech-peers.json'
       - 'ecosystem/xuniaverse.json'
+      - 'ecosystem/xrpl-documentation.json'
       - 'ecosystem/governance-ontology.json'
       - 'ecosystem/glass-onion-layer.json'
       - 'ecosystem/mission-telemetry.json'
       - 'docs/GCPXUNIA_DEFENSE.md'
       - 'docs/TECH_PEERS.md'
       - 'docs/MISSION_TELEMETRY.md'
+      - 'docs/XRPL_INTEGRATION.md'
       - 'README.md'
       - '.github/workflows/xuniaverse-defense.yml'
 
@@ -85,8 +93,8 @@ jobs:
           assert.equal(peers.TECH_PEER_ONTOLOGY.command, '/glass peers');
           assert.equal(peerContract.credentialPolicy.affiliationMustNotBeInferred, true);
           assert.equal(universe.XUNIAVERSE.rootRepository, 'sonoxo/xuniadao');
-          assert.equal(universe.XUNIAVERSE_REPOSITORIES.length, 53);
-          assert.equal(universeContract.repositoryCount, 53);
+          assert.equal(universe.XUNIAVERSE_REPOSITORIES.length, universeContract.repositoryCount);
+          assert.ok(universeContract.repositories.includes('sonoxo/xrpl-dev-portalXUNIA'));
           assert.ok(governance.objectTypes.includes('AGENT_IDENTITY'));
           assert.ok(governance.objectTypes.includes('TECH_PEER'));
           assert.ok(governance.objectTypes.includes('XUNIAVERSE_NODE'));
