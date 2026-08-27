@@ -1,0 +1,70 @@
+name: CRM Certification Readiness Lock
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/lib/crm-compliance.ts'
+      - 'src/lib/crm-compliance.spec.ts'
+      - 'src/lib/crm-certification.ts'
+      - 'src/lib/crm-certification.spec.ts'
+      - 'ecosystem/crm-compliance.json'
+      - 'ecosystem/crm-certification.json'
+      - 'docs/CRM_COMPLIANCE_READINESS.md'
+      - 'src/index.ts'
+      - '.github/workflows/crm-certification-readiness.yml'
+  pull_request:
+    paths:
+      - 'src/lib/crm-compliance.ts'
+      - 'src/lib/crm-compliance.spec.ts'
+      - 'src/lib/crm-certification.ts'
+      - 'src/lib/crm-certification.spec.ts'
+      - 'ecosystem/crm-compliance.json'
+      - 'ecosystem/crm-certification.json'
+      - 'docs/CRM_COMPLIANCE_READINESS.md'
+      - 'src/index.ts'
+      - '.github/workflows/crm-certification-readiness.yml'
+
+jobs:
+  readiness-lock:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: yarn
+      - name: Install
+        run: yarn install --frozen-lockfile
+      - name: Build
+        run: yarn build:main
+      - name: Unit tests
+        run: yarn test:unit
+      - name: Readiness contract lock
+        run: |
+          node <<'NODE'
+          const assert = require('assert');
+          const c = require('./dist/main/lib/crm-compliance');
+          const cert = require('./dist/main/lib/crm-certification');
+          assert.equal(c.CRM_COMPLIANCE_REQUIREMENTS.security.rbac, true);
+          assert.equal(c.CRM_COMPLIANCE_REQUIREMENTS.security.encryptionAtRestRequired, true);
+          assert.equal(c.CRM_COMPLIANCE_REQUIREMENTS.marketing.unsubscribeRequired, true);
+          assert.equal(cert.CRM_EXTERNAL_READINESS.status, 'READY_FOR_EXTERNAL_ASSESSMENT');
+          assert.equal(cert.CRM_EXTERNAL_READINESS.assessment.result, 'PASS');
+          assert.equal(cert.CRM_EXTERNAL_READINESS.externalCertificationStatus, 'NOT_ISSUED');
+          console.log('CRM CERTIFICATION READINESS LOCK: PASS');
+          NODE
+      - name: Machine contract lock
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const assert = require('assert');
+          const readiness = JSON.parse(fs.readFileSync('ecosystem/crm-compliance.json', 'utf8'));
+          assert.equal(readiness.status, 'READY_FOR_EXTERNAL_ASSESSMENT');
+          assert.equal(readiness.domains.privacy.consentLedger, true);
+          assert.equal(readiness.domains.security.rbac, true);
+          assert.equal(readiness.domains.marketing.unsubscribeRequired, true);
+          assert.equal(readiness.claims.thirdPartySOC2Attestation, false);
+          console.log('CRM READINESS MACHINE CONTRACT: PASS');
+          NODE
