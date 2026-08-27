@@ -1,0 +1,20 @@
+{
+  "id": "GLASS-ONION-LICENSE-REGISTRY",
+  "version": "1.0.0",
+  "command": "/glass licenses",
+  "status": "VERIFIED_REPOSITORY_LICENSES",
+  "repositories": [
+    {"repository":"sonoxo/xuniadao","license":"Apache-2.0","class":"PERMISSIVE","licenseFile":"LICENSE"},
+    {"repository":"sonoxo/zyra","license":"BUSL-1.1","class":"SOURCE_AVAILABLE","licenseFile":"LICENSE","changeLicense":"Apache-2.0","changeDateRule":"Four years from the date the Licensed Work is published"},
+    {"repository":"sonoxo/gpt-doug-llm","license":"MIT","class":"PERMISSIVE","licenseFile":"LICENSE"},
+    {"repository":"sonoxo/AlmightySonoxo","license":"MIT","class":"PERMISSIVE","licenseFile":"LICENSE","note":"standard MIT grant text; heading omitted"},
+    {"repository":"sonoxo/gpt-uap-xo","license":"UNDECLARED","class":"UNDECLARED","licenseFile":null}
+  ],
+  "rules": {
+    "useSPDXIdentifiers": true,
+    "preserveLicenseFiles": true,
+    "preserveAttribution": true,
+    "doNotInferUndeclaredRights": true,
+    "sourceAvailableIsNotOpenSource": true
+  }
+}

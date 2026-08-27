@@ -1,0 +1,48 @@
+name: License Registry Lock
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/lib/licenses.ts'
+      - 'src/lib/licenses.spec.ts'
+      - 'src/index.ts'
+      - 'ecosystem/licenses.json'
+      - 'docs/LICENSES.md'
+      - '.github/workflows/licenses.yml'
+  pull_request:
+    paths:
+      - 'src/lib/licenses.ts'
+      - 'src/lib/licenses.spec.ts'
+      - 'src/index.ts'
+      - 'ecosystem/licenses.json'
+      - 'docs/LICENSES.md'
+      - '.github/workflows/licenses.yml'
+
+jobs:
+  license-lock:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: yarn
+      - run: yarn install --frozen-lockfile
+      - run: yarn build:main
+      - run: yarn test:unit
+      - name: License contract lock
+        run: |
+          node <<'NODE'
+          const assert = require('assert');
+          const fs = require('fs');
+          const licenses = require('./dist/main/lib/licenses');
+          const contract = JSON.parse(fs.readFileSync('ecosystem/licenses.json', 'utf8'));
+          assert.equal(licenses.validateEcosystemLicenses().length, 0);
+          assert.equal(licenses.getRepositoryLicense('sonoxo/xuniadao').licenseId, 'Apache-2.0');
+          assert.equal(licenses.getRepositoryLicense('sonoxo/zyra').licenseId, 'BUSL-1.1');
+          assert.equal(licenses.getRepositoryLicense('sonoxo/gpt-doug-llm').licenseId, 'MIT');
+          assert.equal(licenses.getRepositoryLicense('sonoxo/gpt-uap-xo').licenseId, 'UNDECLARED');
+          assert.equal(contract.status, 'VERIFIED_REPOSITORY_LICENSES');
+          console.log('LICENSE REGISTRY: PASS');
+          NODE
