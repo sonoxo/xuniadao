@@ -8,7 +8,9 @@
     "url": "https://openai.com/collective-cyberdefense/",
     "retrievedOn": "2026-08-28",
     "rosterCount": 128,
-    "evidenceClass": "PUBLIC_PRIMARY_SOURCE"
+    "evidenceClass": "PUBLIC_PRIMARY_SOURCE",
+    "xPostUrl": "https://x.com/OpenAI/status/2093074192636018977",
+    "screenshotEvidence": "User-provided screenshot dated 2026-08-27"
   },
   "claims": {
     "signatoryRelationshipOnly": true,
