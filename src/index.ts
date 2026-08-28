@@ -2,6 +2,7 @@ export * from './lib/collective-cyber-defense';
 export * from './lib/ait-ontology';
 export * from './lib/almighty-agi-math';
 export * from './lib/compliance-evidence';
+export * from './lib/control-plane-runtime';
 export * from './lib/crm';
 export * from './lib/crm-certification';
 export * from './lib/crm-compliance';
