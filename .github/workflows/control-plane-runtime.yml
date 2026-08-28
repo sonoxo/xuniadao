@@ -6,12 +6,20 @@ on:
     paths:
       - 'src/lib/control-plane-runtime.ts'
       - 'src/lib/control-plane-runtime.spec.ts'
+      - 'src/lib/action-proof.ts'
+      - 'src/lib/action-proof.spec.ts'
+      - 'src/lib/action-safety.ts'
+      - 'src/lib/action-safety.spec.ts'
       - 'src/index.ts'
       - '.github/workflows/control-plane-runtime.yml'
   pull_request:
     paths:
       - 'src/lib/control-plane-runtime.ts'
       - 'src/lib/control-plane-runtime.spec.ts'
+      - 'src/lib/action-proof.ts'
+      - 'src/lib/action-proof.spec.ts'
+      - 'src/lib/action-safety.ts'
+      - 'src/lib/action-safety.spec.ts'
       - 'src/index.ts'
       - '.github/workflows/control-plane-runtime.yml'
 
@@ -27,4 +35,4 @@ jobs:
           cache: yarn
       - run: yarn install --frozen-lockfile
       - run: yarn build:main
-      - run: yarn test:unit src/lib/control-plane-runtime.spec.ts
+      - run: yarn test:unit src/lib/control-plane-runtime.spec.ts src/lib/action-proof.spec.ts src/lib/action-safety.spec.ts
