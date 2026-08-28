@@ -1,0 +1,92 @@
+name: Glass Onion Health ONC Readiness Lock
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/health/onc-readiness.ts'
+      - 'src/health/onc-readiness.spec.ts'
+      - 'src/health/index.ts'
+      - 'ecosystem/glass-onion-health-onc-readiness.json'
+      - 'docs/GLASS_ONION_HEALTH_ONC_READINESS.md'
+      - '.github/workflows/glass-onion-health-onc-readiness.yml'
+  pull_request:
+    paths:
+      - 'src/health/onc-readiness.ts'
+      - 'src/health/onc-readiness.spec.ts'
+      - 'src/health/index.ts'
+      - 'ecosystem/glass-onion-health-onc-readiness.json'
+      - 'docs/GLASS_ONION_HEALTH_ONC_READINESS.md'
+      - '.github/workflows/glass-onion-health-onc-readiness.yml'
+
+jobs:
+  onc-readiness-lock:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: yarn
+      - name: Install
+        run: yarn install --frozen-lockfile
+      - name: Build
+        run: yarn build:main
+      - name: Unit tests
+        run: yarn test:unit
+      - name: ONC readiness runtime lock
+        run: |
+          node <<'NODE'
+          const assert = require('assert');
+          const {
+            GLASS_ONION_HEALTH_ONC_READINESS,
+            buildSinglePatientEHIExport,
+            sessionTimedOut,
+            evaluateEmergencyAccessReadiness,
+          } = require('./dist/main/health/onc-readiness');
+
+          assert.equal(GLASS_ONION_HEALTH_ONC_READINESS.version, '0.3.0');
+          assert.equal(GLASS_ONION_HEALTH_ONC_READINESS.command, '/glass certify health onc-ready');
+          assert.equal(GLASS_ONION_HEALTH_ONC_READINESS.freeLocalConformanceHarness, true);
+          assert.equal(GLASS_ONION_HEALTH_ONC_READINESS.officialCertificationIssued, false);
+          assert.equal(GLASS_ONION_HEALTH_ONC_READINESS.assessment.externalCertificationStatus, 'NOT_ISSUED');
+
+          const doc = {
+            id: 'doc:onc:ci',
+            clientId: 'client:onc:ci',
+            type: 'CASE_NOTE',
+            dataClass: 'EPHI',
+            title: 'ONC CI note',
+            authorId: 'provider:ci',
+            createdAt: '2026-08-28T00:00:00Z',
+            version: '1.0',
+            status: 'SIGNED',
+            protectedPayloadRef: 'protected://health-document:doc:onc:ci:v:1.0',
+            contentHash: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+            retentionPolicyId: 'retention:clinical',
+            provenance: ['source:ci']
+          };
+          const bundle = buildSinglePatientEHIExport({ clientId: doc.clientId, generatedAt: '2026-08-28T01:00:00Z', documents: [doc] });
+          assert.equal(bundle.scope, 'SINGLE_PATIENT');
+          assert.equal(bundle.records.length, 1);
+          assert.equal(bundle.manifestSha256.length, 64);
+          assert.equal(sessionTimedOut('2026-08-28T00:00:00Z', '2026-08-28T00:15:00Z', 15), true);
+          assert.equal(evaluateEmergencyAccessReadiness({ actorId: 'provider:ci', reason: 'continuity', at: '2026-08-28T00:00:00Z', normalAccessUnavailable: true, auditEnabled: true, reviewRequired: true }), 'PASS');
+          console.log('GLASS ONION HEALTH ONC READINESS LOCK: PASS');
+          NODE
+      - name: Machine contract lock
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const assert = require('assert');
+          const contract = JSON.parse(fs.readFileSync('ecosystem/glass-onion-health-onc-readiness.json', 'utf8'));
+          assert.equal(contract.version, '0.3.0');
+          assert.equal(contract.status, 'CONDITIONAL_READINESS');
+          assert.equal(contract.implemented.singlePatientEhiExport, true);
+          assert.equal(contract.implemented.populationEhiExport, true);
+          assert.equal(contract.implemented.freeLocalConformanceHarness, true);
+          assert.equal(contract.externalBoundary.officialCertificationIssued, false);
+          assert.equal(contract.externalBoundary.externalCertificationStatus, 'NOT_ISSUED');
+          console.log('GLASS ONION HEALTH ONC MACHINE CONTRACT: PASS');
+          NODE

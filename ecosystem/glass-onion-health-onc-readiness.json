@@ -1,0 +1,59 @@
+{
+  "id": "GLASS-ONION-HEALTH-ONC-READINESS",
+  "version": "0.3.0",
+  "command": "/glass certify health onc-ready",
+  "umbrella": "XUNIA",
+  "layer": "GLASS ONION HEALTH",
+  "status": "CONDITIONAL_READINESS",
+  "program": "ONC Health IT Certification Program readiness",
+  "regulatoryFamily": "45 CFR Part 170",
+  "criteria": [
+    "170.315(a)(15)",
+    "170.315(b)(10)",
+    "170.315(d)(1)",
+    "170.315(d)(2)",
+    "170.315(d)(3)",
+    "170.315(d)(4)",
+    "170.315(d)(5)",
+    "170.315(d)(6)",
+    "170.315(d)(7)",
+    "170.315(d)(8)",
+    "170.315(d)(9)",
+    "170.315(d)(12)",
+    "170.315(d)(13)",
+    "170.315(e)(1)",
+    "170.315(g)(4)",
+    "170.315(g)(5)"
+  ],
+  "implemented": {
+    "singlePatientEhiExport": true,
+    "populationEhiExport": true,
+    "exportManifestSha256": true,
+    "auditReportFiltering": true,
+    "automaticAccessTimeoutCheck": true,
+    "emergencyAccessReadinessGate": true,
+    "mfaEvidence": true,
+    "accessControlEvidence": true,
+    "tamperEvidentAuditChain": true,
+    "amendmentEvidence": true,
+    "integrityEvidence": true,
+    "qmsEvidenceContract": true,
+    "accessibilityEvidenceContract": true,
+    "freeLocalConformanceHarness": true
+  },
+  "partialCriteria": [
+    "170.315(a)(15)",
+    "170.315(d)(7)",
+    "170.315(d)(9)",
+    "170.315(d)(12)",
+    "170.315(e)(1)"
+  ],
+  "externalBoundary": {
+    "officialCertificationIssued": false,
+    "externalCertificationStatus": "NOT_ISSUED",
+    "oncAuthorizedTestingLaboratoryRequired": true,
+    "oncAuthorizedCertificationBodyRequired": true,
+    "officialTestMethodValidationRequired": true,
+    "chplListingNotClaimed": true
+  }
+}
