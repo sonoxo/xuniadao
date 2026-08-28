@@ -1,0 +1,112 @@
+name: Glass Onion Health Lock
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/lib/glass-onion-health.ts'
+      - 'src/lib/glass-onion-health.spec.ts'
+      - 'src/lib/glass-onion-health-certification.ts'
+      - 'src/index.ts'
+      - 'ecosystem/glass-onion-health.json'
+      - 'docs/GLASS_ONION_HEALTH.md'
+      - '.github/workflows/glass-onion-health.yml'
+  pull_request:
+    paths:
+      - 'src/lib/glass-onion-health.ts'
+      - 'src/lib/glass-onion-health.spec.ts'
+      - 'src/lib/glass-onion-health-certification.ts'
+      - 'src/index.ts'
+      - 'ecosystem/glass-onion-health.json'
+      - 'docs/GLASS_ONION_HEALTH.md'
+      - '.github/workflows/glass-onion-health.yml'
+
+jobs:
+  health-lock:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: yarn
+      - name: Install
+        run: yarn install --frozen-lockfile
+      - name: Build
+        run: yarn build:main
+      - name: Unit tests
+        run: yarn test:unit
+      - name: Glass Onion Health contract lock
+        run: |
+          node <<'NODE'
+          const assert = require('assert');
+          const {
+            GLASS_ONION_HEALTH,
+            evaluateHealthAccess,
+            validateClinicalDocument,
+          } = require('./dist/main/lib/glass-onion-health');
+          const {
+            GLASS_ONION_HEALTH_CERTIFICATION,
+          } = require('./dist/main/lib/glass-onion-health-certification');
+
+          const note = {
+            id: 'doc:ci',
+            clientId: 'client:ci',
+            type: 'CASE_NOTE',
+            dataClass: 'EPHI',
+            title: 'CI case note',
+            authorId: 'provider:ci',
+            createdAt: '2026-08-28T00:00:00Z',
+            version: '1.0',
+            status: 'DRAFT',
+            protectedPayloadRef: 'vault://clinical/doc:ci',
+            retentionPolicyId: 'retention:clinical',
+            provenance: ['source:ci'],
+          };
+
+          validateClinicalDocument(note);
+          assert.equal(GLASS_ONION_HEALTH.command, '/glass health');
+          assert.equal(GLASS_ONION_HEALTH.certificationCommand, '/glass certify health');
+          assert.equal(GLASS_ONION_HEALTH.complianceBoundary.hipaaCertificationClaimed, false);
+          assert.equal(GLASS_ONION_HEALTH_CERTIFICATION.externalCertificationStatus, 'NOT_ISSUED');
+
+          const read = evaluateHealthAccess({
+            actorId: 'provider:ci',
+            role: 'CLINICIAN',
+            action: 'READ',
+            purpose: 'TREATMENT',
+            document: note,
+            assignedToClient: true,
+            minimumNecessarySatisfied: true,
+          });
+          assert.equal(read.decision, 'ALLOW');
+
+          const deletion = evaluateHealthAccess({
+            actorId: 'provider:ci',
+            role: 'CLINICIAN',
+            action: 'DELETE',
+            purpose: 'TREATMENT',
+            document: note,
+            assignedToClient: true,
+            minimumNecessarySatisfied: true,
+          });
+          assert.equal(deletion.decision, 'BLOCK');
+          console.log('GLASS ONION HEALTH LOCK: PASS');
+          NODE
+      - name: Machine contract lock
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const assert = require('assert');
+          const contract = JSON.parse(fs.readFileSync('ecosystem/glass-onion-health.json', 'utf8'));
+          assert.equal(contract.status, 'READINESS_BASELINE_IMPLEMENTED');
+          assert.equal(contract.command, '/glass health');
+          assert.equal(contract.certificationCommand, '/glass certify health');
+          assert.equal(contract.controls.protectedPayloadIsolationRequired, true);
+          assert.equal(contract.controls.psychotherapyNotesSeparated, true);
+          assert.equal(contract.controls.destructiveClinicalDeletionBlocked, true);
+          assert.equal(contract.certification.externalCertificationStatus, 'NOT_ISSUED');
+          assert.equal(contract.certification.hipaaCertificationClaimed, false);
+          console.log('GLASS ONION HEALTH MACHINE CONTRACT: PASS');
+          NODE
