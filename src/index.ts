@@ -1,5 +1,6 @@
 export * from './lib/collective-cyber-defense';
 export * from './lib/ait-ontology';
+export * from './lib/almighty-agi-math';
 export * from './lib/compliance-evidence';
 export * from './lib/crm';
 export * from './lib/crm-certification';
@@ -25,3 +26,4 @@ export * from './lib/va3lm';
 export * from './lib/xrpl-documentation';
 export * from './lib/xrpl-token-wallet-ontology';
 export * from './lib/xuniaverse';
+export * from './health';
