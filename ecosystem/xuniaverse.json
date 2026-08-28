@@ -1,9 +1,11 @@
 {
   "id": "XUNIAVERSE",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "rootRepository": "sonoxo/xuniadao",
   "face": "XUNIA / XuniaDAO",
-  "repositoryCount": 57,
+  "repositoryCount": 66,
+  "publicRepositoryCount": 62,
+  "privateRepositoryCount": 4,
   "defenseOntology": "GCPXUNIA-VIRGINIA-VA3LM-DEFENSE",
   "peerOntology": "XUNIAVERSE-TECH-PEER-ONTOLOGY",
   "repositories": [
@@ -60,11 +62,25 @@
     "sonoxo/DCSxunia",
     "sonoxo/VICARxunia",
     "sonoxo/plandev-uiXUNIA",
+    "sonoxo/NASA-3D-ResourcesXUNIA-",
+    "sonoxo/api-docsXUNIA",
+    "sonoxo/instructionsXUNIA-",
+    "sonoxo/earthaccessXUNIA-",
+    "sonoxo/fprimeXUNIA-",
+    "sonoxo/SpaceX-APIxunia",
     "sonoxo/xrpl-dev-portalXUNIA",
     "sonoxo/XRPL-StandardsXUNIA-",
+    "sonoxo/rippledXUNIA",
     "sonoxo/xrpl.jsXUNIA",
-    "sonoxo/rippledXUNIA"
+    "sonoxo/xrpl4jXUNIA",
+    "sonoxo/openai-pythonXUNIA",
+    "sonoxo/nsacyber.github.ioZYRA"
   ],
+  "publicMuseumPolicy": {
+    "publishPublicRepositoryExhibits": true,
+    "doNotExposePrivateRepositoryContents": true,
+    "privateRepositoryNamesMayExistInCanonicalRegistry": true
+  },
   "rules": {
     "xuniadaoIsRoot": true,
     "preserveRepositoryLicense": true,
