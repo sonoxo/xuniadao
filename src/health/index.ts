@@ -5,6 +5,7 @@ export * from './documents';
 export * from './evidence';
 export * from './identity';
 export * from './incidents';
+export * from './onc-readiness';
 export * from './portals';
 export * from './retention';
 export * from './runtime';
