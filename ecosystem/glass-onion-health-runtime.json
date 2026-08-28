@@ -1,0 +1,70 @@
+{
+  "id": "GLASS-ONION-HEALTH-RUNTIME",
+  "version": "0.2.0",
+  "command": "/glass health runtime",
+  "umbrella": "XUNIA",
+  "layer": "GLASS ONION HEALTH",
+  "status": "IMPLEMENTED_IN_REPOSITORY",
+  "pipeline": [
+    "AUTHENTICATE",
+    "RESOLVE_ASSIGNMENT",
+    "LOAD_PROTECTED_METADATA",
+    "POLICY_DECIDE",
+    "ALLOW_REVIEW_BLOCK",
+    "AUDIT_APPEND",
+    "EVIDENCE_COLLECT"
+  ],
+  "runtime": {
+    "identityAndMfa": true,
+    "providerAssignments": true,
+    "protectedObjectStore": true,
+    "referenceEncryption": "AES-256-GCM",
+    "plaintextIntegrityHash": "SHA-256",
+    "efileLifecycle": true,
+    "signedHashBinding": true,
+    "appendOnlyAmendments": true,
+    "psychotherapyAuthorization": true,
+    "part2Authorization": true,
+    "sudCounselingAuthorization": true,
+    "releaseOfInformation": true,
+    "retentionAndLegalHold": true,
+    "incidentLifecycle": true,
+    "cryptographicAuditChain": true,
+    "runtimeEvidenceCollection": true,
+    "apiContracts": true,
+    "clinicianPortalContract": true,
+    "adminPortalContract": true,
+    "clientPortalContract": true
+  },
+  "productionAdaptersRequired": [
+    "PERSISTENT_DATABASE",
+    "PERSISTENT_PROTECTED_OBJECT_STORE",
+    "PRODUCTION_KMS_HSM",
+    "PRODUCTION_IDENTITY_PROVIDER",
+    "MFA_PROVIDER",
+    "BACKUP_AND_DISASTER_RECOVERY",
+    "MONITORING_AND_ALERTING"
+  ],
+  "complianceBoundary": {
+    "repositoryControlsImplemented": true,
+    "operationalEvidenceRequired": true,
+    "riskAnalysisRequired": true,
+    "baaAndVendorInventoryRequired": true,
+    "workforcePoliciesAndTrainingRequired": true,
+    "independentReviewRequiredForExternalAttestation": true,
+    "hipaaCertificationClaimed": false,
+    "externalCertificationStatus": "NOT_ISSUED"
+  },
+  "almightyAgiMath": {
+    "enabled": true,
+    "sourceConcept": "GREGORY_MACLAURIN_ARCTAN_ALTERNATING_SERIES",
+    "principles": [
+      "BOUNDED_ITERATION",
+      "ALTERNATING_CORRECTION",
+      "CONVERGENCE_TOLERANCE",
+      "ERROR_SIGNAL",
+      "TRACEABLE_REFINEMENT",
+      "NO_UNBOUNDED_SELF_MODIFICATION"
+    ]
+  }
+}
