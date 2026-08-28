@@ -1,0 +1,73 @@
+{
+  "id": "GLASS-ONION-HEALTH",
+  "version": "0.1.0",
+  "command": "/glass health",
+  "certificationCommand": "/glass certify health",
+  "umbrella": "XUNIA",
+  "layer": "GLASS ONION",
+  "status": "READINESS_BASELINE_IMPLEMENTED",
+  "scope": "mental-health and healthcare e-file/document governance",
+  "objects": [
+    "CLIENT",
+    "PROVIDER",
+    "PROGRAM",
+    "ENCOUNTER",
+    "CLINICAL_DOCUMENT",
+    "CONSENT",
+    "AUTHORIZATION",
+    "SIGNATURE",
+    "DISCLOSURE",
+    "RETENTION_POLICY",
+    "AUDIT_EVENT",
+    "PAYER"
+  ],
+  "documentTypes": [
+    "INTAKE",
+    "ASSESSMENT",
+    "CASE_NOTE",
+    "TREATMENT_PLAN",
+    "DISCHARGE",
+    "PSYCHOTHERAPY_NOTE",
+    "SUD_COUNSELING_NOTE",
+    "RELEASE_OF_INFORMATION",
+    "BILLING_SUPPORT",
+    "OTHER"
+  ],
+  "dataClasses": [
+    "NON_PHI",
+    "PHI",
+    "EPHI",
+    "PSYCHOTHERAPY_NOTES",
+    "PART2_RECORD",
+    "PART2_SUD_COUNSELING_NOTE"
+  ],
+  "pipeline": [
+    "HEALTH_INGEST",
+    "PHI_CLASSIFY",
+    "POLICY_RESOLVE",
+    "ACCESS_DECIDE",
+    "HUMAN_REVIEW",
+    "DOCUMENT_ACTION",
+    "AUDIT_APPEND",
+    "EVIDENCE_LINK"
+  ],
+  "controls": {
+    "protectedPayloadIsolationRequired": true,
+    "provenanceRequired": true,
+    "minimumNecessaryGateRequired": true,
+    "psychotherapyNotesSeparated": true,
+    "part2ClassificationSupported": true,
+    "humanReviewForExternalRelease": true,
+    "humanReviewForFinalizationAndAmendment": true,
+    "immutableAuditChainRequired": true,
+    "destructiveClinicalDeletionBlocked": true
+  },
+  "certification": {
+    "internalAttestation": "XUNIA-HEALTH-ICA-1",
+    "internalScope": "repository code/control baseline only",
+    "deploymentStatus": "OPERATIONAL_EVIDENCE_REQUIRED",
+    "externalCertificationStatus": "NOT_ISSUED",
+    "hipaaCertificationClaimed": false,
+    "independentAssessmentRequiredForExternalAttestation": true
+  }
+}
