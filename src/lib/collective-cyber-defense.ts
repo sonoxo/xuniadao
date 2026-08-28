@@ -28,7 +28,7 @@ export interface CollectiveAlignmentRequest {
   readonly endorsementClaim?: boolean;
   readonly partnershipClaim?: boolean;
   readonly certificationClaim?: boolean;
-  readonly proprietaryStandardClaim?: boolean;
+  readonly proprietaryStandardsClaim?: boolean;
   readonly offensiveAction?: boolean;
 }
 
@@ -41,11 +41,12 @@ export interface CollectiveGap {
 export const evaluateCollectiveAlignment = (request: CollectiveAlignmentRequest): CollectiveDecision => {
   if (!request.organization.trim() || !request.authorized) return 'BLOCK';
   if (request.endorsementClaim || request.partnershipClaim || request.certificationClaim) return 'BLOCK';
-  if (request.proprietaryStandardClaim || request.offensiveAction) return 'BLOCK';
+  if (request.proprietaryStandardsClaim || request.offensiveAction) return 'BLOCK';
 
   if (request.requestedState === 'TARGET') return 'ALLOW';
-  if (request.evidence.length === 0) return 'BLOCK';
-  if (request.requestedState === 'EXTERNALLY_ATTESTED' && !request.attestationReference) return 'BLOCK';
+  const hasEvidence = request.evidence.some((item) => item.trim().length > 0);
+  if (!hasEvidence) return 'BLOCK';
+  if (request.requestedState === 'EXTERNALLY_ATTESTED' && !request.attestationReference?.trim()) return 'BLOCK';
   return 'REVIEW';
 };
 
@@ -56,7 +57,7 @@ export const createCollectiveGapReport = (
     .filter((control) => states[control] !== 'EVIDENCED' && states[control] !== 'EXTERNALLY_ATTESTED')
     .map((control) => ({
       control,
-      currentState: states[control] || 'TARGET',
+      currentState: states[control] ?? 'TARGET',
       targetState: 'EVIDENCED',
     }));
 
