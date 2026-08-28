@@ -27,4 +27,4 @@ jobs:
           cache: yarn
       - run: yarn install --frozen-lockfile
       - run: yarn build:main
-      - run: yarn test:unit --match='*control plane*'
+      - run: yarn test:unit src/lib/control-plane-runtime.spec.ts
