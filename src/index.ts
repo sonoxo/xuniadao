@@ -11,6 +11,8 @@ export * from './lib/exchange-market';
 export * from './lib/gcpxunia-defense';
 export * from './lib/gdpr-hipaa';
 export * from './lib/ecosystem';
+export * from './lib/glass-onion-health';
+export * from './lib/glass-onion-health-certification';
 export * from './lib/glass-onion-layer';
 export * from './lib/licenses';
 export * from './lib/mission-telemetry';
