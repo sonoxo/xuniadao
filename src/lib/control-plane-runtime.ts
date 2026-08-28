@@ -1,7 +1,7 @@
 import { createHash } from 'crypto';
 
 export type ControlRisk = 'READ' | 'WRITE' | 'CONSEQUENTIAL';
-export type ControlDecision = 'ALLOW' | 'BLOCK';
+export type ControlPlaneDecision = 'ALLOW' | 'BLOCK';
 
 export interface ControlRequest {
   requestId: string;
@@ -21,7 +21,7 @@ export interface ControlPlaneAdapter<TResult = unknown> {
 }
 
 export interface ControlEvaluation {
-  decision: ControlDecision;
+  decision: ControlPlaneDecision;
   reasons: string[];
 }
 
