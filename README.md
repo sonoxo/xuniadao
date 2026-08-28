@@ -16,7 +16,7 @@
 
 Command: **`/glass xuniaverse`**
 
-`sonoxo/xuniadao` is the canonical registry and ontology root for the 57 Sonoxo repositories currently indexed in the XUNIAverse machine graph.
+`sonoxo/xuniadao` is the canonical registry and ontology root for the 66 Sonoxo repositories currently indexed in the XUNIAverse machine graph. The public Museum + HQ can exhibit 62 public repositories; four private repositories remain outside the public catalog.
 
 ```text
 XUNIA / XuniaDAO
