@@ -7,18 +7,28 @@ on:
       - 'src/lib/glass-onion-health.ts'
       - 'src/lib/glass-onion-health.spec.ts'
       - 'src/lib/glass-onion-health-certification.ts'
+      - 'src/lib/almighty-agi-math.ts'
+      - 'src/lib/almighty-agi-math.spec.ts'
+      - 'src/health/**'
       - 'src/index.ts'
       - 'ecosystem/glass-onion-health.json'
+      - 'ecosystem/glass-onion-health-runtime.json'
       - 'docs/GLASS_ONION_HEALTH.md'
+      - 'docs/GLASS_ONION_HEALTH_RUNTIME.md'
       - '.github/workflows/glass-onion-health.yml'
   pull_request:
     paths:
       - 'src/lib/glass-onion-health.ts'
       - 'src/lib/glass-onion-health.spec.ts'
       - 'src/lib/glass-onion-health-certification.ts'
+      - 'src/lib/almighty-agi-math.ts'
+      - 'src/lib/almighty-agi-math.spec.ts'
+      - 'src/health/**'
       - 'src/index.ts'
       - 'ecosystem/glass-onion-health.json'
+      - 'ecosystem/glass-onion-health-runtime.json'
       - 'docs/GLASS_ONION_HEALTH.md'
+      - 'docs/GLASS_ONION_HEALTH_RUNTIME.md'
       - '.github/workflows/glass-onion-health.yml'
 
 jobs:
@@ -37,7 +47,7 @@ jobs:
         run: yarn build:main
       - name: Unit tests
         run: yarn test:unit
-      - name: Glass Onion Health contract lock
+      - name: Glass Onion Health baseline lock
         run: |
           node <<'NODE'
           const assert = require('assert');
@@ -60,7 +70,7 @@ jobs:
             createdAt: '2026-08-28T00:00:00Z',
             version: '1.0',
             status: 'DRAFT',
-            protectedPayloadRef: 'vault://clinical/doc:ci',
+            protectedPayloadRef: 'protected://clinical/doc:ci',
             retentionPolicyId: 'retention:clinical',
             provenance: ['source:ci'],
           };
@@ -92,7 +102,57 @@ jobs:
             minimumNecessarySatisfied: true,
           });
           assert.equal(deletion.decision, 'BLOCK');
-          console.log('GLASS ONION HEALTH LOCK: PASS');
+          console.log('GLASS ONION HEALTH BASELINE LOCK: PASS');
+          NODE
+      - name: Runtime v0.2 lock
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const assert = require('assert');
+          const { StaticEnvelopeKeyProvider, MemoryProtectedObjectStore } = require('./dist/main/health/storage');
+          const { GlassOnionHealthRuntime, GLASS_ONION_HEALTH_RUNTIME } = require('./dist/main/health/runtime');
+          const { createHealthSession } = require('./dist/main/health/identity');
+          const { arctanSeries, ALMIGHTY_AGI_MATH } = require('./dist/main/lib/almighty-agi-math');
+
+          const store = new MemoryProtectedObjectStore(new StaticEnvelopeKeyProvider({ 'key:ci': Buffer.alloc(32, 3) }));
+          const runtime = new GlassOnionHealthRuntime(store);
+          runtime.efile.createDraft({
+            id: 'doc:runtime-ci', clientId: 'client:ci', type: 'CASE_NOTE', dataClass: 'EPHI', title: 'Runtime CI note',
+            authorId: 'provider:ci', createdAt: '2026-08-28T00:00:00Z', version: '1.0', retentionPolicyId: 'retention:clinical',
+            content: 'encrypted runtime CI content', contentType: 'text/plain', keyId: 'key:ci', provenance: ['source:ci']
+          });
+          runtime.addAssignment({
+            clientId: 'client:ci', providerId: 'provider:ci', relationship: 'PRIMARY', active: true,
+            effectiveAt: '2026-08-01T00:00:00Z', provenance: ['assignment:ci']
+          });
+          const session = createHealthSession({
+            id: 'provider:ci', role: 'CLINICIAN', active: true, workforceMember: true, mfaRequired: true,
+            organizationId: 'org:ci', provenance: ['identity:ci']
+          }, {
+            sessionId: 'session:ci', authenticatedAt: '2026-08-28T00:00:00Z', expiresAt: '2026-08-29T00:00:00Z',
+            mfaVerified: true, authenticationMethods: ['SSO', 'TOTP'], provenance: ['idp:ci']
+          });
+          const decision = runtime.authorize({
+            requestId: 'req:ci', at: '2026-08-28T01:00:00Z', session, action: 'READ', purpose: 'TREATMENT',
+            documentId: 'doc:runtime-ci', minimumNecessarySatisfied: true, provenance: ['source:ci']
+          });
+          assert.equal(decision.decision, 'ALLOW');
+          assert.equal(runtime.audit.validate(), true);
+          assert.equal(runtime.evidenceSnapshot('2026-08-28T02:00:00Z').auditChainValid, true);
+          assert.equal(GLASS_ONION_HEALTH_RUNTIME.version, '0.2.0');
+
+          const math = arctanSeries(0.5, 1e-10, 1000);
+          assert.equal(math.converged, true);
+          assert.ok(Math.abs(math.estimate - Math.atan(0.5)) < 1e-8);
+          assert.equal(ALMIGHTY_AGI_MATH.principles.includes('BOUNDED_ITERATION'), true);
+
+          const contract = JSON.parse(fs.readFileSync('ecosystem/glass-onion-health-runtime.json', 'utf8'));
+          assert.equal(contract.status, 'IMPLEMENTED_IN_REPOSITORY');
+          assert.equal(contract.runtime.cryptographicAuditChain, true);
+          assert.equal(contract.runtime.appendOnlyAmendments, true);
+          assert.equal(contract.complianceBoundary.hipaaCertificationClaimed, false);
+          assert.equal(contract.complianceBoundary.externalCertificationStatus, 'NOT_ISSUED');
+          console.log('GLASS ONION HEALTH RUNTIME v0.2 LOCK: PASS');
           NODE
       - name: Machine contract lock
         run: |
