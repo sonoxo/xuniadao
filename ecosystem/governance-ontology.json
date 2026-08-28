@@ -65,7 +65,8 @@
     "agentIdentityDefense": "ecosystem/gcpxunia-defense.json",
     "technologyPeers": "ecosystem/tech-peers.json",
     "xuniaverse": "ecosystem/xuniaverse.json",
-    "xrplTokenWallet": "ecosystem/xrpl-token-wallet.json"
+    "xrplTokenWallet": "ecosystem/xrpl-token-wallet.json",
+    "collectiveCyberDefense": "ecosystem/collective-cyber-defense.json"
   },
   "decisions": [
     "ALLOW",

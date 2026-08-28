@@ -1,0 +1,1030 @@
+{
+  "id": "XUNIA-COLLECTIVE-CYBER-DEFENSE-ONTOLOGY",
+  "version": "1.0.0",
+  "command": "/glass collective defense",
+  "source": {
+    "title": "A call for collective action on cyber defense",
+    "publisher": "OpenAI",
+    "url": "https://openai.com/collective-cyberdefense/",
+    "retrievedOn": "2026-08-28",
+    "rosterCount": 128,
+    "evidenceClass": "PUBLIC_PRIMARY_SOURCE",
+    "xPostUrl": "https://x.com/OpenAI/status/2093074192636018977",
+    "screenshotEvidence": "User-provided screenshot dated 2026-08-27"
+  },
+  "claims": {
+    "signatoryRelationshipOnly": true,
+    "endorsementClaim": false,
+    "partnershipClaim": false,
+    "certificationClaim": false,
+    "proprietaryStandardsClaim": false,
+    "complianceInferredFromSignatoryStatus": false
+  },
+  "alignmentStates": [
+    "TARGET",
+    "IMPLEMENTED",
+    "EVIDENCED",
+    "EXTERNALLY_ATTESTED"
+  ],
+  "controlFamilies": [
+    {
+      "id": "LEADERSHIP_PRIORITY",
+      "requirement": "Treat cyber defense as an immediate leadership priority."
+    },
+    {
+      "id": "RISK_REMEDIATION",
+      "requirement": "Fix highest-risk weaknesses and verify results."
+    },
+    {
+      "id": "LEAST_PRIVILEGE",
+      "requirement": "Build and operate with least privilege."
+    },
+    {
+      "id": "STRONG_ACCESS_CONTROL",
+      "requirement": "Use strong authentication and access controls."
+    },
+    {
+      "id": "DEFENSE_IN_DEPTH",
+      "requirement": "Apply layered defenses and verified compensating controls."
+    },
+    {
+      "id": "SECURE_SOFTWARE",
+      "requirement": "Raise the security bar for purchased, built, deployed, and AI-generated code."
+    },
+    {
+      "id": "CONTINUOUS_TESTING",
+      "requirement": "Continuously test defenses against current frontier capabilities."
+    },
+    {
+      "id": "VERIFIED_FIXES",
+      "requirement": "Validate that remediation works without disrupting essential services."
+    },
+    {
+      "id": "THREAT_INTELLIGENCE_SHARING",
+      "requirement": "Share actionable intelligence, tested playbooks, and verified fixes."
+    },
+    {
+      "id": "INCIDENT_RESPONSE",
+      "requirement": "Coordinate containment, response, recovery, and learning."
+    },
+    {
+      "id": "CRITICAL_INFRASTRUCTURE",
+      "requirement": "Prioritize accessible defense for under-resourced essential services."
+    },
+    {
+      "id": "AGENT_IDENTITY",
+      "requirement": "Make agentic identities traceable and accountable."
+    },
+    {
+      "id": "OBSERVABILITY",
+      "requirement": "Provide continuous monitoring, logs, metrics, and evidence."
+    },
+    {
+      "id": "AUTHORIZED_TESTING_DISCLOSURE",
+      "requirement": "Use authorized testing, private disclosure, and evidence-backed remediation."
+    },
+    {
+      "id": "MEASURABLE_OUTCOMES",
+      "requirement": "Measure protection coverage, containment speed, and fix effectiveness."
+    }
+  ],
+  "evidenceRequirements": [
+    "CONTROL_OWNER",
+    "IMPLEMENTATION_REFERENCE",
+    "TEST_RESULT",
+    "OBSERVATION_TIMESTAMP",
+    "SCOPE",
+    "LIMITATIONS",
+    "REVIEWER",
+    "ATTESTATION_REFERENCE"
+  ],
+  "signatories": [
+    {
+      "id": "peer:001",
+      "name": "1Password",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:002",
+      "name": "Abnormal AI",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:003",
+      "name": "Accenture",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:004",
+      "name": "Adobe",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:005",
+      "name": "Advent International",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:006",
+      "name": "Aikido",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:007",
+      "name": "Akamai",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:008",
+      "name": "AMD",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:009",
+      "name": "Anthropic",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:010",
+      "name": "APIsec",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:011",
+      "name": "Arena",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:012",
+      "name": "Arm",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:013",
+      "name": "AWS",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:014",
+      "name": "BBVA",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:015",
+      "name": "Block",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:016",
+      "name": "Broadcom",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:017",
+      "name": "Calif",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:018",
+      "name": "Cantina Security",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:019",
+      "name": "Cape",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:020",
+      "name": "Capgemini",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:021",
+      "name": "Capital One",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:022",
+      "name": "Cato Networks",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:023",
+      "name": "Center for Internet Security",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:024",
+      "name": "Cerebras",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:025",
+      "name": "Check Point",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:026",
+      "name": "Cisco",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:027",
+      "name": "Citadel",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:028",
+      "name": "Citi",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:029",
+      "name": "Clearly AI",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:030",
+      "name": "Cloaked",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:031",
+      "name": "Cloudflare",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:032",
+      "name": "Cogent Security",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:033",
+      "name": "Cognition",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:034",
+      "name": "Cognizant",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:035",
+      "name": "Corelight",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:036",
+      "name": "Corridor",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:037",
+      "name": "Cotool",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:038",
+      "name": "CrowdStrike",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:039",
+      "name": "Cyera",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:040",
+      "name": "Darktrace",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:041",
+      "name": "Dell",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:042",
+      "name": "depthfirst",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:043",
+      "name": "Deutsche Telekom",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:044",
+      "name": "Dropzone.ai",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:045",
+      "name": "DTCC",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:046",
+      "name": "Elastic",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:047",
+      "name": "Enclave",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:048",
+      "name": "EPAM",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:049",
+      "name": "Equinix",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:050",
+      "name": "EXA.ai",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:051",
+      "name": "ExodusPoint",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:052",
+      "name": "F5",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:053",
+      "name": "Factory",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:054",
+      "name": "Fifth Third Bank",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:055",
+      "name": "Figma",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:056",
+      "name": "FIS",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:057",
+      "name": "Fiserv",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:058",
+      "name": "Fleet AI",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:059",
+      "name": "Flexport",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:060",
+      "name": "Fortinet",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:061",
+      "name": "Gen Digital",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:062",
+      "name": "General Motors",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:063",
+      "name": "Glean",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:064",
+      "name": "Glow",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:065",
+      "name": "GoDaddy",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:066",
+      "name": "Google",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:067",
+      "name": "HackerOne",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:068",
+      "name": "Harvey",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:069",
+      "name": "HCLTech",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:070",
+      "name": "Hugging Face",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:071",
+      "name": "IBM",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:072",
+      "name": "Incident.io",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:073",
+      "name": "KPMG LLP",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:074",
+      "name": "Lovable",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:075",
+      "name": "Lumen Technologies",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:076",
+      "name": "Marsh",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:077",
+      "name": "Mastercard",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:078",
+      "name": "Mercor",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:079",
+      "name": "Micron",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:080",
+      "name": "Microsoft",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:081",
+      "name": "National Australia Bank",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:082",
+      "name": "Nationwide Building Society",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:083",
+      "name": "NTT DATA",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:084",
+      "name": "Obsidian Security",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:085",
+      "name": "Octane Security",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:086",
+      "name": "Offensive AI Conference (OAIC)",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:087",
+      "name": "Okta",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:088",
+      "name": "Oliver Wyman",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:089",
+      "name": "OpenAI",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:090",
+      "name": "Oracle",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:091",
+      "name": "Outtake AI",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:092",
+      "name": "Palo Alto Networks",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:093",
+      "name": "Perplexity",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:094",
+      "name": "Proofpoint",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:095",
+      "name": "Prophet Security",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:096",
+      "name": "PwC",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:097",
+      "name": "Red Hat",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:098",
+      "name": "ReliaQuest",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:099",
+      "name": "RemoteThreat",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:100",
+      "name": "Replit",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:101",
+      "name": "Robinhood",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:102",
+      "name": "RunSybil",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:103",
+      "name": "SAP",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:104",
+      "name": "Scale AI",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:105",
+      "name": "SentinelOne",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:106",
+      "name": "ServiceNow",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:107",
+      "name": "Shopify",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:108",
+      "name": "Snowflake",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:109",
+      "name": "Snyk",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:110",
+      "name": "Socket",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:111",
+      "name": "Sophos",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:112",
+      "name": "SpecterOps",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:113",
+      "name": "Tenable",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:114",
+      "name": "Tenzai",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:115",
+      "name": "The Clearing House",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:116",
+      "name": "Third Moment Research",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:117",
+      "name": "Trail of Bits",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:118",
+      "name": "TransUnion",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:119",
+      "name": "TrendAI",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:120",
+      "name": "Unisys",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:121",
+      "name": "U.S. Bank",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:122",
+      "name": "Vercel",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:123",
+      "name": "Veria Labs",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:124",
+      "name": "Visa",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:125",
+      "name": "WWT",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:126",
+      "name": "XBOW",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:127",
+      "name": "Zscaler",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    },
+    {
+      "id": "peer:128",
+      "name": "Zurich Insurance Company",
+      "relationship": "PUBLIC_SIGNATORY_REFERENCE",
+      "alignmentState": "TARGET",
+      "evidence": "https://openai.com/collective-cyberdefense/"
+    }
+  ],
+  "decisions": [
+    "ALLOW",
+    "REVIEW",
+    "BLOCK"
+  ],
+  "policy": {
+    "allow": [
+      "READ_PUBLIC_SOURCE",
+      "REGISTER_REFERENCE_PEER",
+      "MAP_PUBLIC_CONTROL",
+      "ASSESS_TARGET_STATE",
+      "ATTACH_EVIDENCE",
+      "GENERATE_GAP_REPORT"
+    ],
+    "review": [
+      "CLAIM_IMPLEMENTED",
+      "CLAIM_EVIDENCED",
+      "CLAIM_EXTERNALLY_ATTESTED",
+      "PUBLISH_ALIGNMENT_REPORT",
+      "DEPLOY_REMEDIATION"
+    ],
+    "block": [
+      "INFER_ENDORSEMENT",
+      "INFER_PARTNERSHIP",
+      "INFER_CERTIFICATION",
+      "INFER_PROPRIETARY_STANDARD",
+      "PROMOTE_WITHOUT_EVIDENCE",
+      "BYPASS_AUTHORIZATION",
+      "AUTOMATE_OFFENSIVE_ACTION"
+    ]
+  }
+}
