@@ -189,6 +189,14 @@ XUNIA connects standards ([`XRPL-StandardsXUNIA-`](https://github.com/sonoxo/XRP
 
 Docs: [`docs/XRPL_TOKEN_WALLET_PATHWAYS.md`](docs/XRPL_TOKEN_WALLET_PATHWAYS.md) · Contract: [`ecosystem/xrpl-token-wallet.json`](ecosystem/xrpl-token-wallet.json)
 
+## Collective cyber defense
+
+Command: **`/glass collective defense`**
+
+XUNIA maps OpenAI's official 128-signatory collective cyber-defense roster into an evidence-backed peer ontology and 15-control baseline. Alignment states are `TARGET`, `IMPLEMENTED`, `EVIDENCED`, and `EXTERNALLY_ATTESTED`; no organization, partnership, endorsement, certification, or proprietary-standard claim is inferred.
+
+Docs: [`docs/COLLECTIVE_CYBER_DEFENSE.md`](docs/COLLECTIVE_CYBER_DEFENSE.md) · Contract: [`ecosystem/collective-cyber-defense.json`](ecosystem/collective-cyber-defense.json)
+
 ## AIT ontology
 
 Command: **`/glass ait`**
@@ -224,6 +232,7 @@ XUNIA_SCOPE → GPT_UAP_XO_PLAN → GPT_UAP_XO_BOUNDED_WORKERS → PROVENANCE_CH
 | `/glass exchanges` | live read-only exchange listing/ticker discovery |
 | `/glass xrpl` | governed XRPL documentation and upstream source resolution |
 | `/glass xrpl pathways` | token, wallet, client, node, approval and audit ontology |
+| `/glass collective defense` | 128-peer collective cyber-defense alignment and evidence gaps |
 | `/glass uap` | GPT-UAP-XO bounded-agent route |
 | `/VA3LM-SAGI` | VA3LM guardrail intelligence surface |
 
