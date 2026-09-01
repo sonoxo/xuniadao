@@ -26,7 +26,7 @@
       "additionalProperties": false,
       "required": ["type", "value"],
       "properties": {
-        "type": { "enum": ["url", "host", "cidr"] },
+        "type": { "enum": ["url", "host", "cidr", "path", "image", "cloud"] },
         "value": { "type": "string", "minLength": 1 }
       }
     }
