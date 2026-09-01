@@ -1,6 +1,7 @@
 import test from 'ava';
 
 import {
+  canTransitionRuntimeFinding,
   canTransitionRuntimeJob,
   validateRuntimeEvent,
   validateRuntimeSchedule,
@@ -17,6 +18,13 @@ test('does not allow terminal jobs to restart', (t) => {
   t.false(canTransitionRuntimeJob('CANCELLED', 'RUNNING'));
 });
 
+test('finding lifecycle supports fix retest and verification', (t) => {
+  t.true(canTransitionRuntimeFinding('OPEN', 'RESOLVED_PENDING_RETEST'));
+  t.true(canTransitionRuntimeFinding('RESOLVED_PENDING_RETEST', 'RETESTING'));
+  t.true(canTransitionRuntimeFinding('RETESTING', 'VERIFIED'));
+  t.false(canTransitionRuntimeFinding('VERIFIED', 'OPEN'));
+});
+
 test('enforces a one-minute minimum schedule interval', (t) => {
   const error = t.throws(() => validateRuntimeSchedule(59));
   t.is(error?.message, 'RUNTIME_SCHEDULE_INTERVAL_OUT_OF_RANGE');
@@ -25,9 +33,9 @@ test('enforces a one-minute minimum schedule interval', (t) => {
 
 test('accepts a valid live runtime event', (t) => {
   t.notThrows(() => validateRuntimeEvent({
-    type: 'step.finished',
+    type: 'finding.detected',
     jobId: 'job-001',
-    payload: { tool: 'nmap', status: 'COMPLETED' },
+    payload: { tool: 'nmap', status: 'OPEN' },
     createdAt: new Date().toISOString(),
   }));
 });
