@@ -6,6 +6,7 @@ export * from './lib/action-safety';
 export * from './lib/compliance-evidence';
 export * from './lib/control-plane-runtime';
 export * from './lib/guarded-action-runner';
+export * from './lib/security-engagement';
 export * from './lib/crm';
 export * from './lib/crm-certification';
 export * from './lib/crm-compliance';
