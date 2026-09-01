@@ -1,4 +1,11 @@
 export type RuntimeJobStatus = 'QUEUED' | 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED';
+export type RuntimeFindingStatus =
+  | 'OPEN'
+  | 'IN_PROGRESS'
+  | 'RESOLVED_PENDING_RETEST'
+  | 'RETESTING'
+  | 'VERIFIED'
+  | 'DISMISSED';
 export type RuntimeEventType =
   | 'job.queued'
   | 'job.running'
@@ -7,6 +14,9 @@ export type RuntimeEventType =
   | 'job.cancelled'
   | 'step.running'
   | 'step.finished'
+  | 'finding.detected'
+  | 'finding.verified'
+  | 'notification.created'
   | 'schedule.triggered'
   | 'schedule.failed';
 
@@ -27,6 +37,22 @@ export interface RuntimeSchedule {
   lastRunAt?: string | null;
 }
 
+export interface RuntimeFinding {
+  id: string;
+  fingerprint: string;
+  jobId: string;
+  toolId: string;
+  severity: 'critical' | 'high' | 'medium' | 'low' | 'info';
+  title: string;
+  resource: string;
+  description: string;
+  remediation: string;
+  status: RuntimeFindingStatus;
+  firstSeenAt: string;
+  lastSeenAt: string;
+  verifiedAt?: string | null;
+}
+
 const TERMINAL = new Set<RuntimeJobStatus>(['COMPLETED', 'FAILED', 'CANCELLED']);
 
 export function canTransitionRuntimeJob(from: RuntimeJobStatus, to: RuntimeJobStatus): boolean {
@@ -34,6 +60,16 @@ export function canTransitionRuntimeJob(from: RuntimeJobStatus, to: RuntimeJobSt
   if (TERMINAL.has(from)) return false;
   if (from === 'QUEUED') return to === 'RUNNING' || to === 'FAILED' || to === 'CANCELLED';
   if (from === 'RUNNING') return to === 'COMPLETED' || to === 'FAILED' || to === 'CANCELLED';
+  return false;
+}
+
+export function canTransitionRuntimeFinding(from: RuntimeFindingStatus, to: RuntimeFindingStatus): boolean {
+  if (from === to) return true;
+  if (from === 'VERIFIED' || from === 'DISMISSED') return false;
+  if (from === 'OPEN') return ['IN_PROGRESS', 'RESOLVED_PENDING_RETEST', 'RETESTING', 'DISMISSED'].includes(to);
+  if (from === 'IN_PROGRESS') return ['OPEN', 'RESOLVED_PENDING_RETEST', 'RETESTING', 'DISMISSED'].includes(to);
+  if (from === 'RESOLVED_PENDING_RETEST') return ['OPEN', 'RETESTING', 'DISMISSED'].includes(to);
+  if (from === 'RETESTING') return ['OPEN', 'VERIFIED'].includes(to);
   return false;
 }
 
