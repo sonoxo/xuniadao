@@ -1,0 +1,55 @@
+name: AI FDE Migration Fabric
+
+on:
+  push:
+    paths:
+      - "ecosystem/ai-fde-migration-fabric.json"
+      - "docs/AI_FDE_MIGRATION_FABRIC.md"
+      - ".github/workflows/ai-fde-migration-fabric.yml"
+  pull_request:
+    paths:
+      - "ecosystem/ai-fde-migration-fabric.json"
+      - "docs/AI_FDE_MIGRATION_FABRIC.md"
+      - ".github/workflows/ai-fde-migration-fabric.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate machine contract
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path("ecosystem/ai-fde-migration-fabric.json")
+          data = json.loads(path.read_text())
+
+          expected_stages = [
+              "PLAN", "CONNECT", "INTERPRET", "ENHANCE",
+              "STANDARDIZE", "VERIFY", "DEPLOY"
+          ]
+          required_roles = {
+              "source-scout", "schema-cartographer", "code-interpreter",
+              "mapping-engineer", "transform-builder", "verifier",
+              "diagnostician", "sme-gateway", "release-controller", "auditor"
+          }
+
+          assert data["stages"] == expected_stages
+          assert data["implementation"] == "clean-room"
+          assert data["claims"]["palantirProprietarySourceIncluded"] is False
+          assert data["claims"]["palantirModelWeightsIncluded"] is False
+          assert data["contextPolicy"]["strategy"] == "minimum-viable-context"
+          assert data["defaultMaxRepairCycles"] > 0
+          assert required_roles == {r["id"] for r in data["roles"]}
+          assert "DEPLOYMENT_EVIDENCE" in data["ontology"]
+          assert "evaluations-pass" in data["requiredGates"]
+          print("AI FDE migration fabric contract valid")
+          PY

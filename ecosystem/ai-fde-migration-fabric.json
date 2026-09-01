@@ -1,0 +1,105 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "xunia.ai-fde-migration-fabric",
+  "status": "IMPLEMENTED_CONTRACT",
+  "implementation": "clean-room",
+  "claims": {
+    "palantirAffiliation": false,
+    "palantirProprietarySourceIncluded": false,
+    "palantirModelWeightsIncluded": false
+  },
+  "sources": [
+    {
+      "type": "owner-supplied-demo",
+      "url": "https://www.youtube.com/watch?v=e90qUUh8_us"
+    },
+    {
+      "type": "official-public-documentation",
+      "url": "https://www.palantir.com/docs/foundry/ai-fde/overview/"
+    },
+    {
+      "type": "official-public-documentation",
+      "url": "https://www.palantir.com/docs/foundry/ai-fde/modes-capabilities/"
+    },
+    {
+      "type": "official-public-whitepaper",
+      "url": "https://www.palantir.com/assets/xrfr7uokpv1b/2F8L1TTINRFCg8IGhcJ8vo/1965d99b6512cbae17b845ec8d26ebd2/SAP_Migration_Whitepaper.pdf"
+    },
+    {
+      "type": "community-reference",
+      "license": "MIT",
+      "url": "https://github.com/s-andthat/palantir-ai-fde-library"
+    }
+  ],
+  "stages": [
+    "PLAN",
+    "CONNECT",
+    "INTERPRET",
+    "ENHANCE",
+    "STANDARDIZE",
+    "VERIFY",
+    "DEPLOY"
+  ],
+  "validationLoop": [
+    "VERIFY",
+    "DIAGNOSE",
+    "REPAIR_PROPOSAL",
+    "RE_RUN",
+    "VERIFY"
+  ],
+  "defaultMaxRepairCycles": 3,
+  "roles": [
+    {"id": "source-scout", "authority": "read-only"},
+    {"id": "schema-cartographer", "authority": "read-only"},
+    {"id": "code-interpreter", "authority": "read-only"},
+    {"id": "mapping-engineer", "authority": "proposal-only"},
+    {"id": "transform-builder", "authority": "branch-local-write"},
+    {"id": "verifier", "authority": "test-execution"},
+    {"id": "diagnostician", "authority": "proposal-only"},
+    {"id": "sme-gateway", "authority": "human-decision-recording"},
+    {"id": "release-controller", "authority": "approval-gated-write"},
+    {"id": "auditor", "authority": "append-evidence"}
+  ],
+  "contextPolicy": {
+    "strategy": "minimum-viable-context",
+    "credentialMaterialInPrompt": false,
+    "implicitBroadAccess": false,
+    "typedContextRequired": true
+  },
+  "ontology": [
+    "MIGRATION_MISSION",
+    "SOURCE_ASSET",
+    "DISCOVERY_OBSERVATION",
+    "SCHEMA_PROFILE",
+    "SOURCE_LOGIC",
+    "CANONICAL_MAPPING",
+    "TRANSFORM_ARTIFACT",
+    "EVALUATION",
+    "FAILURE_DIAGNOSIS",
+    "REPAIR_PROPOSAL",
+    "SME_DECISION",
+    "RELEASE_CANDIDATE",
+    "DEPLOYMENT_EVIDENCE",
+    "AUDIT_EVENT"
+  ],
+  "requiredGates": [
+    "source-provenance-known",
+    "schema-profile-captured",
+    "source-logic-recorded",
+    "canonical-mappings-reviewed",
+    "transforms-versioned",
+    "reconciliation-passes",
+    "evaluations-pass",
+    "sensitive-data-controls-checked",
+    "permission-boundaries-checked",
+    "unresolved-ambiguity-gated",
+    "rollback-ready",
+    "downstream-impact-reviewed",
+    "deployment-evidence-recorded"
+  ],
+  "ownership": {
+    "governanceRoot": "sonoxo/xuniadao",
+    "runtime": "sonoxo/zyra",
+    "modelControlPlane": "sonoxo/gpt-doug-llm"
+  }
+}
