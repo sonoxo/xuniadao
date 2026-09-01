@@ -1,6 +1,6 @@
 export type SecurityMode = 'ASSESS' | 'PENTEST' | 'SIMULATE';
 export type SecurityRisk = 'PASSIVE' | 'DISCOVERY' | 'SAFE_ACTIVE' | 'LAB_ACTIVE';
-export type SecurityTargetType = 'url' | 'host' | 'cidr';
+export type SecurityTargetType = 'url' | 'host' | 'cidr' | 'path' | 'image' | 'cloud';
 
 export interface SecurityTarget {
   type: SecurityTargetType;
@@ -48,17 +48,20 @@ export interface SecurityAuthorizationDecision {
 }
 
 function canonicalTarget(target: SecurityTarget): string {
-  const raw = target.value.trim().toLowerCase();
+  const trimmed = target.value.trim();
   if (target.type === 'url') {
     try {
-      const url = new URL(raw);
+      const url = new URL(trimmed);
       const path = url.pathname === '/' ? '' : url.pathname.replace(/\/$/, '');
-      return `${url.protocol}//${url.host}${path}`;
+      return `${url.protocol.toLowerCase()}//${url.host.toLowerCase()}${path}`;
     } catch (_) {
-      return raw.replace(/\/$/, '');
+      return trimmed.replace(/\/$/, '');
     }
   }
-  return raw;
+  if (target.type === 'host' || target.type === 'cidr' || target.type === 'cloud') {
+    return trimmed.toLowerCase();
+  }
+  return trimmed;
 }
 
 function targetMatches(allowed: SecurityTarget, requested: SecurityTarget): boolean {
