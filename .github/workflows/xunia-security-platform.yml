@@ -5,6 +5,8 @@ on:
     paths:
       - "src/lib/security-engagement.ts"
       - "src/lib/security-engagement.spec.ts"
+      - "src/lib/security-runtime.ts"
+      - "src/lib/security-runtime.spec.ts"
       - "src/schemas/security-engagement.schema.json"
       - "src/index.ts"
       - ".github/workflows/xunia-security-platform.yml"
@@ -13,7 +15,10 @@ on:
     paths:
       - "src/lib/security-engagement.ts"
       - "src/lib/security-engagement.spec.ts"
+      - "src/lib/security-runtime.ts"
+      - "src/lib/security-runtime.spec.ts"
       - "src/schemas/security-engagement.schema.json"
+      - "src/index.ts"
 
 permissions:
   contents: read
