@@ -91,7 +91,8 @@
       }
     },
     "files": [
-      "!dist/module/**"
+      "!dist/module/**",
+      "!gaming/xuni-engine/tests/**"
     ]
   },
   "config": {
