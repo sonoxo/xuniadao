@@ -3,109 +3,53 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="XUNIA Resilience Atlas — civil-defense consequence visualization and AIP-ready emergency exercise planning." />
+  <meta name="description" content="XUNIA Resilience Atlas — governed civil-defense consequence simulation and AIP-ready emergency planning." />
   <title>XUNIA Resilience Atlas</title>
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-  <div class="shell">
-    <header class="topbar">
-      <div>
-        <div class="eyebrow">XUNIA / GLASS ONION / AIP</div>
-        <h1>RESILIENCE ATLAS</h1>
-      </div>
-      <div class="status"><span></span> SAFE EXERCISE MODE</div>
-    </header>
+<div class="shell">
+  <header class="topbar">
+    <div><div class="eyebrow">XUNIA / AIP / ONTOLOGY / GOTHAM / APOLLO / JUPITER</div><h1>RESILIENCE ATLAS</h1></div>
+    <div class="status-grid">
+      <div class="status"><span></span><b>PLATFORM</b> <em id="platformStatus">BOOTING</em></div>
+      <div class="status"><span></span><b>PALANTIR</b> <em id="palantirStatus">CHECKING</em></div>
+    </div>
+  </header>
 
-    <main class="layout">
-      <aside class="panel controls">
-        <div class="panel-title">SCENARIO CONTROL</div>
-        <label>Exercise type
-          <select id="scenarioType">
-            <option value="radiological">Radiological emergency</option>
-            <option value="industrial">Industrial explosion</option>
-            <option value="chemical">Hazardous-material release</option>
-            <option value="wildfire">Wildfire / smoke event</option>
-            <option value="grid">Grid / infrastructure outage</option>
-          </select>
-        </label>
+  <main class="layout">
+    <aside class="panel controls">
+      <div class="panel-title">SCENARIO CONTROL</div>
+      <label>Exercise type<select id="scenarioType"><option value="radiological">Radiological emergency</option><option value="industrial">Industrial explosion</option><option value="chemical">Hazardous-material release</option><option value="wildfire">Wildfire / smoke event</option><option value="grid">Grid / infrastructure outage</option></select></label>
+      <label>Exercise severity<select id="severity"><option value="1">Level 1 — Localized</option><option value="2">Level 2 — Significant</option><option value="3" selected>Level 3 — Major</option><option value="4">Level 4 — Regional</option><option value="5">Level 5 — Catastrophic exercise</option></select></label>
+      <label>Population context<select id="population"><option value="sparse">Sparse / rural</option><option value="moderate" selected>Moderate / suburban</option><option value="dense">Dense / urban</option></select></label>
+      <label>Weather / dispersion<select id="weather"><option value="stable">Stable</option><option value="windy">Wind-driven</option><option value="rain">Rain / precipitation</option></select></label>
+      <button id="runBtn" class="primary">RUN EXERCISE</button>
+      <button id="publishBtn" class="primary alt">STAGE TO ONTOLOGY</button>
+      <button id="resetBtn" class="secondary">RESET</button>
+      <div class="guardrail"><strong>Governance boundary</strong><p>Emergency preparedness and consequence analysis only. No targeting, weapon design, yield/burst optimization, strike sequencing, casualty maximization, autonomous alerts, or autonomous responder dispatch.</p></div>
+    </aside>
 
-        <label>Exercise severity
-          <select id="severity">
-            <option value="1">Level 1 — Localized</option>
-            <option value="2">Level 2 — Significant</option>
-            <option value="3" selected>Level 3 — Major</option>
-            <option value="4">Level 4 — Regional</option>
-            <option value="5">Level 5 — Catastrophic exercise</option>
-          </select>
-        </label>
+    <section class="map-panel">
+      <div class="map-toolbar"><div><strong id="scenarioLabel">Scenario</strong><span id="scenarioMeta"></span><small>Scenario ID: <code id="scenarioId">—</code></small></div><button id="exportBtn">EXPORT AIP ENVELOPE</button></div>
+      <div class="map-wrap"><canvas id="map" width="1200" height="760" aria-label="exercise consequence map"></canvas><div class="legend"><div><i class="z1"></i> Immediate response zone</div><div><i class="z2"></i> Protective-action zone</div><div><i class="z3"></i> Monitoring / support zone</div></div></div>
+    </section>
 
-        <label>Population context
-          <select id="population">
-            <option value="sparse">Sparse / rural</option>
-            <option value="moderate" selected>Moderate / suburban</option>
-            <option value="dense">Dense / urban</option>
-          </select>
-        </label>
+    <aside class="panel intel">
+      <div class="panel-title">AIP RESPONSE INTELLIGENCE</div>
+      <div class="metric"><span>People in exercise zones</span><strong id="populationImpact">—</strong></div>
+      <div class="metric"><span>Hospitals under surge pressure</span><strong id="hospitalImpact">—</strong></div>
+      <div class="metric"><span>Shelters available</span><strong id="shelterImpact">—</strong></div>
+      <div class="metric"><span>Critical infrastructure at risk</span><strong id="infraImpact">—</strong></div>
+      <div class="metric"><span>Response posture</span><strong id="posture">READY</strong></div>
+      <div class="recommendations"><h2>Recommended exercise actions</h2><ul id="actions"></ul></div>
+      <div class="provenance"><h2>Audit stream</h2><ul id="audit" class="audit"></ul></div>
+      <div class="provenance"><h2>Model provenance</h2><p id="provenance">XUNIA synthetic consequence model v0.2. Training / emergency planning only. Outputs are scenario estimates, not ground truth.</p></div>
+    </aside>
+  </main>
 
-        <label>Weather / dispersion
-          <select id="weather">
-            <option value="stable">Stable</option>
-            <option value="windy">Wind-driven</option>
-            <option value="rain">Rain / precipitation</option>
-          </select>
-        </label>
-
-        <button id="runBtn" class="primary">RUN EXERCISE</button>
-        <button id="resetBtn" class="secondary">RESET</button>
-
-        <div class="guardrail">
-          <strong>Safety boundary</strong>
-          <p>No targeting, weapon engineering, yield, burst-height, penetration, strike sequencing, or casualty-maximization controls.</p>
-        </div>
-      </aside>
-
-      <section class="map-panel">
-        <div class="map-toolbar">
-          <div><strong id="scenarioLabel">Radiological emergency</strong><span id="scenarioMeta"> Major exercise / moderate population</span></div>
-          <button id="exportBtn">EXPORT AIP SCENARIO</button>
-        </div>
-        <div class="map-wrap">
-          <canvas id="map" width="1200" height="760" aria-label="exercise consequence map"></canvas>
-          <div class="legend">
-            <div><i class="z1"></i> Immediate response zone</div>
-            <div><i class="z2"></i> Protective-action zone</div>
-            <div><i class="z3"></i> Monitoring / support zone</div>
-          </div>
-        </div>
-      </section>
-
-      <aside class="panel intel">
-        <div class="panel-title">AIP RESPONSE INTELLIGENCE</div>
-        <div class="metric"><span>Estimated people in exercise zones</span><strong id="populationImpact">—</strong></div>
-        <div class="metric"><span>Hospitals under surge pressure</span><strong id="hospitalImpact">—</strong></div>
-        <div class="metric"><span>Shelters available outside core zone</span><strong id="shelterImpact">—</strong></div>
-        <div class="metric"><span>Critical infrastructure at risk</span><strong id="infraImpact">—</strong></div>
-        <div class="metric"><span>Response posture</span><strong id="posture">READY</strong></div>
-
-        <div class="recommendations">
-          <h2>Recommended exercise actions</h2>
-          <ul id="actions"></ul>
-        </div>
-
-        <div class="provenance">
-          <h2>Model provenance</h2>
-          <p id="provenance">XUNIA synthetic consequence model v0.1. Training / planning only. Outputs are scenario estimates, not ground truth.</p>
-        </div>
-      </aside>
-    </main>
-
-    <footer>
-      <span>XUNIA RESILIENCE ATLAS</span>
-      <span>Human approval required before any operational action.</span>
-    </footer>
-  </div>
-
-  <script type="module" src="./app.js"></script>
+  <footer><span>XUNIA RESILIENCE ATLAS</span><span>Human approval required before any operational action.</span></footer>
+</div>
+<script type="module" src="./app.js"></script>
 </body>
 </html>
