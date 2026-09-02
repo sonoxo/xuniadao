@@ -20,7 +20,7 @@ permissions:
 
 jobs:
   validate:
-    name: Validate Resilience Atlas
+    name: Validate Resilience Atlas Platform
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -29,8 +29,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - name: Validate browser runtime syntax
-        run: node --check apps/resilience-atlas/app.js
+      - name: Syntax and service checks
+        working-directory: apps/resilience-atlas
+        run: npm run check
+      - name: Platform tests
+        working-directory: apps/resilience-atlas
+        run: npm test
       - name: Validate JSON contracts
         run: node -e "const fs=require('fs'); JSON.parse(fs.readFileSync('apps/resilience-atlas/jupiter.manifest.json','utf8')); JSON.parse(fs.readFileSync('ontology/civil-defense-simulation.schema.json','utf8')); console.log('json contracts: ok')"
       - name: Guardrail regression check
