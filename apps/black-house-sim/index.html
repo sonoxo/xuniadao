@@ -1,1 +1,76 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/><meta name="theme-color" content="#0b0d12"/><title>The Black House — Resilience Simulation</title><script type="module" src="/src/main.ts"></script><style>html,body,#app{width:100%;height:100%;margin:0;overflow:hidden;background:#0b0d12;color:#e8eaef;font-family:Inter,system-ui,sans-serif}#app{display:flex}#stage{position:relative;flex:1;min-width:0;height:100%}#viewport{position:absolute;inset:0}#panel{flex:0 0 300px;width:300px;height:100%;background:#18181b;padding:18px;box-sizing:border-box;border-left:1px solid #2a2d33}#place-search{position:absolute;z-index:3;top:28px;left:50%;width:min(640px,calc(100% - 48px));transform:translateX(-50%);display:flex;gap:12px}#place-search input,#place-search select,#panel select,#panel button{background:#111319;border:1px solid #353945;color:#eef1f6;border-radius:10px;padding:12px}#place-search input{flex:1}#hints{position:absolute;left:18px;bottom:18px;z-index:2;background:#111319cc;padding:8px 12px;border-radius:10px;font-size:12px}#brand{font-weight:800;letter-spacing:.12em;font-size:13px;margin-bottom:18px}.metric{display:flex;justify-content:space-between;border-bottom:1px solid #2b2f36;padding:12px 0}.danger{color:#ff6b6b}.good{color:#7cff9d}.cta{width:100%;margin-top:12px}.small{font-size:12px;color:#aab2c0;line-height:1.5}@media(max-width:820px){html,body,#app{height:100dvh}#panel{position:absolute;left:0;right:0;bottom:0;width:100%;height:auto;max-height:42vh;overflow:auto;z-index:4;border-left:0;border-top:1px solid #2a2d33}}</style></head><body><div id="app"><div id="stage"><div id="viewport"></div><form id="place-search"><input id="place" type="search" placeholder="Search a city or place" aria-label="Search a city or place"/><select id="preset"><option value="richmond">Richmond, VA</option><option value="dc">Washington, DC</option><option value="norfolk">Norfolk, VA</option></select></form><div id="hints">Left drag orbit · Right drag pan · Scroll zoom · H home</div></div><aside id="panel"><div id="brand">THE BLACK HOUSE / XUNIA</div><label>Exercise severity<select id="severity"><option value="1">Localized</option><option value="2">Significant</option><option value="3" selected>Major</option><option value="4">Regional</option><option value="5">Catastrophic exercise</option></select></label><button id="run" class="cta">RUN RESILIENCE EXERCISE</button><div class="metric"><span>Population band</span><strong id="pop">—</strong></div><div class="metric"><span>Hospital surge</span><strong id="hosp">—</strong></div><div class="metric"><span>Infrastructure risk</span><strong id="infra">—</strong></div><div class="metric"><span>Posture</span><strong id="posture" class="good">READY</strong></div><button id="brief" class="cta">GPT-DOUG / VIRGINIA BRIEF</button><pre id="briefing" class="small"></pre><p class="small">Civil-defense training only. No targeting, weapon engineering, yield optimization, strike sequencing, or casualty maximization.</p></aside></div></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0d12" />
+  <title>The Black House — Resilience Simulation</title>
+  <script type="module" src="/src/main.ts"></script>
+  <style>
+    :root{color-scheme:dark;font-family:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif}
+    *{box-sizing:border-box}html,body,#app{width:100%;height:100%;margin:0;overflow:hidden;background:#0b0d12;color:#e8eaef}
+    #app{display:flex}#stage{position:relative;flex:1;min-width:0;height:100%}#viewport{position:absolute;inset:0;background:#090b0f}
+    gmp-map-3d{width:100%;height:100%;display:block}
+    #panel{flex:0 0 300px;width:300px;height:100%;background:#18181b;padding:18px;border-left:1px solid #2a2d33;overflow:auto}
+    #place-search{position:absolute;z-index:8;top:28px;left:50%;width:min(640px,calc(100% - 48px));transform:translateX(-50%);display:flex;gap:10px}
+    input,select,button{background:#111319;border:1px solid #353945;color:#eef1f6;border-radius:10px;padding:12px;font:inherit}
+    #place{flex:1;min-width:0}button{cursor:pointer}.cta{width:100%;margin-top:12px;font-weight:700}.primary{background:#f3f4f6;color:#0b0d12;border-color:#f3f4f6}
+    #hints{position:absolute;left:18px;bottom:18px;z-index:7;background:#111319dd;border:1px solid #30343c;padding:8px 12px;border-radius:10px;font-size:12px}
+    #brand{font-weight:900;letter-spacing:.12em;font-size:13px;margin-bottom:8px}.subbrand{font-size:11px;color:#8e98a8;margin-bottom:20px}
+    label{display:block;font-size:12px;color:#aeb6c2;margin:12px 0}label select{width:100%;margin-top:7px}
+    .metric{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #2b2f36;padding:12px 0;font-size:13px}.metric strong{text-align:right}
+    .danger{color:#ff7a73}.good{color:#80ff9f}.small{font-size:12px;color:#aab2c0;line-height:1.5;white-space:pre-wrap}
+    #setup{position:absolute;inset:0;z-index:20;display:none;place-items:center;background:linear-gradient(135deg,#0b0d12,#151820)}#setup.show{display:grid}
+    .setup-card{width:min(560px,calc(100% - 40px));padding:28px;border:1px solid #353945;background:#15171d;border-radius:18px;box-shadow:0 24px 80px #0008}.setup-card h1{margin-top:0;font-size:24px}.setup-card code{color:#9fe8ff}
+    #status{position:absolute;right:18px;bottom:18px;z-index:7;background:#111319dd;border:1px solid #30343c;padding:8px 10px;border-radius:10px;font-size:11px;color:#aeb6c2}
+    @media(max-width:820px){html,body,#app{height:100dvh}#panel{position:absolute;left:0;right:0;bottom:0;width:100%;height:auto;max-height:43vh;z-index:9;border-left:0;border-top:1px solid #2a2d33}#hints{bottom:44vh}#status{bottom:44vh}#place-search{width:calc(100% - 28px);top:14px}}
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div id="stage">
+      <div id="viewport"></div>
+      <form id="place-search" autocomplete="off">
+        <input id="place" type="search" placeholder="Search a city or place" aria-label="Search a city or place" />
+        <select id="preset" aria-label="Choose a preset place">
+          <option value="richmond">Richmond, VA</option>
+          <option value="dc">Washington, DC</option>
+          <option value="norfolk">Norfolk, VA</option>
+          <option value="nyc">New York, NY</option>
+        </select>
+      </form>
+      <div id="hints">Drag to orbit · Scroll/pinch to zoom · Search to relocate</div>
+      <div id="status">GOOGLE MAPS 3D · XUNIA SAFE EXERCISE MODE</div>
+      <div id="setup">
+        <div class="setup-card">
+          <h1>Connect Google Maps</h1>
+          <p>This build uses Google Maps JavaScript API 3D Maps. Add a browser-restricted API key as <code>VITE_GOOGLE_MAPS_API_KEY</code> for local development or the GitHub Actions secret <code>GOOGLE_MAPS_API_KEY</code> for the hosted build.</p>
+          <p class="small">Enable Maps JavaScript API and the 3D Maps capability for the associated Google Cloud project. Restrict the browser key to your production domains.</p>
+        </div>
+      </div>
+    </div>
+    <aside id="panel">
+      <div id="brand">THE BLACK HOUSE / XUNIA</div>
+      <div class="subbrand">GOOGLE MAPS 3D RESILIENCE ENGINE</div>
+      <label>Exercise severity
+        <select id="severity">
+          <option value="1">Localized</option>
+          <option value="2">Significant</option>
+          <option value="3" selected>Major</option>
+          <option value="4">Regional</option>
+          <option value="5">Catastrophic exercise</option>
+        </select>
+      </label>
+      <button id="run" class="cta primary">RUN RESILIENCE EXERCISE</button>
+      <div class="metric"><span>Exercise location</span><strong id="location">Richmond, VA</strong></div>
+      <div class="metric"><span>Population band</span><strong id="pop">—</strong></div>
+      <div class="metric"><span>Hospital surge</span><strong id="hosp">—</strong></div>
+      <div class="metric"><span>Infrastructure risk</span><strong id="infra">—</strong></div>
+      <div class="metric"><span>Posture</span><strong id="posture" class="good">READY</strong></div>
+      <button id="brief" class="cta">GPT-DOUG / VIRGINIA BRIEF</button>
+      <pre id="briefing" class="small"></pre>
+      <p class="small">Civil-defense training only. No targeting, weapon engineering, strike optimization, or casualty-maximization controls.</p>
+    </aside>
+  </div>
+</body>
+</html>
