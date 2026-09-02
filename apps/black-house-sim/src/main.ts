@@ -1,209 +1,199 @@
-import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+/// <reference types="vite/client" />
 
-const viewport = document.getElementById('viewport')!;
-const severity = document.getElementById('severity') as HTMLSelectElement;
-const runBtn = document.getElementById('run') as HTMLButtonElement;
-const briefBtn = document.getElementById('brief') as HTMLButtonElement;
-const preset = document.getElementById('preset') as HTMLSelectElement;
-const place = document.getElementById('place') as HTMLInputElement;
-const popEl = document.getElementById('pop')!;
-const hospEl = document.getElementById('hosp')!;
-const infraEl = document.getElementById('infra')!;
-const postureEl = document.getElementById('posture')!;
-const briefingEl = document.getElementById('briefing')!;
-
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x0b0d12);
-scene.fog = new THREE.FogExp2(0x0b0d12, 0.0028);
-
-const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 5000);
-camera.position.set(115, 95, 150);
-
-const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-renderer.outputColorSpace = THREE.SRGBColorSpace;
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.15;
-viewport.appendChild(renderer.domElement);
-
-const controls = new OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true;
-controls.dampingFactor = 0.06;
-controls.target.set(0, 10, 0);
-controls.maxPolarAngle = Math.PI * 0.49;
-controls.minDistance = 25;
-controls.maxDistance = 450;
-
-scene.add(new THREE.HemisphereLight(0x9ec8ff, 0x17130f, 1.7));
-const sun = new THREE.DirectionalLight(0xffd7b0, 4.2);
-sun.position.set(-140, 210, 100);
-scene.add(sun);
-
-const ground = new THREE.Mesh(
-  new THREE.PlaneGeometry(900, 900, 80, 80),
-  new THREE.MeshStandardMaterial({ color: 0x151a1d, roughness: 1, metalness: 0 })
-);
-ground.rotation.x = -Math.PI / 2;
-scene.add(ground);
-
-const city = new THREE.Group();
-scene.add(city);
-const rng = mulberry32(24024);
-for (let i = 0; i < 260; i++) {
-  const x = (rng() - 0.5) * 420;
-  const z = (rng() - 0.5) * 420;
-  const dist = Math.hypot(x, z);
-  if (dist < 38) continue;
-  const h = 6 + rng() * (dist < 120 ? 72 : 28);
-  const w = 4 + rng() * 11;
-  const d = 4 + rng() * 11;
-  const mesh = new THREE.Mesh(
-    new THREE.BoxGeometry(w, h, d),
-    new THREE.MeshStandardMaterial({
-      color: new THREE.Color().setHSL(0.56, 0.08, 0.14 + rng() * 0.09),
-      roughness: 0.9,
-      metalness: 0.1
-    })
-  );
-  mesh.position.set(x, h / 2, z);
-  city.add(mesh);
+declare global {
+  interface Window { google: any }
 }
 
-const roads = new THREE.GridHelper(900, 60, 0x33414a, 0x20282f);
-roads.position.y = 0.03;
-scene.add(roads);
+const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+const viewport = $('viewport');
+const setup = $('setup');
+const form = $('place-search') as HTMLFormElement;
+const place = $('place') as HTMLInputElement;
+const preset = $('preset') as HTMLSelectElement;
+const severity = $('severity') as HTMLSelectElement;
+const runBtn = $('run') as HTMLButtonElement;
+const briefBtn = $('brief') as HTMLButtonElement;
+const locationEl = $('location');
+const popEl = $('pop');
+const hospEl = $('hosp');
+const infraEl = $('infra');
+const postureEl = $('posture');
+const briefingEl = $('briefing');
 
-const origin = new THREE.Vector3(0, 0.2, 0);
-const marker = new THREE.Mesh(
-  new THREE.CylinderGeometry(1.8, 1.8, 0.5, 32),
-  new THREE.MeshStandardMaterial({ color: 0xff5b5b, emissive: 0x801818, emissiveIntensity: 2 })
-);
-marker.position.copy(origin);
-scene.add(marker);
+const PRESETS: Record<string, { label: string; lat: number; lng: number }> = {
+  richmond: { label: 'Richmond, VA', lat: 37.5407, lng: -77.4360 },
+  dc: { label: 'Washington, DC', lat: 38.9072, lng: -77.0369 },
+  norfolk: { label: 'Norfolk, VA', lat: 36.8508, lng: -76.2859 },
+  nyc: { label: 'New York, NY', lat: 40.7128, lng: -74.0060 },
+};
 
-const rings: THREE.Mesh[] = [];
-const plume = new THREE.Group();
-scene.add(plume);
+let map: any;
+let geocoder: any;
+let maps3d: any;
+let current = { ...PRESETS.richmond };
+let overlays: HTMLElement[] = [];
 
-function makeRing(radius: number, color: number) {
-  const mesh = new THREE.Mesh(
-    new THREE.RingGeometry(radius * 0.96, radius, 128),
-    new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0.5, side: THREE.DoubleSide, depthWrite: false })
-  );
-  mesh.rotation.x = -Math.PI / 2;
-  mesh.position.y = 0.15;
-  scene.add(mesh);
-  rings.push(mesh);
+async function loadGoogleMaps(key: string) {
+  if (window.google?.maps) return;
+  await new Promise<void>((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(key)}&loading=async&v=weekly`;
+    script.async = true;
+    script.onerror = () => reject(new Error('Google Maps JavaScript API failed to load'));
+    script.onload = () => resolve();
+    document.head.appendChild(script);
+  });
 }
 
-function clearEffects() {
-  for (const r of rings) scene.remove(r);
-  rings.length = 0;
-  plume.clear();
+async function boot() {
+  const key = import.meta.env.VITE_GOOGLE_MAPS_API_KEY?.trim();
+  if (!key) {
+    setup.classList.add('show');
+    return;
+  }
+
+  try {
+    await loadGoogleMaps(key);
+    maps3d = await window.google.maps.importLibrary('maps3d');
+    const geocoding = await window.google.maps.importLibrary('geocoding');
+    geocoder = new geocoding.Geocoder();
+
+    map = new maps3d.Map3DElement({
+      center: { lat: current.lat, lng: current.lng, altitude: 0 },
+      range: 6200,
+      tilt: 67.5,
+      heading: 0,
+      mode: 'HYBRID',
+      gestureHandling: 'GREEDY',
+    });
+    viewport.replaceChildren(map);
+    runExercise();
+    generateBrief();
+  } catch (error) {
+    console.error(error);
+    setup.classList.add('show');
+    const card = setup.querySelector('.setup-card');
+    if (card) card.insertAdjacentHTML('beforeend', '<p class="small danger">Google Maps could not initialize. Verify API enablement, billing, key restrictions, and 3D Maps availability.</p>');
+  }
+}
+
+function clearOverlays() {
+  overlays.forEach((el) => el.remove());
+  overlays = [];
+}
+
+function circlePath(lat: number, lng: number, radiusMeters: number, points = 96) {
+  const earth = 6_378_137;
+  const latRad = lat * Math.PI / 180;
+  return Array.from({ length: points }, (_, i) => {
+    const a = (i / points) * Math.PI * 2;
+    const dLat = (radiusMeters * Math.cos(a)) / earth;
+    const dLng = (radiusMeters * Math.sin(a)) / (earth * Math.cos(latRad));
+    return {
+      lat: lat + dLat * 180 / Math.PI,
+      lng: lng + dLng * 180 / Math.PI,
+      altitude: 8,
+    };
+  });
+}
+
+function addZone(radiusMeters: number, fillColor: string, strokeColor: string) {
+  const polygon = new maps3d.Polygon3DElement({
+    path: circlePath(current.lat, current.lng, radiusMeters),
+    altitudeMode: 'RELATIVE_TO_GROUND',
+    fillColor,
+    strokeColor,
+    strokeWidth: 3,
+    drawsOccludedSegments: true,
+  });
+  map.append(polygon);
+  overlays.push(polygon);
+}
+
+function addOriginMarker() {
+  const marker = new maps3d.Marker3DElement({
+    position: { lat: current.lat, lng: current.lng, altitude: 60 },
+    altitudeMode: 'RELATIVE_TO_GROUND',
+    extruded: true,
+    label: 'EXERCISE ORIGIN',
+    drawsWhenOccluded: true,
+  });
+  map.append(marker);
+  overlays.push(marker);
 }
 
 function runExercise() {
-  clearEffects();
+  if (!map || !maps3d) return;
+  clearOverlays();
   const s = Number(severity.value);
-  makeRing(24 * s, 0xff6d66);
-  makeRing(42 * s, 0xffbe55);
-  makeRing(68 * s, 0x66d9ff);
 
-  const flash = new THREE.PointLight(0xffe9c9, 0, 550, 2);
-  flash.position.set(origin.x, 18, origin.z);
-  scene.add(flash);
-  const flashStart = performance.now();
+  const inner = 450 * s;
+  const middle = 820 * s;
+  const outer = 1320 * s;
+  addZone(outer, '#36c7ff22', '#5ed9ffcc');
+  addZone(middle, '#ffc2472b', '#ffc247dd');
+  addZone(inner, '#ff5e5e32', '#ff7068ee');
+  addOriginMarker();
 
-  for (let i = 0; i < 70; i++) {
-    const radius = 3 + rng() * 18;
-    const mat = new THREE.MeshStandardMaterial({
-      color: i < 18 ? 0xe9d2b9 : 0x5e6267,
-      transparent: true,
-      opacity: 0.4 + rng() * 0.35,
-      roughness: 1
-    });
-    const puff = new THREE.Mesh(new THREE.SphereGeometry(radius, 12, 10), mat);
-    const y = 8 + i * 1.15 + rng() * 16;
-    const spread = 8 + Math.min(52, y * 0.28);
-    puff.position.set((rng() - 0.5) * spread, y, (rng() - 0.5) * spread);
-    plume.add(puff);
-  }
+  map.center = { lat: current.lat, lng: current.lng, altitude: 0 };
+  map.range = Math.max(4200, outer * 2.9);
+  map.tilt = 67.5;
 
-  const people = Math.round(9000 * s * s * (preset.value === 'dc' ? 1.8 : preset.value === 'norfolk' ? 1.25 : 1));
-  const hospitals = Math.max(1, Math.round(s * 1.7));
-  const infra = Math.max(1, Math.round(s * 2.4));
+  const densityFactor = current.label.includes('New York') ? 2.1 : current.label.includes('Washington') ? 1.6 : current.label.includes('Norfolk') ? 1.15 : 1;
+  const people = Math.round(7600 * s * s * densityFactor);
+  const hospitals = Math.max(1, Math.round(s * 1.6 * Math.min(densityFactor, 1.5)));
+  const infra = Math.max(1, Math.round(s * 2.2));
+
+  locationEl.textContent = current.label;
   popEl.textContent = people.toLocaleString();
   hospEl.textContent = String(hospitals);
   infraEl.textContent = String(infra);
   postureEl.textContent = s >= 4 ? 'ELEVATED' : 'READY';
   postureEl.className = s >= 4 ? 'danger' : 'good';
-
-  function pulse(now: number) {
-    const t = (now - flashStart) / 1000;
-    flash.intensity = t < 0.25 ? 2400 * (1 - t / 0.25) : 0;
-    rings.forEach((r, idx) => {
-      const phase = Math.min(1, t / (1.2 + idx * 0.35));
-      r.scale.setScalar(0.15 + phase * 0.85);
-      (r.material as THREE.MeshBasicMaterial).opacity = 0.52 * (1 - Math.max(0, t - 1.8) / 4);
-    });
-    plume.rotation.y += 0.0025;
-    if (t < 6) requestAnimationFrame(pulse); else scene.remove(flash);
-  }
-  requestAnimationFrame(pulse);
 }
 
 function generateBrief() {
   const s = Number(severity.value);
-  const location = place.value.trim() || preset.options[preset.selectedIndex].text;
-  const posture = s >= 4 ? 'elevated' : 'ready';
   briefingEl.textContent = [
     'GPT-DOUG-LLM / VIRGINIA-LLM',
-    `Location: ${location}`,
-    `Exercise posture: ${posture}`,
-    `Priority: validate hospital surge, shelter availability, backup power, communications, and mutual-aid readiness.`,
-    `AIP/Ontology: publish CivilDefenseScenario + ResponseProposal for human review.`,
-    `Glass Onion: training-only policy enforced; no autonomous public actions.`
+    `Location: ${current.label}`,
+    `Exercise severity: ${s}/5`,
+    `Priority: hospital surge, shelter readiness, backup power, communications, transport continuity, and mutual aid.`,
+    `AIP/Ontology: stage CivilDefenseScenario and ResponseProposal for human review.`,
+    `Glass Onion: training-only governance active; no autonomous operational action.`
   ].join('\n');
 }
 
-preset.addEventListener('change', () => {
-  place.value = preset.options[preset.selectedIndex].text;
+async function moveToAddress(address: string) {
+  if (!geocoder || !address.trim()) return;
+  const response = await geocoder.geocode({ address: address.trim() });
+  const first = response.results?.[0];
+  if (!first) throw new Error('Place not found');
+  const lat = first.geometry.location.lat();
+  const lng = first.geometry.location.lng();
+  current = { label: first.formatted_address ?? address.trim(), lat, lng };
+  place.value = current.label;
   runExercise();
+  generateBrief();
+}
+
+form.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  try { await moveToAddress(place.value); }
+  catch (error) { console.error(error); }
 });
+
+preset.addEventListener('change', () => {
+  current = { ...PRESETS[preset.value] };
+  place.value = current.label;
+  runExercise();
+  generateBrief();
+});
+
 runBtn.addEventListener('click', runExercise);
 briefBtn.addEventListener('click', generateBrief);
-window.addEventListener('keydown', (e) => {
-  if (e.key.toLowerCase() === 'h') {
-    camera.position.set(115, 95, 150);
-    controls.target.set(0, 10, 0);
-  }
-});
+severity.addEventListener('change', runExercise);
 
-function resize() {
-  const w = viewport.clientWidth;
-  const h = viewport.clientHeight;
-  renderer.setSize(w, h, false);
-  camera.aspect = w / Math.max(1, h);
-  camera.updateProjectionMatrix();
-}
-window.addEventListener('resize', resize);
-resize();
-runExercise();
-generateBrief();
+void boot();
 
-function animate() {
-  controls.update();
-  renderer.render(scene, camera);
-  requestAnimationFrame(animate);
-}
-animate();
-
-function mulberry32(seed: number) {
-  return function () {
-    let t = (seed += 0x6d2b79f5);
-    t = Math.imul(t ^ (t >>> 15), t | 1);
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
+export {};
