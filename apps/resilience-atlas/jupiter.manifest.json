@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "product": "xunia-resilience-atlas",
+  "codename": "JUPITER",
+  "version": "0.1.0",
+  "mission": "civil-defense-emergency-resilience",
+  "palantir": {
+    "aip": {
+      "role": "governed-agent-and-decision-layer",
+      "capabilities": ["scenario-summary", "response-gap-analysis", "proposal-generation", "after-action-analysis"],
+      "humanApprovalRequired": true,
+      "evalsRequired": true
+    },
+    "foundryOntology": {
+      "role": "operational-semantic-layer",
+      "primaryObject": "CivilDefenseScenario",
+      "schema": "../../ontology/civil-defense-simulation.schema.json"
+    },
+    "gotham": {
+      "role": "authorized-operational-geospatial-surface",
+      "integration": "adapter",
+      "writeMode": "disabled-by-default"
+    },
+    "apollo": {
+      "role": "deployment-and-environment-control",
+      "channels": ["dev", "exercise", "production-readonly", "production-action"],
+      "productionActionRequiresAccreditation": true
+    }
+  },
+  "jupiter": {
+    "role": "xunia-resilience-orchestration-layer",
+    "officialPalantirProduct": false,
+    "responsibilities": [
+      "regional-readiness",
+      "infrastructure-dependency-federation",
+      "scenario-catalog",
+      "provider-registry",
+      "deployment-inventory",
+      "agent-policy-registry",
+      "audit-reference-federation",
+      "recovery-prioritization"
+    ]
+  },
+  "guardrails": {
+    "allowedPurpose": ["training", "civil-defense", "emergency-planning", "infrastructure-resilience", "disaster-response"],
+    "prohibited": [
+      "target-selection",
+      "weapon-design",
+      "yield-optimization",
+      "burst-optimization",
+      "penetration-optimization",
+      "strike-sequencing",
+      "casualty-maximization",
+      "damage-maximization"
+    ],
+    "autonomousPublicAlerting": false,
+    "autonomousResponderDispatch": false
+  }
+}
