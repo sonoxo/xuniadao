@@ -1,47 +1,37 @@
-name: XUNIA Resilience Atlas / JUPITER Gate
+name: "XUNIA Resilience Atlas JUPITER Gate"
 
 on:
   push:
     paths:
-      - 'apps/resilience-atlas/**'
-      - 'ontology/civil-defense-simulation.schema.json'
-      - 'scripts/validate-civil-defense-scenario.mjs'
-      - '.github/workflows/resilience-atlas.yml'
+      - "apps/resilience-atlas/**"
+      - "ontology/civil-defense-simulation.schema.json"
+      - "scripts/validate-civil-defense-scenario.mjs"
+      - ".github/workflows/resilience-atlas.yml"
   pull_request:
     paths:
-      - 'apps/resilience-atlas/**'
-      - 'ontology/civil-defense-simulation.schema.json'
-      - 'scripts/validate-civil-defense-scenario.mjs'
-      - '.github/workflows/resilience-atlas.yml'
-  workflow_dispatch:
+      - "apps/resilience-atlas/**"
+      - "ontology/civil-defense-simulation.schema.json"
+      - "scripts/validate-civil-defense-scenario.mjs"
+      - ".github/workflows/resilience-atlas.yml"
+  workflow_dispatch: {}
 
 permissions:
   contents: read
 
 jobs:
   validate:
+    name: Validate Resilience Atlas
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
       - name: Validate browser runtime syntax
         run: node --check apps/resilience-atlas/app.js
-      - name: Validate JUPITER manifest JSON
-        run: node -e "JSON.parse(require('fs').readFileSync('apps/resilience-atlas/jupiter.manifest.json','utf8')); console.log('manifest: ok')"
-      - name: Validate ontology schema JSON
-        run: node -e "JSON.parse(require('fs').readFileSync('ontology/civil-defense-simulation.schema.json','utf8')); console.log('ontology: ok')"
-      - name: Guard against offensive capability regressions
-        run: |
-          node <<'NODE'
-          const fs = require('fs');
-          const manifest = JSON.parse(fs.readFileSync('apps/resilience-atlas/jupiter.manifest.json','utf8'));
-          const required = ['target-selection','weapon-design','yield-optimization','burst-optimization','strike-sequencing','casualty-maximization'];
-          for (const item of required) {
-            if (!manifest.guardrails.prohibited.includes(item)) throw new Error(`missing prohibited capability: ${item}`);
-          }
-          if (manifest.guardrails.autonomousPublicAlerting !== false) throw new Error('autonomous public alerting must remain disabled');
-          if (manifest.guardrails.autonomousResponderDispatch !== false) throw new Error('autonomous responder dispatch must remain disabled');
-          console.log('guardrails: ok');
-          NODE
+      - name: Validate JSON contracts
+        run: node -e "const fs=require('fs'); JSON.parse(fs.readFileSync('apps/resilience-atlas/jupiter.manifest.json','utf8')); JSON.parse(fs.readFileSync('ontology/civil-defense-simulation.schema.json','utf8')); console.log('json contracts: ok')"
+      - name: Guardrail regression check
+        run: node -e "const fs=require('fs'); const m=JSON.parse(fs.readFileSync('apps/resilience-atlas/jupiter.manifest.json','utf8')); const req=['target-selection','weapon-design','yield-optimization','burst-optimization','strike-sequencing','casualty-maximization']; for(const x of req){if(!m.guardrails.prohibited.includes(x)) throw new Error('missing prohibited capability '+x)} if(m.guardrails.autonomousPublicAlerting!==false||m.guardrails.autonomousResponderDispatch!==false) throw new Error('autonomous operational actions must remain disabled'); console.log('guardrails: ok')"
