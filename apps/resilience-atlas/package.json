@@ -1,0 +1,13 @@
+{
+  "name": "@xunia/resilience-atlas",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node --watch server.mjs",
+    "check": "node --check server.mjs && node --check app.js && node --check lib/engine.mjs && node --check lib/governance.mjs && node --check lib/aip-adapter.mjs",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "engines": {"node": ">=20"}
+}
