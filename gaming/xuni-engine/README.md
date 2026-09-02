@@ -1,20 +1,53 @@
-# XUNI Game Engine
+# XUNI Game Engine + Streaming Core
 
-XUNI is an Xbox-first game-engine foundation with a free browser test harness. The first vertical slice is **Neon Deck Arena**, an original first-person free-for-all test game.
+XUNI is an Xbox-first game-engine foundation with a free local-first cloud streaming stack. The browser harness and **Neon Deck Arena** remain the fast iteration target while the platform contracts are designed to map onto licensed Xbox/GDK and future GPU streaming hosts.
 
 ## Engine slice
 - HTML5 Canvas first-person raycasting renderer
 - fixed collision world + ray queries
 - deterministic gameplay simulation
 - movement, aiming, shooting, damage, kills, deaths, respawn
-- configurable weapon classes
-- autonomous bots
-- free-for-all scoreboard
-- pause / resume / class selection
-- navmesh and collision debug overlays
+- configurable weapon classes and autonomous bots
+- free-for-all scoreboard, pause / resume / class selection
 - Xbox-controller-first browser input mapping
 - zero runtime dependencies
-- Node unit tests + deterministic end-to-end gameplay/package integration test
+
+## XUNI Streaming Core
+The first xCloud-class vertical slice now implements the complete local session loop:
+
+```text
+PLAY
+ -> entitlement gate
+ -> session broker
+ -> regional placement
+ -> host allocation
+ -> remote game runtime
+ -> live stream events
+ -> controller/input return channel
+ -> QoS telemetry
+ -> cloud save
+ -> suspend
+ -> host release
+ -> resume on another host
+ -> terminate
+```
+
+Implemented services:
+- session lifecycle: `QUEUED -> ALLOCATING -> BOOTING -> READY -> STREAMING -> SUSPENDING -> SUSPENDED -> TERMINATED`
+- finite host-pool allocation and release
+- regional latency/capacity router
+- deterministic isolated remote-game host
+- ordered input channel with stale-packet rejection
+- local SSE state-stream reference transport
+- browser streaming client with keyboard/Xbox-style gamepad input
+- adaptive QoS profiles for latency, packet loss and bandwidth
+- session startup/input/frame telemetry
+- cloud save snapshots with SHA-256 integrity tags
+- disconnect/suspend/resume state handoff
+- transport capability registry for local stream, WebRTC and licensed Xbox streaming runtime
+- local-only HTTP control plane on `127.0.0.1`
+
+The current free transport streams deterministic game state for architecture and CI validation. WebRTC video/audio and licensed Xbox game-streaming transports remain separate adapters so real encoders/runtimes can replace the reference transport without changing session, save, entitlement or lifecycle semantics.
 
 ## Xbox-first platform contract
 The public repository contains only XUNI-owned adapters and mocks. Licensed Microsoft GDK binaries, private headers, NDA documentation, credentials, certificates and signing material are never committed here.
@@ -26,12 +59,12 @@ Target platform model:
 - XSAPI C service context
 - XStore entitlements/commerce boundary
 - XTaskQueue async boundary
-- MSIXVC packaging boundary
+- Xbox console package/deployment boundary
 - suspend/resume lifecycle
 - `MockXboxPlatform` for CI and free local development
 
 ## Quantum / resilient-systems simulation layer
-The image-inspired systems are implemented strictly as deterministic game/simulation mechanics, not real-world targeting or weapons software:
+The image-inspired systems are deterministic game/simulation mechanics only:
 - GPS-denied zones
 - inertial navigation drift/recovery
 - confidence-weighted sensor fusion
@@ -40,40 +73,27 @@ The image-inspired systems are implemented strictly as deterministic game/simula
 - secure multi-hop communications mesh
 - simulation-only `QuantumCloudMock`
 
-These mechanics are suitable for gameplay, training-sim prototypes and fictional mission systems while remaining safe to run in CI and the browser harness.
+## Run the local cloud
+```bash
+npm run stream
+```
+The control plane binds to `http://127.0.0.1:8787`.
 
-## Run
+In another terminal:
 ```bash
 npm run dev
 ```
-Open `http://localhost:4173`.
+Open `http://localhost:4173/streaming-client.html` and press **PLAY**.
 
 ## Verify
 ```bash
 npm run verify
 ```
 
-The E2E test validates the browser package and an automated gameplay route through movement, raycasting, firing, elimination, scoring and respawn. Additional tests verify the Xbox platform contract and resilient-systems simulation layer.
+Verification covers the engine, Xbox platform contract, simulation systems, streaming broker, host capacity, QoS, region routing, transport boundaries and a full remote-session E2E route through play -> input -> save -> suspend -> resume -> terminate.
 
-## Architecture
-```text
-Xbox / Browser Input
-        |
-        v
-XUNI Simulation -----> Collision / Raycast -----> Combat / Bots
-        |                                      
-        +-----> Platform Adapter (Xbox Mock/GDK)
-        +-----> Resilient Systems Simulation
-        |          |- GPS-denied zones
-        |          |- inertial drift
-        |          |- sensor fusion
-        |          |- comms mesh
-        |          `- quantum-cloud mock
-        `-----> Renderer / HUD / Debug Overlays
-```
-
-## Roadmap
-D3D12 native renderer, WebGPU test renderer, GLTF loader, audio mixer, ECS scheduler, scene editor, navmesh generation, multiplayer transport, authoritative server, replay system, mod SDK, package format, visual scripting and XUNI project CLI.
+## Scale roadmap
+Next production layers are hardware video/audio capture + encoding, WebRTC/QUIC media transport, distributed host agents, container/VM isolation, durable database/object storage, autoscaling, region health/capacity forecasting, multiplayer co-placement, title image distribution, signed build ingestion, anti-cheat integrity signals, observability, device clients and the Zyra operator/developer control plane.
 
 ## Reference policy
-External references are used only as feature/UX or conceptual benchmarks. XUNI uses original code, maps, names, UI, logic and assets.
+External references are used only as feature/UX or architectural benchmarks. XUNI uses original code, maps, names, UI, logic and assets.

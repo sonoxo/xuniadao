@@ -1,13 +1,14 @@
 {
   "name": "xuni-game-engine",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": false,
-  "description": "XUNI: zero-dependency browser game engine prototype with a functional FPS arena demo.",
+  "description": "XUNI: Xbox-first game engine and local-first cloud streaming platform prototype.",
   "type": "module",
   "scripts": {
     "dev": "python3 -m http.server 4173",
+    "stream": "node src/streaming/local-cloud.js",
     "test": "node --test tests/*.test.mjs",
-    "test:e2e": "node --test tests/e2e.mjs",
+    "test:e2e": "node --test tests/e2e.mjs tests/streaming-e2e.mjs",
     "verify": "npm test && npm run test:e2e"
   },
   "license": "MIT"
