@@ -3,73 +3,65 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#0b0d12" />
+  <meta name="theme-color" content="#07090d" />
   <title>The Black House — Resilience Simulation</title>
   <script type="module" src="/src/main.ts"></script>
   <style>
-    :root{color-scheme:dark;font-family:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif}
-    *{box-sizing:border-box}html,body,#app{width:100%;height:100%;margin:0;overflow:hidden;background:#0b0d12;color:#e8eaef}
-    #app{display:flex}#stage{position:relative;flex:1;min-width:0;height:100%}#viewport{position:absolute;inset:0;background:#090b0f}
-    gmp-map-3d{width:100%;height:100%;display:block}
-    #panel{flex:0 0 300px;width:300px;height:100%;background:#18181b;padding:18px;border-left:1px solid #2a2d33;overflow:auto}
-    #place-search{position:absolute;z-index:8;top:28px;left:50%;width:min(640px,calc(100% - 48px));transform:translateX(-50%);display:flex;gap:10px}
-    input,select,button{background:#111319;border:1px solid #353945;color:#eef1f6;border-radius:10px;padding:12px;font:inherit}
-    #place{flex:1;min-width:0}button{cursor:pointer}.cta{width:100%;margin-top:12px;font-weight:700}.primary{background:#f3f4f6;color:#0b0d12;border-color:#f3f4f6}
-    #hints{position:absolute;left:18px;bottom:18px;z-index:7;background:#111319dd;border:1px solid #30343c;padding:8px 12px;border-radius:10px;font-size:12px}
-    #brand{font-weight:900;letter-spacing:.12em;font-size:13px;margin-bottom:8px}.subbrand{font-size:11px;color:#8e98a8;margin-bottom:20px}
-    label{display:block;font-size:12px;color:#aeb6c2;margin:12px 0}label select{width:100%;margin-top:7px}
-    .metric{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #2b2f36;padding:12px 0;font-size:13px}.metric strong{text-align:right}
-    .danger{color:#ff7a73}.good{color:#80ff9f}.small{font-size:12px;color:#aab2c0;line-height:1.5;white-space:pre-wrap}
-    #setup{position:absolute;inset:0;z-index:20;display:none;place-items:center;background:linear-gradient(135deg,#0b0d12,#151820)}#setup.show{display:grid}
-    .setup-card{width:min(560px,calc(100% - 40px));padding:28px;border:1px solid #353945;background:#15171d;border-radius:18px;box-shadow:0 24px 80px #0008}.setup-card h1{margin-top:0;font-size:24px}.setup-card code{color:#9fe8ff}
-    #status{position:absolute;right:18px;bottom:18px;z-index:7;background:#111319dd;border:1px solid #30343c;padding:8px 10px;border-radius:10px;font-size:11px;color:#aeb6c2}
-    @media(max-width:820px){html,body,#app{height:100dvh}#panel{position:absolute;left:0;right:0;bottom:0;width:100%;height:auto;max-height:43vh;z-index:9;border-left:0;border-top:1px solid #2a2d33}#hints{bottom:44vh}#status{bottom:44vh}#place-search{width:calc(100% - 28px);top:14px}}
+    :root{color-scheme:dark;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--panel:#111318;--line:#2b3039;--muted:#8d97a6;--hot:#ff6b57;--amber:#ffbc4b;--cyan:#62d9ff;--green:#7dffa0}
+    *{box-sizing:border-box}html,body,#app{width:100%;height:100%;margin:0;overflow:hidden;background:#07090d;color:#eef2f7}
+    #app{display:flex}#stage{position:relative;flex:1;min-width:0;height:100%;background:#080a0e;isolation:isolate}#viewport{position:absolute;inset:0;background:#090b0f}
+    gmp-map-3d{width:100%;height:100%;display:block;filter:saturate(.86) contrast(1.04)}
+    #fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:4;mix-blend-mode:screen}
+    #vignette{position:absolute;inset:0;z-index:5;pointer-events:none;background:radial-gradient(circle at 50% 46%,transparent 30%,rgba(0,0,0,.12) 58%,rgba(0,0,0,.58) 100%)}
+    #topbar{position:absolute;z-index:8;top:16px;left:18px;display:flex;gap:8px;align-items:center}.pill{padding:8px 10px;border:1px solid #303640;background:#0c0f14cc;backdrop-filter:blur(14px);border-radius:999px;font-size:10px;letter-spacing:.12em;color:#b9c2cf}.live{color:var(--green)}
+    #place-search{position:absolute;z-index:9;top:22px;left:50%;width:min(660px,calc(100% - 48px));transform:translateX(-50%);display:flex;gap:8px;padding:7px;border:1px solid #343a44;background:#0d1016e6;backdrop-filter:blur(18px);border-radius:15px;box-shadow:0 18px 55px #0008}
+    input,select,button{background:#151920;border:1px solid #343a44;color:#eef2f7;border-radius:10px;padding:11px 12px;font:inherit}#place{flex:1;min-width:0;border:0;background:transparent;outline:0}#preset{max-width:170px}button{cursor:pointer}
+    #telemetry{position:absolute;left:18px;bottom:54px;z-index:8;display:grid;grid-template-columns:repeat(3,minmax(110px,1fr));gap:8px;width:min(470px,calc(100% - 36px))}.telemetry-card{padding:11px 12px;border:1px solid #303640;background:#0d1015d8;backdrop-filter:blur(14px);border-radius:12px}.telemetry-card span{display:block;font-size:9px;letter-spacing:.12em;color:#8994a4;margin-bottom:5px}.telemetry-card strong{font-size:15px}
+    #hints{position:absolute;left:18px;bottom:16px;z-index:8;font-size:10px;color:#9ca6b5;text-shadow:0 1px 3px #000}
+    #status{position:absolute;right:18px;bottom:16px;z-index:8;font-size:9px;letter-spacing:.1em;color:#9aa5b5}
+    #panel{flex:0 0 330px;width:330px;height:100%;background:linear-gradient(180deg,#14171d,#0e1015);padding:20px 18px;border-left:1px solid var(--line);overflow:auto;box-shadow:-20px 0 60px #0006;position:relative;z-index:12}
+    #brand{font-weight:900;letter-spacing:.15em;font-size:13px}.subbrand{font-size:10px;letter-spacing:.11em;color:#7f8998;margin:7px 0 22px}.section-title{font-size:10px;letter-spacing:.13em;color:#707b8b;margin:22px 0 10px;text-transform:uppercase}
+    label{display:block;font-size:11px;color:#aeb7c4;margin:12px 0}label select{width:100%;margin-top:7px}.cta{width:100%;margin-top:10px;font-weight:800;letter-spacing:.04em}.primary{background:linear-gradient(180deg,#f7f8fa,#d9dde3);color:#0b0d11;border-color:#fff}.primary:hover{filter:brightness(1.04)}
+    .metric{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #252a31;padding:11px 0;font-size:12px}.metric span{color:#909aa8}.metric strong{text-align:right}.danger{color:#ff7a73}.good{color:var(--green)}.small{font-size:11px;color:#9aa4b2;line-height:1.55;white-space:pre-wrap}
+    .legend{display:grid;gap:8px;margin-top:10px}.legend-row{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:#9ea8b6}.legend-left{display:flex;align-items:center;gap:8px}.dot{width:9px;height:9px;border-radius:50%;box-shadow:0 0 13px currentColor}.hot{color:var(--hot)}.amber{color:var(--amber)}.cyan{color:var(--cyan)}
+    #setup{position:absolute;inset:0;z-index:30;display:none;place-items:center;background:radial-gradient(circle at 50% 30%,#17202d,#080a0e 62%)}#setup.show{display:grid}.setup-card{width:min(580px,calc(100% - 40px));padding:28px;border:1px solid #343b47;background:#11151dcc;border-radius:18px;box-shadow:0 24px 90px #000b;backdrop-filter:blur(20px)}.setup-card h1{margin-top:0;font-size:24px}.setup-card code{color:#9fe8ff}
+    @media(max-width:900px){#panel{flex-basis:300px;width:300px}#telemetry{grid-template-columns:1fr;max-width:170px}.telemetry-card{padding:8px 10px}}
+    @media(max-width:820px){html,body,#app{height:100dvh}#panel{position:absolute;left:0;right:0;bottom:0;width:100%;height:auto;max-height:42vh;border-left:0;border-top:1px solid #2a2d33}#place-search{top:12px;width:calc(100% - 24px)}#topbar{top:70px;left:12px}#telemetry{bottom:44vh;left:12px;width:150px}.telemetry-card:nth-child(n+2){display:none}#hints,#status{display:none}}
   </style>
 </head>
 <body>
   <div id="app">
     <div id="stage">
       <div id="viewport"></div>
+      <canvas id="fx"></canvas>
+      <div id="vignette"></div>
+      <div id="topbar"><div class="pill live">● LIVE 3D</div><div class="pill">BLACK HOUSE EXERCISE</div></div>
       <form id="place-search" autocomplete="off">
-        <input id="place" type="search" placeholder="Search a city or place" aria-label="Search a city or place" />
-        <select id="preset" aria-label="Choose a preset place">
-          <option value="richmond">Richmond, VA</option>
-          <option value="dc">Washington, DC</option>
-          <option value="norfolk">Norfolk, VA</option>
-          <option value="nyc">New York, NY</option>
-        </select>
+        <input id="place" type="search" placeholder="Search real-world location" aria-label="Search a city or place" />
+        <select id="preset" aria-label="Choose a preset place"><option value="richmond">Richmond, VA</option><option value="dc">Washington, DC</option><option value="norfolk">Norfolk, VA</option><option value="nyc">New York, NY</option></select>
       </form>
-      <div id="hints">Drag to orbit · Scroll/pinch to zoom · Search to relocate</div>
-      <div id="status">GOOGLE MAPS 3D · XUNIA SAFE EXERCISE MODE</div>
-      <div id="setup">
-        <div class="setup-card">
-          <h1>Connect Google Maps</h1>
-          <p>This build uses Google Maps JavaScript API 3D Maps. Add a browser-restricted API key as <code>VITE_GOOGLE_MAPS_API_KEY</code> for local development or the GitHub Actions secret <code>GOOGLE_MAPS_API_KEY</code> for the hosted build.</p>
-          <p class="small">Enable Maps JavaScript API and the 3D Maps capability for the associated Google Cloud project. Restrict the browser key to your production domains.</p>
-        </div>
+      <div id="telemetry">
+        <div class="telemetry-card"><span>EXERCISE LOCATION</span><strong id="location">Richmond, VA</strong></div>
+        <div class="telemetry-card"><span>EST. POPULATION BAND</span><strong id="pop">—</strong></div>
+        <div class="telemetry-card"><span>READINESS POSTURE</span><strong id="posture" class="good">READY</strong></div>
       </div>
+      <div id="hints">Drag orbit · Wheel/pinch zoom · Search relocate · R rerun</div>
+      <div id="status">GOOGLE PHOTOREALISTIC 3D · XUNIA GOVERNED</div>
+      <div id="setup"><div class="setup-card"><h1>Connect Google Maps 3D</h1><p>This experience requires a browser-restricted Google Maps Platform key. Add <code>VITE_GOOGLE_MAPS_API_KEY</code> locally or the GitHub Actions secret <code>GOOGLE_MAPS_API_KEY</code> for production.</p><p class="small">Enable Maps JavaScript API / 3D Maps for the associated project and restrict the key to your deployed domain.</p></div></div>
     </div>
     <aside id="panel">
       <div id="brand">THE BLACK HOUSE / XUNIA</div>
-      <div class="subbrand">GOOGLE MAPS 3D RESILIENCE ENGINE</div>
-      <label>Exercise severity
-        <select id="severity">
-          <option value="1">Localized</option>
-          <option value="2">Significant</option>
-          <option value="3" selected>Major</option>
-          <option value="4">Regional</option>
-          <option value="5">Catastrophic exercise</option>
-        </select>
-      </label>
-      <button id="run" class="cta primary">RUN RESILIENCE EXERCISE</button>
-      <div class="metric"><span>Exercise location</span><strong id="location">Richmond, VA</strong></div>
-      <div class="metric"><span>Population band</span><strong id="pop">—</strong></div>
-      <div class="metric"><span>Hospital surge</span><strong id="hosp">—</strong></div>
-      <div class="metric"><span>Infrastructure risk</span><strong id="infra">—</strong></div>
-      <div class="metric"><span>Posture</span><strong id="posture" class="good">READY</strong></div>
+      <div class="subbrand">REAL-WORLD 3D RESILIENCE SIMULATOR</div>
+      <div class="section-title">Scenario</div>
+      <label>Exercise severity<select id="severity"><option value="1">Localized</option><option value="2">Significant</option><option value="3" selected>Major</option><option value="4">Regional</option><option value="5">Catastrophic exercise</option></select></label>
+      <button id="run" class="cta primary">RUN CINEMATIC EXERCISE</button>
+      <div class="section-title">Modeled effects</div>
+      <div class="legend"><div class="legend-row"><div class="legend-left"><i class="dot hot"></i><span>Severe pressure zone</span></div><strong id="zoneInner">—</strong></div><div class="legend-row"><div class="legend-left"><i class="dot amber"></i><span>Thermal exposure zone</span></div><strong id="zoneMiddle">—</strong></div><div class="legend-row"><div class="legend-left"><i class="dot cyan"></i><span>Shockwave watch zone</span></div><strong id="zoneOuter">—</strong></div></div>
+      <div class="section-title">Response impact</div>
+      <div class="metric"><span>Hospital surge</span><strong id="hosp">—</strong></div><div class="metric"><span>Infrastructure risk</span><strong id="infra">—</strong></div>
       <button id="brief" class="cta">GPT-DOUG / VIRGINIA BRIEF</button>
       <pre id="briefing" class="small"></pre>
-      <p class="small">Civil-defense training only. No targeting, weapon engineering, strike optimization, or casualty-maximization controls.</p>
+      <p class="small">Civil-defense and emergency-response training. Severity tiers are exercise abstractions; no weapon selection, yield control, strike optimization, or target-ranking functions are exposed.</p>
     </aside>
   </div>
 </body>
