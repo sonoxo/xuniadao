@@ -2,21 +2,39 @@
 
 # 🧅 XUNIA // XUNIAVERSE // GLASS ONION
 
-### Main face, root ontology, defensive identity layer, CRM, compliance, licensing, market discovery, and governed execution fabric
+### XUNIAverse domain ontology, defensive identity layer, CRM, compliance, licensing, market discovery, and governed execution fabric
 
-**XuniaDAO is the root and front door of the XUNIAverse.**
+**XuniaDAO is the root and front door of the XUNIAverse domain. The Black House is the canonical global control-plane root.**
 
-**XUNIA → GCPXUNIA → VIRGINIA → VA3LM → ZYRA → SONOXO / GPT-DOUG-LLM → AlmightySonoxo → GPT-UAP-XO**
+**THE BLACK HOUSE → GPT-DOUG-LLM MAX → XUNIA → GCPXUNIA → VIRGINIA → VA3LM → ZYRA → EVIDENCE**
 
-`GLASS ONION 2.6` · `XUNIAVERSE ROOT` · `AGENT IDENTITY` · `GCPXUNIA DEFENSE` · `VA3LM :8088` · `CRM ACTIVE` · `GDPR/HIPAA CONTROL MODEL` · `TECH PEER ONTOLOGY` · `PROVENANCE REQUIRED`
+`BLACK HOUSE KERNEL 3.0.0` · `GLASS ONION 2.6` · `XUNIAVERSE DOMAIN ROOT` · `AGENT IDENTITY` · `GCPXUNIA DEFENSE` · `VA3LM :8088` · `PROVENANCE REQUIRED`
 
 </div>
 
-## XUNIAverse root
+## Black House kernel v3
+
+XUNIA is bound to the canonical **Black House Kernel 3.0.0**. The global control-plane authority lives at [`sonoxo/gpt-doug-llm/the-black-house`](https://github.com/sonoxo/gpt-doug-llm/tree/main/the-black-house). XUNIA remains authoritative for its own XUNIAverse domain graph; it does not supersede the Black House control plane.
+
+```text
+THE BLACK HOUSE                         global control plane
+  └─ GPT-DOUG-LLM MAX                  planner / orchestration
+      └─ XUNIA / XuniaDAO              XUNIAverse domain root
+          ├─ GLASS ONION                observable governance + provenance
+          ├─ GCPXUNIA / VIRGINIA        identity + policy boundary
+          ├─ VA3LM :8088                bounded coding runtime
+          └─ ZYRA / Zyra Cloud          approval + execution + audit
+```
+
+Machine contracts: [`.black-house/kernel.json`](.black-house/kernel.json) · [`.black-house/runtime.json`](.black-house/runtime.json) · [`src/lib/black-house-kernel.ts`](src/lib/black-house-kernel.ts)
+
+Canonical Black House vocabulary is fail-closed: typed objects, registered relationships, evidence provenance, and explicit approval for consequential mutations are enforced as kernel invariants.
+
+## XUNIAverse domain root
 
 Command: **`/glass xuniaverse`**
 
-`sonoxo/xuniadao` is the canonical registry and ontology root for the 66 Sonoxo repositories currently indexed in the XUNIAverse machine graph. The public Museum + HQ can exhibit 62 public repositories; four private repositories remain outside the public catalog.
+`sonoxo/xuniadao` is the canonical registry and ontology root **inside the XUNIAverse domain** for the Sonoxo repositories indexed in its machine graph. The Black House remains the ecosystem-wide control-plane authority.
 
 ```text
 XUNIA / XuniaDAO
@@ -35,28 +53,31 @@ Registry: [`ecosystem/xuniaverse.json`](ecosystem/xuniaverse.json)
 
 | Layer | Mission | Source |
 |---|---|---|
-| **XUNIA / XuniaDAO** | XUNIAverse root, registry, ontology, governance, CRM, compliance, licensing | [`sonoxo/xuniadao`](https://github.com/sonoxo/xuniadao) |
+| **THE BLACK HOUSE** | global control plane, canonical kernel, mission protocol, cross-repo identity and ontology authority | [`sonoxo/gpt-doug-llm/the-black-house`](https://github.com/sonoxo/gpt-doug-llm/tree/main/the-black-house) |
+| **XUNIA / XuniaDAO** | XUNIAverse domain root, registry, ontology, governance, CRM, compliance, licensing | [`sonoxo/xuniadao`](https://github.com/sonoxo/xuniadao) |
 | **GCPXUNIA** | agent identity, auth brokering, cloud-defense policy model | [`docs/GCPXUNIA_DEFENSE.md`](docs/GCPXUNIA_DEFENSE.md) |
 | **VIRGINIA** | policy boundary between identity/auth and agent execution | [`ecosystem/gcpxunia-defense.json`](ecosystem/gcpxunia-defense.json) |
 | **VA3LM** | coding/reasoning runtime and defensive command center | [`gpt-doug-llm/va3lm`](https://github.com/sonoxo/gpt-doug-llm/tree/main/va3lm) · `127.0.0.1:8088` |
 | **ZYRA** | workflows, routing, approvals, bounded execution | [`sonoxo/zyra`](https://github.com/sonoxo/zyra) |
-| **SONOXO / GPT-DOUG-LLM** | model brain, ontology, defensive automation | [`sonoxo/gpt-doug-llm`](https://github.com/sonoxo/gpt-doug-llm) |
+| **SONOXO / GPT-DOUG-LLM** | model brain, orchestration and Black House kernel host | [`sonoxo/gpt-doug-llm`](https://github.com/sonoxo/gpt-doug-llm) |
 | **AlmightySonoxo** | creative/media layer | [`sonoxo/AlmightySonoxo`](https://github.com/sonoxo/AlmightySonoxo) |
 | **GPT-UAP-XO** | bounded local agent runtime | [`sonoxo/gpt-uap-xo`](https://github.com/sonoxo/gpt-uap-xo) |
 
 ```mermaid
 flowchart TD
-    X[XUNIA / XuniaDAO\nXUNIAverse Root]
+    B[THE BLACK HOUSE\nKernel 3.0.0 / Global Control Plane]
+    X[XUNIA / XuniaDAO\nXUNIAverse Domain Root]
     I[Agent Identity\nSPIFFE + Attestation]
     G[GCPXUNIA\nAuth Broker]
     V[VIRGINIA\nPolicy Boundary]
     A[VA3LM :8088\nReason + Plan]
     R[Runtime Guardrails]
-    Z[ZYRA\nAction Gate]
+    Z[ZYRA / Zyra Cloud\nAction Gate]
     E[Audit Evidence]
     P[Technology Peer Graph]
     C[CRM + Compliance]
 
+    B --> X
     X --> I --> G --> V --> A --> R --> Z --> E
     X --> P
     X --> C
@@ -69,7 +90,8 @@ Command: **`/glass defense`**
 Identity route: **`/glass identity`**
 
 ```text
-XUNIA_SCOPE
+BLACK_HOUSE_MISSION
+  → XUNIA_SCOPE
   → AGENT_IDENTITY_VERIFY
   → GCPXUNIA_AUTH_BROKER
   → VIRGINIA_POLICY_BOUNDARY
@@ -104,10 +126,12 @@ Command: **`/glass ontology governance`**
 Architecture:
 
 ```text
-OBJECT → PROPERTY → LINK → ACTION → EVIDENCE → DECISION
+BLACK HOUSE CANONICAL OBJECT/LINK TYPES
+                ↓
+XUNIA DOMAIN OBJECT → PROPERTY → LINK → ACTION → EVIDENCE → DECISION
 ```
 
-The ontology now spans repositories, licenses, tokens, exchanges, compliance requirements, agent identities, auth providers, access policies, runtimes, guardrails, security events, technology peers, security domains, XUNIAverse nodes, evidence, assessments, and attestations.
+The XUNIA domain ontology spans repositories, licenses, tokens, exchanges, compliance requirements, agent identities, auth providers, access policies, runtimes, guardrails, security events, technology peers, security domains, XUNIAverse nodes, evidence, assessments, and attestations. [`src/lib/black-house-kernel.ts`](src/lib/black-house-kernel.ts) translates domain types into the canonical Black House vocabulary.
 
 Contract: [`ecosystem/governance-ontology.json`](ecosystem/governance-ontology.json)
 
@@ -158,7 +182,7 @@ Command: **`/glass licenses`**
 | Repository | License |
 |---|---|
 | `sonoxo/xuniadao` | `Apache-2.0` |
-| `sonoxo/zyra` | `BUSL-1.1` → change license `Apache-2.0` under its stated rule |
+| `sonoxo/zyra` | repository license controls apply; verify current LICENSE before reuse |
 | `sonoxo/gpt-doug-llm` | `MIT` |
 | `sonoxo/AlmightySonoxo` | `MIT` |
 | `sonoxo/gpt-uap-xo` | `Apache-2.0` |
@@ -193,7 +217,7 @@ Docs: [`docs/XRPL_TOKEN_WALLET_PATHWAYS.md`](docs/XRPL_TOKEN_WALLET_PATHWAYS.md)
 
 Command: **`/glass collective defense`**
 
-XUNIA maps OpenAI's official 128-signatory collective cyber-defense roster into an evidence-backed peer ontology and 15-control baseline. Alignment states are `TARGET`, `IMPLEMENTED`, `EVIDENCED`, and `EXTERNALLY_ATTESTED`; no organization, partnership, endorsement, certification, or proprietary-standard claim is inferred.
+XUNIA maps public collective cyber-defense references into an evidence-backed peer ontology and control baseline. Alignment states are `TARGET`, `IMPLEMENTED`, `EVIDENCED`, and `EXTERNALLY_ATTESTED`; no organization, partnership, endorsement, certification, or proprietary-standard claim is inferred.
 
 Docs: [`docs/COLLECTIVE_CYBER_DEFENSE.md`](docs/COLLECTIVE_CYBER_DEFENSE.md) · Contract: [`ecosystem/collective-cyber-defense.json`](ecosystem/collective-cyber-defense.json)
 
@@ -210,7 +234,7 @@ Contract: [`ecosystem/ait-ontology.json`](ecosystem/ait-ontology.json)
 Command: **`/glass uap`**
 
 ```text
-XUNIA_SCOPE → GPT_UAP_XO_PLAN → GPT_UAP_XO_BOUNDED_WORKERS → PROVENANCE_CHECK → ZYRA_ACTION_GATE
+BLACK_HOUSE_MISSION → XUNIA_SCOPE → GPT_UAP_XO_PLAN → GPT_UAP_XO_BOUNDED_WORKERS → PROVENANCE_CHECK → ZYRA_ACTION_GATE
 ```
 
 ## Command surface
@@ -218,11 +242,11 @@ XUNIA_SCOPE → GPT_UAP_XO_PLAN → GPT_UAP_XO_BOUNDED_WORKERS → PROVENANCE_CH
 | Command | Purpose |
 |---|---|
 | `/glass` | GLASS ONION router |
-| `/glass xuniaverse` | XUNIAverse repository/root registry |
+| `/glass xuniaverse` | XUNIAverse domain registry |
 | `/glass identity` | agent identity and auth-broker security |
 | `/glass defense` | GCPXUNIA/VIRGINIA/VA3LM defensive pipeline |
 | `/glass peers` | technology peer/source ontology |
-| `/glass ontology governance` | unified governance ontology |
+| `/glass ontology governance` | XUNIA domain governance ontology bound to Black House kernel |
 | `/glass ait` | AIT ontology/intelligence |
 | `/glass crm` | CRM relationship/pipeline layer |
 | `/glass crm port` | bulk CRM read/write/migration |
@@ -232,26 +256,28 @@ XUNIA_SCOPE → GPT_UAP_XO_PLAN → GPT_UAP_XO_BOUNDED_WORKERS → PROVENANCE_CH
 | `/glass exchanges` | live read-only exchange listing/ticker discovery |
 | `/glass xrpl` | governed XRPL documentation and upstream source resolution |
 | `/glass xrpl pathways` | token, wallet, client, node, approval and audit ontology |
-| `/glass collective defense` | 128-peer collective cyber-defense alignment and evidence gaps |
+| `/glass collective defense` | collective cyber-defense alignment and evidence gaps |
 | `/glass uap` | GPT-UAP-XO bounded-agent route |
 | `/VA3LM-SAGI` | VA3LM guardrail intelligence surface |
 
 ## Guardrails
 
 ```text
-XuniaDAO is XUNIAverse root                 YES
-Agent identity before brokered auth         YES
-Short-lived agent credentials               YES
-Shared/long-lived agent credentials         NO
-Broad agent grants without review           NO
-Provenance required                          YES
-Human review for consequential mutation      YES
-External exchange listing self-declaration   NO
-Exchange order placement                     NO
-Code => production compliance inference      NO
-Automatic fund movement                      NO
-Automatic governance voting                  NO
-Arbitrary remote shell                       NO
+Black House is global control-plane root       YES
+XuniaDAO is XUNIAverse domain root             YES
+Kernel version must match canonical v3         YES
+Agent identity before brokered auth            YES
+Short-lived agent credentials                  YES
+Shared/long-lived agent credentials            NO
+Broad agent grants without review              NO
+Provenance required                            YES
+Human review for consequential mutation        YES
+External exchange listing self-declaration     NO
+Exchange order placement                       NO
+Code => production compliance inference        NO
+Automatic fund movement                        NO
+Automatic governance voting                    NO
+Arbitrary remote shell                         NO
 ```
 
 ## Development
@@ -260,19 +286,20 @@ Arbitrary remote shell                       NO
 yarn install --frozen-lockfile
 yarn build:main
 yarn test:unit
+node --test apps/resilience-atlas/tests/*.test.mjs
 ```
 
-GitHub Actions lock the XUNIAverse root registry, GCPXUNIA defense model, agent identity rules, technology peer ontology, ecosystem governance, CRM, compliance, licensing, exchange discovery, and evidence contracts.
+GitHub Actions lock the XUNIAverse domain registry, Black House kernel binding, GCPXUNIA defense model, agent identity rules, technology peer ontology, ecosystem governance, CRM, compliance, licensing, exchange discovery, and evidence contracts.
 
 ## Source and affiliation boundary
 
-The agent-identity/auth model is derived from public Google Cloud IAM and Google Cloud Security Community guidance. Palantir-style ontology alignment means object/property/link/action/function/governance modeling based on public Palantir documentation. These references do not claim Google or Palantir sponsorship, endorsement, partnership, or a live vendor deployment.
+The agent-identity/auth model is derived from public cloud and security guidance. Palantir-style ontology alignment means object/property/link/action/function/governance modeling based on public documentation. These references do not claim vendor sponsorship, endorsement, partnership, or a live external deployment.
 
 The Flow native token-registry code/data originated from the FlowFans community project. XUNIA preserves that provenance and attribution.
 
 <div align="center">
 
-### 🧅 XUNIAverse
-**XuniaDAO at the root. Identity first. Evidence everywhere. Human command at the boundary.**
+### 🧅 XUNIAverse // Black House Kernel 3.0.0
+**The Black House controls the global kernel. XuniaDAO roots the XUNIAverse domain. Identity first. Evidence everywhere. Human authority at the consequential boundary.**
 
 </div>
