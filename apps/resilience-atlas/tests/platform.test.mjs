@@ -1,4 +1,4 @@
-import test from 'node:test';
+import test from 'ava';
 import assert from 'node:assert/strict';
 import { assertSafeScenario } from '../lib/governance.mjs';
 import { runScenario, toOntologyEnvelope } from '../lib/engine.mjs';
