@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "1.0.0",
+  "controlPlane": "THE_BLACK_HOUSE_V1",
+  "canonicalRoot": "sonoxo/gpt-doug-llm/the-black-house",
+  "component": "XUNIA",
+  "role": "applications_agents_orchestration",
+  "requiredGates": [
+    "yarn build:main",
+    "yarn test:unit",
+    "node --test apps/resilience-atlas/tests/*.test.mjs"
+  ],
+  "failureState": "RED",
+  "successState": "GREEN"
+}
