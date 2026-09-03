@@ -1,0 +1,13 @@
+{
+  "controlPlane": "THE_BLACK_HOUSE_V1",
+  "kernelVersion": "3.0.0",
+  "missionProtocol": "black-house-mission-v1",
+  "component": "XUNIA",
+  "acceptedTargets": ["XUNIA"],
+  "adapterMode": "contract-adapter",
+  "requiresZyraApprovalForMutation": true,
+  "mutationAuthority": false,
+  "evidenceRequired": true,
+  "auditRequired": true,
+  "failClosed": true
+}
