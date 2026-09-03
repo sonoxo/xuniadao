@@ -1,7 +1,9 @@
 {
   "schemaVersion": "1.0.0",
+  "kernelVersion": "3.0.0",
   "controlPlane": "THE_BLACK_HOUSE_V1",
   "canonicalRoot": "sonoxo/gpt-doug-llm/the-black-house",
+  "kernelContract": ".black-house/kernel.json",
   "component": "XUNIA",
   "role": "applications_agents_orchestration",
   "requiredGates": [
