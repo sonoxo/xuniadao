@@ -92,7 +92,8 @@
     },
     "files": [
       "!dist/module/**",
-      "!gaming/xuni-engine/tests/**"
+      "!gaming/xuni-engine/tests/**",
+      "!apps/resilience-atlas/tests/**"
     ]
   },
   "config": {
