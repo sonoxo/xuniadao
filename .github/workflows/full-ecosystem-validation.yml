@@ -18,6 +18,21 @@ jobs:
       - run: yarn install --frozen-lockfile
       - run: yarn build:main
       - run: yarn test:unit
+      - name: Run native runtime suites
+        run: node --test apps/resilience-atlas/tests/*.test.mjs
+      - name: Validate Black House runtime contract
+        run: |
+          node <<'NODE'
+          const assert = require('assert');
+          const fs = require('fs');
+          const runtime = JSON.parse(fs.readFileSync('.black-house/runtime.json','utf8'));
+          assert.equal(runtime.controlPlane, 'THE_BLACK_HOUSE_V1');
+          assert.equal(runtime.component, 'XUNIA');
+          assert.ok(runtime.requiredGates.includes('yarn build:main'));
+          assert.ok(runtime.requiredGates.includes('yarn test:unit'));
+          assert.ok(runtime.requiredGates.some(g => g.startsWith('node --test apps/resilience-atlas/tests/')));
+          console.log('BLACK HOUSE XUNIA RUNTIME CONTRACT: PASS');
+          NODE
       - name: Validate all current machine contracts
         run: |
           node <<'NODE'
