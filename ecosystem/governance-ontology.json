@@ -1,6 +1,6 @@
 {
   "id": "GLASS-ONION-GOVERNANCE-ONTOLOGY",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "command": "/glass ontology governance",
   "architecture": "OBJECT_PROPERTY_LINK_ACTION_EVIDENCE_DECISION",
   "objectTypes": [
@@ -21,7 +21,19 @@
     "XUNIAVERSE_NODE",
     "EVIDENCE",
     "ASSESSMENT",
-    "ATTESTATION"
+    "ATTESTATION",
+    "PROTECTED_SITE",
+    "AIRSPACE_SENSOR",
+    "SENSOR_OBSERVATION",
+    "REMOTE_ID_OBSERVATION",
+    "RF_OBSERVATION",
+    "ACOUSTIC_OBSERVATION",
+    "AIRCRAFT_TRACK",
+    "CLASSIFICATION",
+    "THREAT_ASSESSMENT",
+    "AIRSPACE_ALERT",
+    "OPERATOR_REVIEW",
+    "SAFEHOUSE_EVIDENCE"
   ],
   "linkTypes": [
     "LICENSED_UNDER",
@@ -42,7 +54,17 @@
     "BENCHMARKS_AGAINST",
     "LEARNS_FROM",
     "MODELS_AFTER",
-    "VALIDATES_WITH"
+    "VALIDATES_WITH",
+    "OBSERVES",
+    "CORRELATES_WITH",
+    "NEAR_PROTECTED_SITE",
+    "SUPPORTS_CLASSIFICATION",
+    "SUPPORTS_ASSESSMENT",
+    "TRIGGERS_ALERT",
+    "REQUIRES_REVIEW",
+    "PRODUCES_DECISION",
+    "GOVERNED_BY_GLASS_ONION",
+    "PROTECTED_BY_SAFEHOUSE"
   ],
   "actions": [
     "VERIFY_LICENSE",
@@ -56,7 +78,16 @@
     "BROKER_AGENT_AUTH",
     "REVOKE_AGENT_ACCESS",
     "VERIFY_PEER_SOURCE",
-    "REGISTER_XUNIAVERSE_NODE"
+    "REGISTER_XUNIAVERSE_NODE",
+    "INGEST_SENSOR_OBSERVATION",
+    "NORMALIZE_SENSOR_OBSERVATION",
+    "CORRELATE_SENSOR_OBSERVATIONS",
+    "FUSE_SENSOR_EVIDENCE",
+    "BUILD_OR_UPDATE_AIRCRAFT_TRACK",
+    "CLASSIFY_AIRCRAFT_TRACK",
+    "ASSESS_AIRSPACE_THREAT",
+    "ROUTE_AIRSPACE_ALERT",
+    "ESCALATE_AIRSPACE_REVIEW"
   ],
   "domains": {
     "licensing": "ecosystem/licenses.json",
@@ -66,11 +97,15 @@
     "technologyPeers": "ecosystem/tech-peers.json",
     "xuniaverse": "ecosystem/xuniaverse.json",
     "xrplTokenWallet": "ecosystem/xrpl-token-wallet.json",
-    "collectiveCyberDefense": "ecosystem/collective-cyber-defense.json"
+    "collectiveCyberDefense": "ecosystem/collective-cyber-defense.json",
+    "safehouseAirspaceAwareness": "ecosystem/safehouse-airspace-awareness.json"
   },
   "decisions": [
     "ALLOW",
+    "MONITOR",
+    "ALERT",
     "REVIEW",
+    "ESCALATE_FOR_REVIEW",
     "BLOCK"
   ],
   "invariants": {
@@ -84,6 +119,14 @@
     "broadAgentGrantRequiresReview": true,
     "peerClaimsRequireEvidence": true,
     "xuniadaoIsXuniaverseRoot": true,
-    "fundMovementBlocked": true
+    "fundMovementBlocked": true,
+    "safehouseAirspaceProvenanceRequired": true,
+    "detectionDoesNotEqualHostility": true,
+    "uncertainAirspaceClassificationRequiresReview": true,
+    "autonomousAirspaceCountermeasureBlocked": true,
+    "airspaceJammingBlocked": true,
+    "airspaceSpoofingBlocked": true,
+    "aircraftTakeoverBlocked": true,
+    "kineticAirspaceActionBlocked": true
   }
 }
