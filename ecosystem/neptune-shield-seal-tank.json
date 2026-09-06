@@ -1,0 +1,409 @@
+{
+  "id": "GLASS-ONION-NEPTUNE-SHIELD-SEAL-TANK",
+  "version": "1.0.0",
+  "snapshotDate": "2026-09-06",
+  "command": "/glass intel neptune-shield seal-tank",
+  "authority": "sonoxo/xuniadao",
+  "controlPlane": "sonoxo/gpt-doug-llm/the-black-house",
+  "governanceLayer": "GLASS_ONION",
+  "protectiveEnvelope": "SAFEHOUSE",
+  "classification": "PUBLIC_SOURCE_INTELLIGENCE",
+  "purpose": "Model public dual-use commercialization, accelerator, cohort, capital, acquisition, partner, event, facility, and technology-sector signals relevant to XUNIA without implying affiliation, access, endorsement, eligibility, or classified knowledge.",
+  "primarySource": {
+    "publisher": "Neptune SHIELD",
+    "url": "https://neptuneshield.com/seal-tank.html",
+    "sourceType": "FIRST_PARTY_PUBLIC_WEB",
+    "retrieved": "2026-09-06",
+    "confidence": "HIGH_FOR_SELF_DESCRIBED_PROGRAM_CLAIMS"
+  },
+  "supportingSources": [
+    {
+      "publisher": "Neptune SHIELD",
+      "url": "https://neptuneshield.com/",
+      "role": "ORGANIZATION_MISSION_LEADERSHIP_CAMPUS"
+    },
+    {
+      "publisher": "Neptune SHIELD",
+      "url": "https://neptuneshield.com/investors.html",
+      "role": "FUNDING_FEDERAL_READINESS_SECTOR_MODEL"
+    },
+    {
+      "publisher": "Neptune SHIELD",
+      "url": "https://neptuneshield.com/pathfinder.html",
+      "role": "VENTURE_BUILDING_ACQUISITION_EXIT_PATHWAYS"
+    },
+    {
+      "publisher": "Neptune SHIELD",
+      "url": "https://neptuneshield.com/campus.html",
+      "role": "FACILITY_AND_REGIONAL_INFRASTRUCTURE"
+    },
+    {
+      "publisher": "Innovate Hampton Roads",
+      "url": "https://www.innovate757.org/2026/09/03/the-next-generation-of-defense-technology-is-being-built-in-hampton-roads/",
+      "role": "RECENT_THIRD_PARTY_COHORT_TECHNOLOGY_DETAIL"
+    },
+    {
+      "publisher": "Mid-Atlantic Tech Bridge",
+      "url": "https://www.linkedin.com/company/navalx-mid-atlantic-tech-bridge",
+      "role": "PUBLIC_PARTNER_AND_PROGRAM_DURATION_SIGNAL"
+    },
+    {
+      "publisher": "HigherGov",
+      "url": "https://www.highergov.com/awardee/neptune-shield-foundation-967119269/",
+      "role": "SECONDARY_FEDERAL_IDENTIFIER_CORROBORATION"
+    }
+  ],
+  "organization": {
+    "name": "Neptune SHIELD",
+    "foundationName": "Neptune Shield Foundation",
+    "missionDomains": [
+      "DUAL_USE_TECHNOLOGY",
+      "NATIONAL_DEFENSE",
+      "MARITIME_INFRASTRUCTURE",
+      "DEFENSE_COMMERCIALIZATION",
+      "VENTURE_ACCELERATION"
+    ],
+    "publicFederalIdentifiers": {
+      "cage": "07L84",
+      "uei": "STXJUM7D6FK1",
+      "entityScope": "NEPTUNE_SHIELD_FOUNDATION_ONLY",
+      "verificationState": "CORROBORATED_BY_MULTIPLE_PUBLIC_SOURCES",
+      "inheritanceBlocked": true
+    },
+    "publicLocation": {
+      "address": "448 Viking Drive, Virginia Beach, VA 23452",
+      "region": "Hampton Roads, Virginia"
+    }
+  },
+  "program": {
+    "name": "SEAL Tank",
+    "type": "DUAL_USE_INCUBATOR_ACCELERATOR",
+    "status": "ACTIVE_PUBLICLY_REPORTED",
+    "currentWebsiteDurationWeeks": 16,
+    "cohortCapacity": "UP_TO_10_COMPANIES",
+    "mission": "Commercialize dual-use technology at the intersection of national defense, maritime operations, and emerging technology.",
+    "targetUsers": [
+      "EARLY_STAGE_FOUNDERS",
+      "DUAL_USE_TECH_COMPANIES",
+      "GOVCON_BUILDERS",
+      "DEFENSE_AND_MARITIME_INNOVATORS"
+    ],
+    "targetEndMarkets": [
+      "DOD",
+      "DHS",
+      "SPECIAL_OPERATIONS",
+      "NAVAL_AND_MARITIME",
+      "CRITICAL_INFRASTRUCTURE",
+      "COMMERCIAL_DUAL_USE"
+    ],
+    "currentApplicationSignal": "NEXT_COHORT_APPLICATION_WINDOW_OPEN_ON_CURRENT_SITE"
+  },
+  "accelerationModel": {
+    "phase1": {
+      "name": "FOUNDATION_AND_VALIDATION",
+      "weeks": "1-8",
+      "activities": [
+        "MARKET_VALIDATION",
+        "BUSINESS_MODEL_REFINEMENT",
+        "TECHNOLOGY_ASSESSMENT",
+        "CUSTOMER_DISCOVERY_WITH_DEFENSE_AND_MARITIME_END_USERS",
+        "WEEKLY_MENTORING",
+        "PRODUCT_MARKET_FIT_ANALYSIS",
+        "COMPETITIVE_POSITIONING"
+      ]
+    },
+    "phase2": {
+      "name": "SCALE_AND_INVESTMENT",
+      "weeks": "9-16",
+      "activities": [
+        "GO_TO_MARKET_EXECUTION",
+        "INVESTOR_PITCH_PREPARATION",
+        "GOVERNMENT_ACQUISITION_PATHWAY_MAPPING",
+        "DEMO_DAY_PREPARATION",
+        "INVESTOR_INTRODUCTIONS",
+        "DEFENSE_ACQUISITION_INTRODUCTIONS",
+        "STRATEGIC_PARTNER_INTRODUCTIONS"
+      ]
+    },
+    "normalizedPipeline": [
+      "MISSION_PROBLEM",
+      "TECHNOLOGY_ASSESSMENT",
+      "MARKET_VALIDATION",
+      "CUSTOMER_DISCOVERY",
+      "PRODUCT_MARKET_FIT",
+      "COMPETITIVE_POSITIONING",
+      "GO_TO_MARKET",
+      "ACQUISITION_PATHWAY_MAPPING",
+      "CAPITAL_MATCHING",
+      "DEMO_AND_EVIDENCE",
+      "PROCUREMENT_OR_COMMERCIAL_ENTRY"
+    ]
+  },
+  "programAdvantages": [
+    "SOF_MENTORSHIP",
+    "DEFENSE_EXECUTIVE_MENTORSHIP",
+    "FUNDING_ACCESS",
+    "CAMPUS_WORKSPACE",
+    "SPECIAL_OPERATIONS_NETWORK",
+    "GOVERNMENT_ACQUISITION_SUPPORT",
+    "DEMO_DAY"
+  ],
+  "acquisitionPathways": [
+    {
+      "name": "SAM_GOV_REGISTRATION_SUPPORT",
+      "type": "FEDERAL_VENDOR_READINESS"
+    },
+    {
+      "name": "SBIR_STTR_GUIDANCE",
+      "type": "NON_DILUTIVE_R_AND_D_PATHWAY"
+    },
+    {
+      "name": "PROGRAM_MANAGER_AND_CONTRACTING_OFFICER_INTRODUCTIONS",
+      "type": "MARKET_ACCESS"
+    },
+    {
+      "name": "SOCOM_PIPELINE",
+      "type": "PUBLICLY_CLAIMED_DEFENSE_ACCESS_PATHWAY"
+    },
+    {
+      "name": "NAVSPECWAR_NETWORK",
+      "type": "PUBLICLY_CLAIMED_DEFENSE_ACCESS_PATHWAY"
+    },
+    {
+      "name": "OTHER_TRANSACTION_PATHWAYS",
+      "type": "DEFENSE_PROTOTYPING_REFERENCE",
+      "evidence": "Neptune SHIELD leadership has publicly participated in OTA-focused regional events; no XUNIA eligibility is implied."
+    }
+  ],
+  "capitalModel": {
+    "cyberTechnologyFund1": {
+      "publicTargetRangeUsd": "$20M-$50M",
+      "state": "PUBLICLY_DESCRIBED_BY_NEPTUNE_SHIELD",
+      "availabilityToXunia": "NOT_ESTABLISHED"
+    },
+    "otherCapitalSources": [
+      "ANGEL_INVESTORS",
+      "VENTURE_CAPITAL",
+      "PRIVATE_EQUITY",
+      "FAMILY_OFFICES",
+      "CO_INVESTMENT_VEHICLES"
+    ],
+    "pathfinderVenturesCapabilities": [
+      "CAPITAL_FORMATION",
+      "STRATEGIC_ADVISORY",
+      "DEAL_ORIGINATION",
+      "GOV_MARKET_ACCESS",
+      "VENTURE_BUILDING",
+      "EXIT_STRATEGY"
+    ]
+  },
+  "focusSectors": [
+    "DEFENSE_AND_SPECIAL_OPERATIONS",
+    "PORT_AND_HARBOR_DIGITAL_TRANSFORMATION",
+    "CYBERSECURITY_AND_INTELLIGENCE",
+    "AUTONOMOUS_SYSTEMS_AND_ROBOTICS",
+    "MARITIME_AUTONOMY",
+    "CRITICAL_INFRASTRUCTURE_SECURITY",
+    "ZERO_TRUST",
+    "OT_SECURITY",
+    "THREAT_INTELLIGENCE",
+    "SECURE_COMMUNICATIONS",
+    "SENSORS",
+    "EDGE_COMPUTING",
+    "RESILIENT_COMMUNICATIONS",
+    "PORT_AND_SUPPLY_CHAIN_TECHNOLOGY",
+    "DIGITAL_TWINS",
+    "PREDICTIVE_MAINTENANCE",
+    "AUTONOMOUS_LOGISTICS"
+  ],
+  "inauguralCohort": {
+    "label": "SUMMER_2026",
+    "companies": [
+      {
+        "name": "Development Infostructure",
+        "officialSiteClaim": "Scalable digital infrastructure and software addressing national security logistics and communications vulnerabilities in deployed and contested environments.",
+        "normalizedDomains": ["DEFENSE_SOFTWARE", "RESILIENT_INFRASTRUCTURE", "LOGISTICS", "COMMUNICATIONS"]
+      },
+      {
+        "name": "Gargoyle Systems",
+        "officialSiteClaim": "Persistent surveillance, intelligence and reconnaissance platforms for maritime domain awareness and force protection.",
+        "recentThirdPartyDetail": "Real-time drone detection and classification for local airspace awareness.",
+        "normalizedDomains": ["ISR", "AIRSPACE_AWARENESS", "DRONE_DETECTION", "FORCE_PROTECTION", "MARITIME_DOMAIN_AWARENESS"],
+        "xuniaReference": "ecosystem/safehouse-airspace-awareness.json"
+      },
+      {
+        "name": "Voltage Vessels",
+        "officialSiteClaim": "Electric maritime propulsion and autonomous vessel systems.",
+        "recentThirdPartyDetail": "Recyclable thermoplastic composite systems for large-scale maritime and defense manufacturing.",
+        "normalizedDomains": ["ADVANCED_MATERIALS", "MARITIME_MANUFACTURING", "AUTONOMY", "PROPULSION"]
+      },
+      {
+        "name": "Disruptor Maritime",
+        "officialSiteClaim": "Maritime technology for defense fleet modernization and commercial shipping.",
+        "recentThirdPartyDetail": "Vessels for military, law-enforcement, public-safety and commercial customers focused on shock/vibration reduction, maneuverability, efficiency and safety.",
+        "normalizedDomains": ["VESSEL_ENGINEERING", "NAVAL_MODERNIZATION", "PUBLIC_SAFETY", "MARITIME_EFFICIENCY"]
+      },
+      {
+        "name": "StewTech",
+        "officialSiteClaim": "Resilience and defense technology for critical infrastructure, disaster response and continuity in degraded environments.",
+        "recentThirdPartyDetail": "Compact tactical electric vehicles and unmanned surface vessels for defense and commercial use.",
+        "normalizedDomains": ["TACTICAL_MOBILITY", "ELECTRIC_VEHICLES", "UNMANNED_SURFACE_VESSELS", "RESILIENCE", "CRITICAL_INFRASTRUCTURE"]
+      }
+    ]
+  },
+  "facilityModel": {
+    "campusSqFt": 15000,
+    "facilityTypes": [
+      "MULTI_DOMAIN_OPERATIONS_LABS",
+      "CYBER_CENTER",
+      "SECURITY_OPERATIONS_CENTER",
+      "TRAINING_ENVIRONMENTS",
+      "PROTOTYPING_SPACE",
+      "SENSOR_INTEGRATION_SPACE",
+      "CONFERENCE_AND_BRIEFING_SPACE",
+      "COWORKING"
+    ],
+    "publicClaimsRequiringExternalOperationalVerification": [
+      "CLASSIFIED_MEETING_SPACES",
+      "CLASSIFIED_WORK_SUPPORT"
+    ]
+  },
+  "eventSignals": [
+    {
+      "name": "SEAL Tank Inaugural Cohort Pitch Night",
+      "date": "2026-09-17",
+      "timeLocal": "15:00-17:00",
+      "venue": "The HIVE, Virginia Beach",
+      "audiences": ["FOUNDERS", "VC", "PRIVATE_EQUITY", "FAMILY_OFFICES", "ANGELS", "GUESTS"],
+      "purpose": ["LIVE_PITCH", "INVESTOR_FEEDBACK", "DEAL_FLOW", "PUBLIC_SHOWCASE"]
+    }
+  ],
+  "commercialSignals": {
+    "pitchNightSponsorTiersUsd": {
+      "TRIDENT": "12000+",
+      "FLAGSHIP": 7500,
+      "DEEP_BLUE": 5000,
+      "HARBOR": 2500,
+      "TIDE": 1500,
+      "ANCHOR": 950,
+      "CREW": 400
+    },
+    "generalAdmissionUsd": 110,
+    "cohortFounderAdmission": "COMPLIMENTARY"
+  },
+  "partnerGraph": [
+    {
+      "name": "Mid-Atlantic Tech Bridge",
+      "relationship": "PUBLICLY_DESCRIBED_ACCELERATOR_PARTNER",
+      "confidence": "HIGH"
+    },
+    {
+      "name": "NAVWAR",
+      "relationship": "BRANDING_REFERENCE_ON_SEAL_TANK_PAGE_VIA_MID_ATLANTIC_TECH_BRIDGE",
+      "confidence": "MEDIUM",
+      "note": "Do not infer direct NAVWAR sponsorship or authority beyond the public page evidence."
+    },
+    {
+      "name": "Innovate Hampton Roads",
+      "relationship": "REGIONAL_INNOVATION_AND_EVENT_PARTNER",
+      "confidence": "HIGH"
+    },
+    {
+      "name": "The HIVE Virginia Beach",
+      "relationship": "PITCH_NIGHT_VENUE_AND_REGIONAL_BUSINESS_RESOURCE",
+      "confidence": "HIGH"
+    }
+  ],
+  "sourceConflicts": [
+    {
+      "field": "PROGRAM_DURATION",
+      "claimA": {
+        "value": "16_WEEKS",
+        "source": "https://neptuneshield.com/seal-tank.html",
+        "retrieved": "2026-09-06"
+      },
+      "claimB": {
+        "value": "10_WEEK_DEFENSE_ACCELERATOR_COHORT",
+        "source": "Mid-Atlantic Tech Bridge LinkedIn repost surfaced 2026-09-06",
+        "retrieved": "2026-09-06"
+      },
+      "resolution": "UNRESOLVED_KEEP_BOTH_DATED_CLAIMS"
+    },
+    {
+      "field": "APPLICATION_WINDOW",
+      "claimA": {
+        "value": "NEXT_COHORT_APPLICATION_WINDOW_OPEN",
+        "source": "CURRENT_SEAL_TANK_PAGE"
+      },
+      "claimB": {
+        "value": "INAUGURAL_APPLICATION_DEADLINES_PUBLISHED_EARLIER_IN_2026",
+        "source": "EARLIER_PUBLIC_POSTS_AND_EVENT_PAGES"
+      },
+      "resolution": "CURRENT_SITE_CONTROLS_CURRENT_NEXT_COHORT_STATUS; HISTORICAL_DEADLINES_RETAINED_AS_HISTORY"
+    }
+  ],
+  "glassOnionObjectTypes": [
+    "EXTERNAL_ORGANIZATION",
+    "ACCELERATOR_PROGRAM",
+    "ACCELERATOR_COHORT",
+    "COHORT_COMPANY",
+    "TECHNOLOGY_DOMAIN",
+    "COMMERCIALIZATION_STAGE",
+    "PROCUREMENT_PATHWAY",
+    "INVESTMENT_VEHICLE",
+    "FUNDING_SOURCE",
+    "PARTNER_ORGANIZATION",
+    "FACILITY",
+    "PROGRAM_EVENT",
+    "SOURCE_CLAIM",
+    "SOURCE_CONFLICT"
+  ],
+  "glassOnionActions": [
+    "INGEST_PUBLIC_PROGRAM_SOURCE",
+    "NORMALIZE_PROGRAM_CLAIM",
+    "VERIFY_EXTERNAL_IDENTIFIER",
+    "REGISTER_EXTERNAL_ACCELERATOR",
+    "MAP_COHORT_COMPANY",
+    "MAP_TECHNOLOGY_DOMAIN",
+    "ASSESS_COMMERCIALIZATION_READINESS",
+    "MAP_PROCUREMENT_PATHWAY",
+    "MAP_CAPITAL_PATHWAY",
+    "TRACK_APPLICATION_WINDOW",
+    "TRACK_DEMO_DAY",
+    "ATTACH_SOURCE_CLAIM",
+    "FLAG_SOURCE_CONFLICT"
+  ],
+  "xuniaUseCases": [
+    "BENCHMARK_XUNIA_COMMERCIALIZATION_READINESS",
+    "MAP_XUNIA_CAPABILITIES_TO_PUBLIC_DEFENSE_AND_MARITIME_PROBLEM_SETS",
+    "BUILD_EVIDENCE_BACKED_GOVCON_READINESS_CHECKLIST",
+    "TRACK_PUBLIC_APPLICATION_AND_DEMO_WINDOWS",
+    "MAP_PUBLIC_FUNDING_AND_ACQUISITION_PATHWAYS",
+    "BENCHMARK_SAFEHOUSE_AIRSPACE_AWARENESS_AGAINST_PUBLIC_COHORT_SIGNALS",
+    "IDENTIFY_TECHNOLOGY_GAPS_WITHOUT_COPYING_VENDOR_IP",
+    "BUILD_PARTNER_AND_ECOSYSTEM_GRAPH_WITHOUT_CLAIMING_AFFILIATION"
+  ],
+  "invariants": {
+    "publicSourcesOnly": true,
+    "classifiedInferenceBlocked": true,
+    "externalAffiliationNeverImplied": true,
+    "externalEndorsementNeverImplied": true,
+    "externalFederalIdentifiersNeverInherited": true,
+    "externalProcurementEligibilityNeverInherited": true,
+    "fundAvailabilityNeverAssumed": true,
+    "marketingClaimRequiresSourceLabel": true,
+    "conflictingClaimsRetainedWithProvenance": true,
+    "companyTechnologyDescriptionsArePublicClaimsNotValidatedPerformance": true,
+    "noVendorIPCopying": true,
+    "consequentialExternalActionRequiresHumanApproval": true
+  },
+  "truthState": {
+    "publicSourceExtraction": "IMPLEMENTED",
+    "ontologyMapping": "IMPLEMENTED",
+    "externalAffiliation": "NOT_CLAIMED",
+    "programAdmission": "NOT_CLAIMED",
+    "fundingAccess": "NOT_CLAIMED",
+    "governmentProcurementAccess": "NOT_CLAIMED",
+    "classifiedAccess": "NOT_CLAIMED"
+  }
+}
