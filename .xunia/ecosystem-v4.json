@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "ecosystem_version": "4.0.0",
+  "repo": "sonoxo/xuniadao",
+  "plane_id": "xunia-domain-root",
+  "role": "domain-ontology-registry",
+  "control_root": "sonoxo/gpt-doug-llm",
+  "hub": "sonoxo/xuniahub",
+  "execution_plane": "sonoxo/zyra",
+  "responsibilities": ["XUNIAverse domain ontology", "repository registry", "identity graph", "CRM", "compliance", "licensing", "domain governance"],
+  "collective_ai_layers": ["classical_ai", "machine_learning", "neural_networks", "deep_learning", "generative_ai", "agentic_ai"],
+  "authority_boundary": "XuniaDAO is authoritative for the XUNIAverse domain graph only; it does not supersede the Black House global control plane and ecosystem membership creates no third-party rights or authorization."
+}
