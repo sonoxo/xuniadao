@@ -1,6 +1,6 @@
 {
   "id": "GLASS-ONION-GOVERNANCE-ONTOLOGY",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "command": "/glass ontology governance",
   "architecture": "OBJECT_PROPERTY_LINK_ACTION_EVIDENCE_DECISION",
   "objectTypes": [
@@ -33,7 +33,21 @@
     "THREAT_ASSESSMENT",
     "AIRSPACE_ALERT",
     "OPERATOR_REVIEW",
-    "SAFEHOUSE_EVIDENCE"
+    "SAFEHOUSE_EVIDENCE",
+    "EXTERNAL_ORGANIZATION",
+    "ACCELERATOR_PROGRAM",
+    "ACCELERATOR_COHORT",
+    "COHORT_COMPANY",
+    "TECHNOLOGY_DOMAIN",
+    "COMMERCIALIZATION_STAGE",
+    "PROCUREMENT_PATHWAY",
+    "INVESTMENT_VEHICLE",
+    "FUNDING_SOURCE",
+    "PARTNER_ORGANIZATION",
+    "FACILITY",
+    "PROGRAM_EVENT",
+    "SOURCE_CLAIM",
+    "SOURCE_CONFLICT"
   ],
   "linkTypes": [
     "LICENSED_UNDER",
@@ -64,7 +78,21 @@
     "REQUIRES_REVIEW",
     "PRODUCES_DECISION",
     "GOVERNED_BY_GLASS_ONION",
-    "PROTECTED_BY_SAFEHOUSE"
+    "PROTECTED_BY_SAFEHOUSE",
+    "OPERATES_PROGRAM",
+    "HAS_COHORT",
+    "PARTICIPATES_IN_COHORT",
+    "TARGETS_TECHNOLOGY_DOMAIN",
+    "USES_COMMERCIALIZATION_STAGE",
+    "OFFERS_PROCUREMENT_PATHWAY",
+    "CONNECTS_TO_FUNDING_SOURCE",
+    "USES_INVESTMENT_VEHICLE",
+    "PARTNERS_WITH",
+    "LOCATED_AT_FACILITY",
+    "HOSTS_PROGRAM_EVENT",
+    "CLAIM_SUPPORTED_BY_SOURCE",
+    "CLAIM_CONFLICTS_WITH_CLAIM",
+    "BENCHMARKS_COMMERCIALIZATION_AGAINST"
   ],
   "actions": [
     "VERIFY_LICENSE",
@@ -87,7 +115,20 @@
     "CLASSIFY_AIRCRAFT_TRACK",
     "ASSESS_AIRSPACE_THREAT",
     "ROUTE_AIRSPACE_ALERT",
-    "ESCALATE_AIRSPACE_REVIEW"
+    "ESCALATE_AIRSPACE_REVIEW",
+    "INGEST_PUBLIC_PROGRAM_SOURCE",
+    "NORMALIZE_PROGRAM_CLAIM",
+    "VERIFY_EXTERNAL_IDENTIFIER",
+    "REGISTER_EXTERNAL_ACCELERATOR",
+    "MAP_COHORT_COMPANY",
+    "MAP_TECHNOLOGY_DOMAIN",
+    "ASSESS_COMMERCIALIZATION_READINESS",
+    "MAP_PROCUREMENT_PATHWAY",
+    "MAP_CAPITAL_PATHWAY",
+    "TRACK_APPLICATION_WINDOW",
+    "TRACK_DEMO_DAY",
+    "ATTACH_SOURCE_CLAIM",
+    "FLAG_SOURCE_CONFLICT"
   ],
   "domains": {
     "licensing": "ecosystem/licenses.json",
@@ -98,7 +139,8 @@
     "xuniaverse": "ecosystem/xuniaverse.json",
     "xrplTokenWallet": "ecosystem/xrpl-token-wallet.json",
     "collectiveCyberDefense": "ecosystem/collective-cyber-defense.json",
-    "safehouseAirspaceAwareness": "ecosystem/safehouse-airspace-awareness.json"
+    "safehouseAirspaceAwareness": "ecosystem/safehouse-airspace-awareness.json",
+    "neptuneShieldSealTank": "ecosystem/neptune-shield-seal-tank.json"
   },
   "decisions": [
     "ALLOW",
@@ -127,6 +169,15 @@
     "airspaceJammingBlocked": true,
     "airspaceSpoofingBlocked": true,
     "aircraftTakeoverBlocked": true,
-    "kineticAirspaceActionBlocked": true
+    "kineticAirspaceActionBlocked": true,
+    "externalProgramClaimsRequireSourceLabels": true,
+    "conflictingExternalClaimsMustRetainProvenance": true,
+    "externalAffiliationNeverImplied": true,
+    "externalFederalIdentifiersNeverInherited": true,
+    "externalProcurementEligibilityNeverInherited": true,
+    "externalFundingAccessNeverAssumed": true,
+    "classifiedInferenceFromPublicSourcesBlocked": true,
+    "vendorProprietaryTechnologyCopyingBlocked": true,
+    "consequentialExternalCommitmentRequiresHumanApproval": true
   }
 }
