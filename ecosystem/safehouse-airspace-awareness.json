@@ -1,0 +1,129 @@
+{
+  "id": "BLACK-HOUSE-SAFEHOUSE-AIRSPACE-AWARENESS",
+  "version": "1.0.0",
+  "command": "/glass safehouse airspace",
+  "authority": "sonoxo/gpt-doug-llm/the-black-house",
+  "domainRoot": "sonoxo/xuniadao",
+  "controlPlane": "THE_BLACK_HOUSE_V1",
+  "protectiveEnvelope": "SAFEHOUSE",
+  "governanceLayer": "GLASS_ONION",
+  "mission": "Defensive low-altitude airspace awareness for protected sites using evidence-backed sensing, correlation, classification, alerting, operator review, and audit.",
+  "scope": {
+    "defensiveOnly": true,
+    "protectedSiteTypes": [
+      "CRITICAL_ASSET",
+      "CORPORATE_CAMPUS",
+      "DATA_CENTER",
+      "INDUSTRIAL_SITE",
+      "UTILITY_SITE",
+      "LOGISTICS_HUB",
+      "VENUE"
+    ],
+    "externalReference": {
+      "repository": "https://github.com/maya-gargoyle-agent/gargoyle_fact_sheet",
+      "role": "PUBLIC_ARCHITECTURE_REFERENCE_ONLY",
+      "relationship": "NO_AFFILIATION_OR_ENDORSEMENT_IMPLIED",
+      "reusePolicy": "Do not copy branding, imagery, pricing, proprietary claims, or represent XUNIA as a Gargoyle Systems or Neptune SHIELD product."
+    }
+  },
+  "objectTypes": [
+    "PROTECTED_SITE",
+    "AIRSPACE_SENSOR",
+    "REMOTE_ID_OBSERVATION",
+    "RF_OBSERVATION",
+    "ACOUSTIC_OBSERVATION",
+    "SENSOR_OBSERVATION",
+    "AIRCRAFT_TRACK",
+    "CLASSIFICATION",
+    "THREAT_ASSESSMENT",
+    "AIRSPACE_ALERT",
+    "OPERATOR_REVIEW",
+    "SAFEHOUSE_EVIDENCE"
+  ],
+  "sensorModalities": [
+    "REMOTE_ID",
+    "RADIO_FREQUENCY",
+    "ACOUSTIC"
+  ],
+  "classificationStates": [
+    "KNOWN",
+    "EXPECTED",
+    "UNKNOWN",
+    "SUSPICIOUS"
+  ],
+  "decisionStates": [
+    "ALLOW",
+    "MONITOR",
+    "ALERT",
+    "ESCALATE_FOR_REVIEW",
+    "BLOCK_AUTONOMOUS_ACTION"
+  ],
+  "pipeline": [
+    "INGEST_SENSOR_OBSERVATION",
+    "NORMALIZE",
+    "CORRELATE",
+    "FUSE_EVIDENCE",
+    "BUILD_OR_UPDATE_TRACK",
+    "CLASSIFY",
+    "ASSESS",
+    "ALERT_IF_POLICY_REQUIRES",
+    "HUMAN_OR_AUTHORIZED_REVIEW",
+    "ATTACH_GLASS_ONION_EVIDENCE",
+    "RETURN_AUDIT_TO_BLACK_HOUSE"
+  ],
+  "links": [
+    "SENSOR_OBSERVES_TRACK",
+    "OBSERVATION_SUPPORTS_CLASSIFICATION",
+    "TRACK_NEAR_PROTECTED_SITE",
+    "CLASSIFICATION_SUPPORTS_ASSESSMENT",
+    "ASSESSMENT_TRIGGERS_ALERT",
+    "ALERT_REQUIRES_REVIEW",
+    "REVIEW_PRODUCES_DECISION",
+    "DECISION_REQUIRES_EVIDENCE",
+    "SAFEHOUSE_PROTECTS_SITE",
+    "GLASS_ONION_GOVERNS_DECISION"
+  ],
+  "evidenceRequirements": {
+    "timestampRequired": true,
+    "sourceSensorRequired": true,
+    "locationRequiredWhenAvailable": true,
+    "confidenceRequired": true,
+    "classificationBasisRequired": true,
+    "decisionRationaleRequired": true,
+    "operatorIdentityRequiredForConsequentialReview": true,
+    "provenanceRequired": true
+  },
+  "integrations": {
+    "geospatial": {
+      "preferredXuniaSurface": "sonoxo/MMGISxunia-",
+      "mode": "READ_AND_VISUALIZE_TRACKS",
+      "mutationAuthority": "SAFEHOUSE_POLICY_GATED"
+    },
+    "workflow": {
+      "preferredXuniaSurface": "sonoxo/zyra",
+      "mode": "ALERT_ROUTING_AND_APPROVAL"
+    },
+    "controlPlane": {
+      "repository": "sonoxo/gpt-doug-llm",
+      "path": "the-black-house/layers/safehouse/layer.manifest.json"
+    }
+  },
+  "safetyInvariants": {
+    "noAutonomousCountermeasure": true,
+    "noJamming": true,
+    "noSpoofing": true,
+    "noTakeover": true,
+    "noKineticAction": true,
+    "detectionDoesNotEqualHostility": true,
+    "uncertainClassificationEscalatesToReview": true,
+    "consequentialActionRequiresExplicitAuthorization": true,
+    "externalAffiliationNeverImplied": true,
+    "failClosedOnMissingProvenance": true
+  },
+  "truthState": {
+    "ontologyContract": "IMPLEMENTED",
+    "runtimeSensorAdapters": "NOT_YET_RUNTIME_VERIFIED",
+    "liveHardwareIntegration": "NOT_CLAIMED",
+    "externalVendorIntegration": "NOT_CLAIMED"
+  }
+}
