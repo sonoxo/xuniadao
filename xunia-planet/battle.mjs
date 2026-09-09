@@ -146,3 +146,5 @@ export function endTurn(input) {
 export function resetBattle() {
   return createBattleState();
 }
+
+import "./supremacy.mjs";
