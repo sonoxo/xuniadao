@@ -303,3 +303,12 @@ The Flow native token-registry code/data originated from the FlowFans community 
 **The Black House controls the global kernel. XuniaDAO roots the XUNIAverse domain. Identity first. Evidence everywhere. Human authority at the consequential boundary.**
 
 </div>
+
+## NVIDIA ecosystem tools
+
+Integrated [NVIDIA SuperHub](integrations/nvidia-superhub/README.md) provides public
+repository discovery, search, stack plans, ontology metadata export and reviewed
+local checkouts. Run `npm run nvidia -- catalog`, then `npm run nvidia -- graph`.
+Validate offline with `npm run nvidia:test`. These commands do not provision GPUs
+or automatically activate upstream models. ZYRA approval and Black House authority
+remain unchanged.
