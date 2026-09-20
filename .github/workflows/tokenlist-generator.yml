@@ -1,4 +1,5 @@
-name: FTL-LIST-GENERATOR
+name: GPT-DOUG-LIVE-UPSTREAM-SYNC
+
 on:
   workflow_dispatch:
   schedule:
@@ -8,29 +9,89 @@ permissions:
   contents: write
   pull-requests: write
 
+concurrency:
+  group: gpt-doug-live-upstream-sync
+  cancel-in-progress: false
+
 jobs:
-  generate:
-    name: Generate Token List
+  sync-and-generate:
+    name: Sync Flow registry and generate token lists
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout XuniaDAO
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v4
+
+      - name: Checkout FlowFans upstream registry
+        uses: actions/checkout@v4
+        with:
+          repository: FlowFans/flow-token-list
+          ref: main
+          path: .upstream/flow-token-list
+          fetch-depth: 1
+
+      - name: Record upstream provenance
+        shell: bash
+        run: |
+          set -euo pipefail
+          git -C .upstream/flow-token-list rev-parse HEAD > .upstream-flow-token-list.sha
+          echo "FlowFans/flow-token-list@$(cat .upstream-flow-token-list.sha)"
+
+      - name: Sync upstream token registry into XuniaDAO mirror
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -d .upstream/flow-token-list/token-registry
+          rm -rf token-registry
+          mkdir -p token-registry
+          cp -a .upstream/flow-token-list/token-registry/. token-registry/
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: yarn
-      - run: yarn --frozen-lockfile
-      - run: node src/utils/tokenlist-generator.js
-      - run: yarn prettier --write src/tokens/*.json
-      - name: Create Pull Request
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Generate Flow token lists
+        run: node src/utils/tokenlist-generator.js
+
+      - name: Format generated token lists
+        run: yarn prettier --write src/tokens/*.json
+
+      - name: Validate build and tests
+        run: yarn test
+
+      - name: Detect synchronized changes
+        id: changes
+        shell: bash
+        run: |
+          if git diff --quiet -- token-registry src/tokens .upstream-flow-token-list.sha; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create XuniaDAO sync pull request
+        if: steps.changes.outputs.changed == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          title: 'feat(TokenList): auto-generate tokenlist'
-          body: 'auto-generated tokenlist'
+          title: 'sync(flow): GPT-Doug live upstream token registry'
+          body: |
+            Automated GPT-Doug-LLM upstream synchronization from `FlowFans/flow-token-list`.
+
+            - Mirrors the upstream `token-registry/`
+            - Records the exact upstream commit SHA
+            - Regenerates Flow mainnet/testnet token lists
+            - Runs the XuniaDAO test suite before proposing changes
+
+            Upstream contributions remain PR-based; this workflow never direct-pushes to FlowFans/OnFlow repositories.
           labels: TokenList
-          branch: 'feature/auto-generate'
+          branch: 'gpt-doug/flow-upstream-sync'
           branch-suffix: timestamp
           delete-branch: true
           base: main
