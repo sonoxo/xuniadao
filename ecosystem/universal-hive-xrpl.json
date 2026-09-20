@@ -1,0 +1,81 @@
+{
+  "id": "XUNIA-UNIVERSAL-HIVE-XRPL-MONETARY",
+  "version": "1.0.0",
+  "command": "/glass hive xrpl",
+  "root": "sonoxo/xuniadao",
+  "network": "XRP_LEDGER",
+  "defaultEnvironment": "TESTNET",
+  "sources": {
+    "flowUpstream": "FlowFans/flow-token-list",
+    "palantirOntologyReference": "https://www.palantir.com/docs/foundry/ontology/overview",
+    "xrplDocumentation": "https://xrpl.org",
+    "xrplStandards": "XRPLF/XRPL-Standards",
+    "xrplClient": "XRPLF/xrpl.js",
+    "xrplNode": "XRPLF/rippled"
+  },
+  "objectTypes": [
+    "UNIVERSAL_HIVE",
+    "SWARM",
+    "BUILDER",
+    "BUILDER_REWARD_EVENT",
+    "TREASURY_ACCOUNT",
+    "XRPL_ASSET",
+    "PAYMENT_INTENT",
+    "HUMAN_APPROVAL",
+    "EXTERNAL_SIGNER",
+    "LEDGER_RECEIPT",
+    "EVIDENCE"
+  ],
+  "linkTypes": [
+    "CONTAINS",
+    "CREATED_BY",
+    "GENERATES",
+    "ATTRIBUTED_TO",
+    "SETTLED_WITH",
+    "APPROVED_BY",
+    "SIGNED_BY",
+    "SUBMITTED_TO",
+    "VERIFIED_BY",
+    "SUPPORTED_BY"
+  ],
+  "pipeline": [
+    "SWARM_CREATED",
+    "BUILDER_REWARD_EVENT",
+    "PROVENANCE_COMMITMENT",
+    "BUILD_UNSIGNED_XRPL_PAYMENT",
+    "HUMAN_APPROVAL",
+    "EXTERNAL_WALLET_SIGNER",
+    "XRPL_SUBMISSION",
+    "VALIDATED_LEDGER_VERIFY",
+    "AUDIT_EVIDENCE"
+  ],
+  "assets": {
+    "XRP": {
+      "status": "SUPPORTED_FOR_UNSIGNED_PAYMENT_INTENTS",
+      "amountUnit": "drops"
+    },
+    "XUN": {
+      "status": "TOKEN_BLUEPRINT_ONLY_UNTIL_ISSUER_IS_EXPLICITLY_CONFIGURED",
+      "standard": "XRPL_ISSUED_CURRENCY",
+      "issuer": null,
+      "automaticIssuance": false
+    }
+  },
+  "monetaryPolicy": {
+    "everyPersistedSwarmCanReferenceOneOrMoreRewardEvents": true,
+    "duplicateRewardIdsBlockedByCallerContract": true,
+    "builderAmountsMustBeExplicit": true,
+    "automaticDistributionFormula": false,
+    "automaticFundMovement": false,
+    "automaticSigning": false,
+    "automaticSubmission": false,
+    "humanApprovalForSettlement": true,
+    "externalSignerRequired": true,
+    "privateKeyStorage": false,
+    "seedStorage": false
+  },
+  "legalProvenance": {
+    "projectRuleStatus": "PROJECT_GOVERNANCE_RULE",
+    "externalLegalStatus": "SOURCE_STATUS_TRACKED_SEPARATELY"
+  }
+}
