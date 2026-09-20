@@ -1,6 +1,6 @@
 {
   "id": "GLASS-ONION-GOVERNANCE-ONTOLOGY",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "command": "/glass ontology governance",
   "architecture": "OBJECT_PROPERTY_LINK_ACTION_EVIDENCE_DECISION",
   "objectTypes": [
@@ -47,7 +47,14 @@
     "FACILITY",
     "PROGRAM_EVENT",
     "SOURCE_CLAIM",
-    "SOURCE_CONFLICT"
+    "SOURCE_CONFLICT",
+    "UNIVERSAL_HIVE",
+    "SWARM",
+    "BUILDER",
+    "BUILDER_REWARD_EVENT",
+    "TREASURY_ACCOUNT",
+    "PAYMENT_INTENT",
+    "LEDGER_RECEIPT"
   ],
   "linkTypes": [
     "LICENSED_UNDER",
@@ -92,7 +99,12 @@
     "HOSTS_PROGRAM_EVENT",
     "CLAIM_SUPPORTED_BY_SOURCE",
     "CLAIM_CONFLICTS_WITH_CLAIM",
-    "BENCHMARKS_COMMERCIALIZATION_AGAINST"
+    "BENCHMARKS_COMMERCIALIZATION_AGAINST",
+    "GENERATES",
+    "ATTRIBUTED_TO",
+    "SETTLED_WITH",
+    "SIGNED_BY",
+    "SUBMITTED_TO"
   ],
   "actions": [
     "VERIFY_LICENSE",
@@ -128,7 +140,11 @@
     "TRACK_APPLICATION_WINDOW",
     "TRACK_DEMO_DAY",
     "ATTACH_SOURCE_CLAIM",
-    "FLAG_SOURCE_CONFLICT"
+    "FLAG_SOURCE_CONFLICT",
+    "REGISTER_SWARM_REWARD",
+    "BUILD_XRPL_PAYMENT_INTENT",
+    "AUTHORIZE_REWARD_SETTLEMENT",
+    "VERIFY_XRPL_RECEIPT"
   ],
   "domains": {
     "licensing": "ecosystem/licenses.json",
@@ -140,7 +156,9 @@
     "xrplTokenWallet": "ecosystem/xrpl-token-wallet.json",
     "collectiveCyberDefense": "ecosystem/collective-cyber-defense.json",
     "safehouseAirspaceAwareness": "ecosystem/safehouse-airspace-awareness.json",
-    "neptuneShieldSealTank": "ecosystem/neptune-shield-seal-tank.json"
+    "neptuneShieldSealTank": "ecosystem/neptune-shield-seal-tank.json",
+    "universalHiveXrpl": "ecosystem/universal-hive-xrpl.json",
+    "palantirFlowXrpl": "ecosystem/palantir-flow-xrpl.json"
   },
   "decisions": [
     "ALLOW",
@@ -178,6 +196,9 @@
     "externalFundingAccessNeverAssumed": true,
     "classifiedInferenceFromPublicSourcesBlocked": true,
     "vendorProprietaryTechnologyCopyingBlocked": true,
-    "consequentialExternalCommitmentRequiresHumanApproval": true
+    "consequentialExternalCommitmentRequiresHumanApproval": true,
+    "xrplPrivateKeyStorageBlocked": true,
+    "xrplAutomaticSigningBlocked": true,
+    "xrplExternalSignerRequired": true
   }
 }

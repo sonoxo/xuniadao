@@ -31,5 +31,7 @@ export * from './lib/tokenlist';
 export * from './lib/va3lm';
 export * from './lib/xrpl-documentation';
 export * from './lib/xrpl-token-wallet-ontology';
+export * from './lib/universal-hive-xrpl';
+export * from './lib/palantir-flow-xrpl';
 export * from './lib/xuniaverse';
 export * from './health';

@@ -8,7 +8,7 @@
 
 **THE BLACK HOUSE → GPT-DOUG-LLM MAX → XUNIA → GCPXUNIA → VIRGINIA → VA3LM → ZYRA → EVIDENCE**
 
-`BLACK HOUSE KERNEL 3.0.0` · `GLASS ONION 2.6` · `XUNIAVERSE DOMAIN ROOT` · `AGENT IDENTITY` · `GCPXUNIA DEFENSE` · `VA3LM :8088` · `PROVENANCE REQUIRED`
+`BLACK HOUSE KERNEL 3.0.0` · `GLASS ONION 2.8` · `XUNIAVERSE DOMAIN ROOT` · `AGENT IDENTITY` · `GCPXUNIA DEFENSE` · `VA3LM :8088` · `PROVENANCE REQUIRED`
 
 </div>
 
@@ -213,6 +213,27 @@ XUNIA connects standards ([`XRPL-StandardsXUNIA-`](https://github.com/sonoxo/XRP
 
 Docs: [`docs/XRPL_TOKEN_WALLET_PATHWAYS.md`](docs/XRPL_TOKEN_WALLET_PATHWAYS.md) · Contract: [`ecosystem/xrpl-token-wallet.json`](ecosystem/xrpl-token-wallet.json)
 
+## Universal Hive XRPL monetary ecosystem
+
+Commands: **`/glass hive xrpl`** · **`/glass palantir flow`**
+
+Universal Hive swarm rewards now compile into provenance-bound **unsigned XRPL Payment intents** for XRP or explicitly configured issued currencies. The monetary path is:
+
+```text
+SWARM_CREATED
+  → BUILDER_REWARD_EVENT
+  → PROVENANCE_COMMITMENT
+  → XRPL_UNSIGNED_PAYMENT_INTENT
+  → HUMAN_APPROVAL
+  → EXTERNAL_WALLET_SIGNER
+  → VALIDATED_LEDGER_RECEIPT
+  → AUDIT_EVIDENCE
+```
+
+XuniaDAO also binds its existing Flow-token-registry ancestry to an original Palantir-Ontology-inspired object/link/action flow. Flow upstream history and licensing remain attributed; proprietary Palantir Foundry code is not copied. The `XUN` asset is a blueprint only until an issuer is explicitly configured.
+
+Docs: [`docs/UNIVERSAL_HIVE_XRPL_MONETARY.md`](docs/UNIVERSAL_HIVE_XRPL_MONETARY.md) · Contracts: [`ecosystem/universal-hive-xrpl.json`](ecosystem/universal-hive-xrpl.json) · [`ecosystem/palantir-flow-xrpl.json`](ecosystem/palantir-flow-xrpl.json)
+
 ## Collective cyber defense
 
 Command: **`/glass collective defense`**
@@ -256,6 +277,8 @@ BLACK_HOUSE_MISSION → XUNIA_SCOPE → GPT_UAP_XO_PLAN → GPT_UAP_XO_BOUNDED_W
 | `/glass exchanges` | live read-only exchange listing/ticker discovery |
 | `/glass xrpl` | governed XRPL documentation and upstream source resolution |
 | `/glass xrpl pathways` | token, wallet, client, node, approval and audit ontology |
+| `/glass hive xrpl` | Universal Hive reward events to unsigned XRPL payment intents |
+| `/glass palantir flow` | Flow provenance + Palantir-style object/link graph + XRPL settlement path |
 | `/glass collective defense` | collective cyber-defense alignment and evidence gaps |
 | `/glass uap` | GPT-UAP-XO bounded-agent route |
 | `/VA3LM-SAGI` | VA3LM guardrail intelligence surface |
