@@ -15,6 +15,10 @@ test('governance ontology exposes object-link-action model', (t) => {
   t.true(ECOSYSTEM_GOVERNANCE_ONTOLOGY.actions.includes('DISCOVER_LISTING'));
   t.true(ECOSYSTEM_GOVERNANCE_ONTOLOGY.actions.includes('ATTACH_EVIDENCE'));
   t.true(ECOSYSTEM_GOVERNANCE_ONTOLOGY.domains.includes('XRPL_TOKEN_WALLET'));
+  t.true(ECOSYSTEM_GOVERNANCE_ONTOLOGY.domains.includes('UNIVERSAL_HIVE_XRPL'));
+  t.true(ECOSYSTEM_GOVERNANCE_ONTOLOGY.domains.includes('PALANTIR_FLOW_XRPL'));
+  t.true(ECOSYSTEM_GOVERNANCE_ONTOLOGY.objectTypes.includes('BUILDER_REWARD_EVENT'));
+  t.true(ECOSYSTEM_GOVERNANCE_ONTOLOGY.actions.includes('BUILD_XRPL_PAYMENT_INTENT'));
   t.true(ECOSYSTEM_GOVERNANCE_ONTOLOGY.domains.includes('COLLECTIVE_CYBER_DEFENSE'));
 });
 
@@ -38,4 +42,24 @@ test('governance actions allow reads but review external claims and mutations', 
 test('links cannot point outside the ontology graph', (t) => {
   const seed = createGovernanceSeed();
   t.throws(() => validateGovernanceLink({ from: 'repo:xuniadao', to: 'missing', type: 'SUPPORTED_BY', provenance: ['test'] }, seed.objects), { message: 'ONTOLOGY_LINK_ENDPOINT_REQUIRED' });
+});
+
+
+test('Universal Hive monetary governance keeps fund movement behind the execution boundary', (t) => {
+  t.is(evaluateGovernanceAction({
+    action: 'BUILD_XRPL_PAYMENT_INTENT',
+    objectIds: ['reward:1'],
+    provenance: ['contract:ecosystem/universal-hive-xrpl.json'],
+  }), 'ALLOW');
+
+  t.is(evaluateGovernanceAction({
+    action: 'AUTHORIZE_REWARD_SETTLEMENT',
+    objectIds: ['reward:1'],
+    provenance: ['contract:ecosystem/universal-hive-xrpl.json'],
+    movesFunds: true,
+  }), 'BLOCK');
+
+  t.true(ECOSYSTEM_GOVERNANCE_ONTOLOGY.invariants.xrplPrivateKeyStorageBlocked);
+  t.true(ECOSYSTEM_GOVERNANCE_ONTOLOGY.invariants.xrplAutomaticSigningBlocked);
+  t.true(ECOSYSTEM_GOVERNANCE_ONTOLOGY.invariants.xrplExternalSignerRequired);
 });
