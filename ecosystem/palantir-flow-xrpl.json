@@ -1,0 +1,33 @@
+{
+  "id": "XUNIA-PALANTIR-FLOW-XRPL",
+  "version": "1.0.0",
+  "command": "/glass palantir flow",
+  "implementation": "ORIGINAL_XUNIA_INTEGRATION",
+  "repositories": {
+    "xuniaRoot": "sonoxo/xuniadao",
+    "flowUpstream": "FlowFans/flow-token-list"
+  },
+  "references": {
+    "palantirOntology": "https://www.palantir.com/docs/foundry/ontology/overview",
+    "xrpl": "https://xrpl.org"
+  },
+  "boundaries": {
+    "palantirCodeCopied": false,
+    "palantirAffiliationClaim": false,
+    "flowHistoryAndLicensePreserved": true,
+    "privateKeysInRepository": false,
+    "automaticFundMovement": false
+  },
+  "pipeline": [
+    "FLOW_SOURCE_INGEST",
+    "PROVENANCE_VERIFY",
+    "PALANTIR_STYLE_OBJECT_LINK_NORMALIZE",
+    "UNIVERSAL_HIVE_EVENT_GRAPH",
+    "BUILDER_ATTRIBUTION",
+    "XRPL_UNSIGNED_PAYMENT_INTENT",
+    "HUMAN_APPROVAL",
+    "EXTERNAL_WALLET_SIGNER",
+    "VALIDATED_LEDGER_RECEIPT",
+    "EVIDENCE_RETURN"
+  ]
+}
