@@ -20,6 +20,8 @@ export type GlassOnionCapability =
   | 'MEDIA_WORKFLOW'
   | 'QUANTUM_BLUEPRINT'
   | 'CADENCE_FLOW'
+  | 'UNIVERSAL_HIVE_MONETARY'
+  | 'PALANTIR_FLOW_XRPL'
   | 'UAP_AGENT_RUNTIME'
   | 'CI_VALIDATION';
 
@@ -67,6 +69,8 @@ const PIPELINES: Readonly<Record<GlassOnionCapability, readonly string[]>> = {
   MEDIA_WORKFLOW: ['ALMIGHTY_SONOXO_MEDIA', 'XUNIA_PROVENANCE', 'SONOXO_INDEX', 'ZYRA_WORKFLOW'],
   QUANTUM_BLUEPRINT: ['XUNIA_SCOPE', 'VA3LM_QUANTUM_PLAN', 'SONOXO_ONTOLOGY', 'ZYRA_VERIFY'],
   CADENCE_FLOW: ['XUNIA_CADENCE_INTENT', 'VA3LM_PLAN', 'ZYRA_TRANSACTION_GATE', 'XUNIA_VERIFY'],
+  UNIVERSAL_HIVE_MONETARY: ['SWARM_CREATED', 'BUILDER_REWARD_EVENT', 'PROVENANCE_COMMITMENT', 'XRPL_UNSIGNED_PAYMENT_INTENT', 'HUMAN_APPROVAL', 'EXTERNAL_WALLET_SIGNER', 'VALIDATED_LEDGER_RECEIPT', 'AUDIT_EVIDENCE'],
+  PALANTIR_FLOW_XRPL: ['FLOW_SOURCE_INGEST', 'PROVENANCE_VERIFY', 'PALANTIR_STYLE_OBJECT_LINK_NORMALIZE', 'UNIVERSAL_HIVE_EVENT_GRAPH', 'BUILDER_ATTRIBUTION', 'XRPL_UNSIGNED_PAYMENT_INTENT', 'HUMAN_APPROVAL', 'EXTERNAL_WALLET_SIGNER', 'VALIDATED_LEDGER_RECEIPT', 'EVIDENCE_RETURN'],
   UAP_AGENT_RUNTIME: ['XUNIA_SCOPE', 'GPT_UAP_XO_PLAN', 'GPT_UAP_XO_BOUNDED_WORKERS', 'PROVENANCE_CHECK', 'ZYRA_ACTION_GATE'],
   CI_VALIDATION: ['XUNIA_SCOPE', 'ZYRA_CI', 'SONOXO_EVIDENCE', 'XUNIA_VERIFY'],
 };
@@ -86,6 +90,8 @@ const PROVENANCE_CAPABILITIES: readonly GlassOnionCapability[] = [
   'XUNIAVERSE_REGISTRY',
   'MISSION_TELEMETRY',
   'AUTHENTICATED_BROWSER',
+  'UNIVERSAL_HIVE_MONETARY',
+  'PALANTIR_FLOW_XRPL',
 ];
 
 const uniqueTargets = (targets: readonly XuniaLayerId[]): XuniaLayerId[] =>
@@ -133,7 +139,7 @@ export const routeGlassOnion = (request: GlassOnionRequest): GlassOnionRoute => 
 
 export const GLASS_ONION_LAYER = {
   codename: 'GLASS ONION',
-  version: '2.7.0',
+  version: '2.8.0',
   command: '/glass',
   aitCommand: '/glass ait',
   crmCommand: '/glass crm',
@@ -149,6 +155,8 @@ export const GLASS_ONION_LAYER = {
   missionCommand: '/glass mission',
   browserCommand: '/glass browse',
   uapCommand: '/glass uap',
+  hiveMonetaryCommand: '/glass hive xrpl',
+  palantirFlowCommand: '/glass palantir flow',
   umbrella: 'XUNIA',
   face: 'XUNIA / XuniaDAO',
   layers: ['xunia', 'zyra', 'sonoxo', 'almighty-sonoxo', 'va3lm', 'gpt-uap-xo'] as readonly XuniaLayerId[],
@@ -172,6 +180,9 @@ export const GLASS_ONION_LAYER = {
     externalExchangeListingCannotBeSelfDeclared: true,
     productionComplianceEvidenceCannotBeInferred: true,
     automaticFundMovement: false,
+    xrplExternalSignerRequired: true,
+    xrplPrivateKeyStorage: false,
+    xrplAutomaticSigning: false,
     automaticGovernanceVoting: false,
     arbitraryRemoteShell: false,
   },
