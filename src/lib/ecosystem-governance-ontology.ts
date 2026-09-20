@@ -16,7 +16,14 @@ export type GovernanceObjectType =
   | 'XUNIAVERSE_NODE'
   | 'EVIDENCE'
   | 'ASSESSMENT'
-  | 'ATTESTATION';
+  | 'ATTESTATION'
+  | 'UNIVERSAL_HIVE'
+  | 'SWARM'
+  | 'BUILDER'
+  | 'BUILDER_REWARD_EVENT'
+  | 'TREASURY_ACCOUNT'
+  | 'PAYMENT_INTENT'
+  | 'LEDGER_RECEIPT';
 
 export type GovernanceLinkType =
   | 'LICENSED_UNDER'
@@ -37,7 +44,12 @@ export type GovernanceLinkType =
   | 'BENCHMARKS_AGAINST'
   | 'LEARNS_FROM'
   | 'MODELS_AFTER'
-  | 'VALIDATES_WITH';
+  | 'VALIDATES_WITH'
+  | 'GENERATES'
+  | 'ATTRIBUTED_TO'
+  | 'SETTLED_WITH'
+  | 'SIGNED_BY'
+  | 'SUBMITTED_TO';
 
 export type GovernanceAction =
   | 'VERIFY_LICENSE'
@@ -51,7 +63,11 @@ export type GovernanceAction =
   | 'BROKER_AGENT_AUTH'
   | 'REVOKE_AGENT_ACCESS'
   | 'VERIFY_PEER_SOURCE'
-  | 'REGISTER_XUNIAVERSE_NODE';
+  | 'REGISTER_XUNIAVERSE_NODE'
+  | 'REGISTER_SWARM_REWARD'
+  | 'BUILD_XRPL_PAYMENT_INTENT'
+  | 'AUTHORIZE_REWARD_SETTLEMENT'
+  | 'VERIFY_XRPL_RECEIPT';
 
 export interface GovernanceObject {
   readonly id: string;
@@ -178,25 +194,28 @@ export const createGovernanceSeed = (): { readonly objects: readonly GovernanceO
 
 export const ECOSYSTEM_GOVERNANCE_ONTOLOGY = {
   id: 'GLASS-ONION-GOVERNANCE-ONTOLOGY',
-  version: '1.2.0',
+  version: '1.3.0',
   command: '/glass ontology governance',
   architecture: 'OBJECT_PROPERTY_LINK_ACTION_EVIDENCE_DECISION',
   objectTypes: [
     'REPOSITORY', 'LICENSE', 'TOKEN', 'EXCHANGE', 'MARKET', 'COMPLIANCE_REQUIREMENT',
     'AGENT_IDENTITY', 'AUTH_PROVIDER', 'ACCESS_POLICY', 'RUNTIME', 'GUARDRAIL', 'SECURITY_EVENT',
     'TECH_PEER', 'SECURITY_DOMAIN', 'XUNIAVERSE_NODE', 'EVIDENCE', 'ASSESSMENT', 'ATTESTATION',
+    'UNIVERSAL_HIVE', 'SWARM', 'BUILDER', 'BUILDER_REWARD_EVENT', 'TREASURY_ACCOUNT', 'PAYMENT_INTENT', 'LEDGER_RECEIPT',
   ] as readonly GovernanceObjectType[],
   linkTypes: [
     'LICENSED_UNDER', 'DISCOVERED_ON', 'QUOTED_BY', 'REQUIRES_EVIDENCE', 'SUPPORTED_BY',
     'SATISFIES', 'GOVERNS', 'DERIVED_FROM', 'BLOCKED_BY', 'ROOTS', 'IDENTIFIES', 'AUTHORIZES',
     'BROKERS_AUTH_FOR', 'ENFORCES', 'PROTECTS', 'BENCHMARKS_AGAINST', 'LEARNS_FROM', 'MODELS_AFTER', 'VALIDATES_WITH',
+    'GENERATES', 'ATTRIBUTED_TO', 'SETTLED_WITH', 'SIGNED_BY', 'SUBMITTED_TO',
   ] as readonly GovernanceLinkType[],
   actions: [
     'VERIFY_LICENSE', 'DISCOVER_LISTING', 'READ_TICKER', 'VALIDATE_LISTING_PACKET', 'ATTACH_EVIDENCE',
     'ASSESS_READINESS', 'ISSUE_INTERNAL_ATTESTATION', 'VERIFY_AGENT_IDENTITY', 'BROKER_AGENT_AUTH',
     'REVOKE_AGENT_ACCESS', 'VERIFY_PEER_SOURCE', 'REGISTER_XUNIAVERSE_NODE',
+    'REGISTER_SWARM_REWARD', 'BUILD_XRPL_PAYMENT_INTENT', 'AUTHORIZE_REWARD_SETTLEMENT', 'VERIFY_XRPL_RECEIPT',
   ] as readonly GovernanceAction[],
-  domains: ['LICENSES', 'EXCHANGES', 'GDPR_HIPAA_EVIDENCE', 'AGENT_IDENTITY', 'GCPXUNIA_DEFENSE', 'TECH_PEERS', 'XUNIAVERSE', 'XRPL_TOKEN_WALLET', 'COLLECTIVE_CYBER_DEFENSE'] as const,
+  domains: ['LICENSES', 'EXCHANGES', 'GDPR_HIPAA_EVIDENCE', 'AGENT_IDENTITY', 'GCPXUNIA_DEFENSE', 'TECH_PEERS', 'XUNIAVERSE', 'XRPL_TOKEN_WALLET', 'UNIVERSAL_HIVE_XRPL', 'PALANTIR_FLOW_XRPL', 'COLLECTIVE_CYBER_DEFENSE'] as const,
   invariants: {
     provenanceRequired: true,
     externalListingRequiresExchangeEvidence: true,
@@ -209,5 +228,8 @@ export const ECOSYSTEM_GOVERNANCE_ONTOLOGY = {
     peerClaimsRequireEvidence: true,
     xuniadaoIsXuniaverseRoot: true,
     fundMovementBlocked: true,
+    xrplPrivateKeyStorageBlocked: true,
+    xrplAutomaticSigningBlocked: true,
+    xrplExternalSignerRequired: true,
   },
 } as const;
