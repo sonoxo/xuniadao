@@ -16,6 +16,8 @@ test('Glass Onion identity and six-layer membrane are locked', (t) => {
   t.is(GLASS_ONION_LAYER.peersCommand, '/glass peers');
   t.is(GLASS_ONION_LAYER.xuniaverseCommand, '/glass xuniaverse');
   t.is(GLASS_ONION_LAYER.uapCommand, '/glass uap');
+  t.is(GLASS_ONION_LAYER.hiveMonetaryCommand, '/glass hive xrpl');
+  t.is(GLASS_ONION_LAYER.palantirFlowCommand, '/glass palantir flow');
   t.is(GLASS_ONION_LAYER.face, 'XUNIA / XuniaDAO');
   t.deepEqual(GLASS_ONION_LAYER.layers, ['xunia', 'zyra', 'sonoxo', 'almighty-sonoxo', 'va3lm', 'gpt-uap-xo']);
 });
@@ -108,6 +110,7 @@ test('provenance-sensitive capabilities without provenance are held for review',
     'INTELLIGENCE_QUERY', 'AIT_ONTOLOGY', 'CRM', 'CRM_PORT', 'CRM_CERTIFICATION',
     'LICENSE_REGISTRY', 'EXCHANGE_MARKET_DATA', 'COMPLIANCE_EVIDENCE', 'AGENT_IDENTITY_SECURITY',
     'GCPXUNIA_DEFENSE', 'TECH_PEER_ONTOLOGY', 'XUNIAVERSE_REGISTRY',
+    'UNIVERSAL_HIVE_MONETARY', 'PALANTIR_FLOW_XRPL',
   ] as const;
   for (const capability of capabilities) {
     const route = routeGlassOnion({ objective: 'Promote governed information', capability, targets: ['xunia', 'zyra'] });
@@ -134,4 +137,50 @@ test('automatic funds, governance votes and arbitrary remote shell are blocked',
   t.true(route.reasons.includes('AUTOMATIC_FUND_MOVEMENT_BLOCKED'));
   t.true(route.reasons.includes('AUTOMATIC_GOVERNANCE_VOTING_BLOCKED'));
   t.true(route.reasons.includes('ARBITRARY_REMOTE_SHELL_BLOCKED'));
+});
+
+
+test('Universal Hive monetary route reaches XRPL external signer boundary', (t) => {
+  const route = routeGlassOnion({
+    objective: 'Compile verified swarm rewards into unsigned XRPL payment intents',
+    capability: 'UNIVERSAL_HIVE_MONETARY',
+    targets: ['xunia', 'zyra', 'va3lm'],
+    provenance: ['contract:ecosystem/universal-hive-xrpl.json'],
+  });
+  t.is(route.decision, 'ALLOW');
+  t.true(route.pipeline.includes('BUILDER_REWARD_EVENT'));
+  t.true(route.pipeline.includes('EXTERNAL_WALLET_SIGNER'));
+  t.true(route.pipeline.includes('VALIDATED_LEDGER_RECEIPT'));
+});
+
+test('Palantir Flow XRPL route preserves provenance and evidence return', (t) => {
+  const route = routeGlassOnion({
+    objective: 'Normalize Flow provenance into the Universal Hive object-link graph',
+    capability: 'PALANTIR_FLOW_XRPL',
+    targets: ['xunia', 'sonoxo', 'zyra'],
+    provenance: ['repo:FlowFans/flow-token-list', 'https://www.palantir.com/docs/foundry/ontology/overview'],
+  });
+  t.is(route.decision, 'ALLOW');
+  t.true(route.pipeline.includes('PALANTIR_STYLE_OBJECT_LINK_NORMALIZE'));
+  t.true(route.pipeline.includes('EVIDENCE_RETURN'));
+});
+
+test('XRPL monetary settlement signing remains reviewed and automatic movement blocked', (t) => {
+  const signRoute = routeGlassOnion({
+    objective: 'Sign an approved builder reward through an external wallet',
+    capability: 'UNIVERSAL_HIVE_MONETARY',
+    targets: ['xunia', 'zyra'],
+    provenance: ['contract:ecosystem/universal-hive-xrpl.json'],
+    signsTransaction: true,
+  });
+  t.is(signRoute.decision, 'REVIEW');
+
+  const autoMove = routeGlassOnion({
+    objective: 'Automatically move builder funds',
+    capability: 'UNIVERSAL_HIVE_MONETARY',
+    targets: ['xunia'],
+    provenance: ['contract:ecosystem/universal-hive-xrpl.json'],
+    movesFunds: true,
+  });
+  t.is(autoMove.decision, 'BLOCK');
 });
