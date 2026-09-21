@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0.0",
+  "policyId": "NIST_AI_RMF_1_0_XUNIA_PROFILE_V1",
+  "status": "ADOPTED_INTERNAL_PROFILE",
+  "ownerScope": "github.com/sonoxo/*",
+  "canonicalPolicy": "sonoxo/gpt-doug-llm/the-black-house/governance/nist-ai-rmf.profile.json",
+  "domainRoot": "sonoxo/xuniadao",
+  "enforcement": {
+    "failClosed": true,
+    "requireMissionRiskEnvelope": true,
+    "requireHumanOwner": true,
+    "requireFunctions": [
+      "GOVERN",
+      "MAP",
+      "MEASURE",
+      "MANAGE"
+    ],
+    "requireTEVVBeforeGreen": true,
+    "requireResidualRiskRecord": true,
+    "highRiskHumanReview": true,
+    "criticalRiskDefault": "HOLD",
+    "requireMonitoring": true,
+    "requireDecommissionPath": true,
+    "requireThirdPartyInventory": true
+  },
+  "inheritance": {
+    "appliesToRegisteredXuniaComponents": true,
+    "repositoryPattern": "sonoxo/*",
+    "standaloneRepositoriesNeedLocalWorkflowForGitHubEnforcement": true
+  },
+  "disclaimer": "Internal NIST AI RMF implementation profile. This file does not assert NIST certification, endorsement, or automatic legal compliance."
+}
