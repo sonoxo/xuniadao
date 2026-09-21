@@ -7,10 +7,16 @@
   "component": "XUNIA",
   "role": "applications_agents_orchestration",
   "requiredGates": [
+    "node scripts/validate-nist-ai-rmf.mjs",
     "yarn build:main",
     "yarn test:unit",
     "node --test apps/resilience-atlas/tests/*.test.mjs"
   ],
+  "governance": {
+    "profile": "NIST_AI_RMF_1_0_XUNIA_PROFILE_V1",
+    "contract": ".xunia/nist-ai-rmf.json",
+    "failClosed": true
+  },
   "failureState": "RED",
   "successState": "GREEN"
 }
