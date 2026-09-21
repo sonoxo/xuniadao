@@ -1,0 +1,39 @@
+name: NIST AI RMF Governance Gate
+
+on:
+  push:
+    paths:
+      - ".xunia/nist-ai-rmf.json"
+      - ".xunia/ecosystem-v4.json"
+      - ".black-house/kernel.json"
+      - ".black-house/mission-router.json"
+      - ".black-house/runtime.json"
+      - "scripts/validate-nist-ai-rmf.mjs"
+      - ".github/workflows/nist-ai-rmf-governance.yml"
+  pull_request:
+    paths:
+      - ".xunia/nist-ai-rmf.json"
+      - ".xunia/ecosystem-v4.json"
+      - ".black-house/kernel.json"
+      - ".black-house/mission-router.json"
+      - ".black-house/runtime.json"
+      - "scripts/validate-nist-ai-rmf.mjs"
+      - ".github/workflows/nist-ai-rmf-governance.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  governance-gate:
+    name: NIST AI RMF fail-closed profile
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate NIST AI RMF profile
+        run: node scripts/validate-nist-ai-rmf.mjs
