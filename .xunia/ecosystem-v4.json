@@ -7,7 +7,35 @@
   "control_root": "sonoxo/gpt-doug-llm",
   "hub": "sonoxo/xuniahub",
   "execution_plane": "sonoxo/zyra",
-  "responsibilities": ["XUNIAverse domain ontology", "repository registry", "identity graph", "CRM", "compliance", "licensing", "domain governance"],
-  "collective_ai_layers": ["classical_ai", "machine_learning", "neural_networks", "deep_learning", "generative_ai", "agentic_ai"],
-  "authority_boundary": "XuniaDAO is authoritative for the XUNIAverse domain graph only; it does not supersede the Black House global control plane and ecosystem membership creates no third-party rights or authorization."
+  "governance_profile": "NIST_AI_RMF_1_0_XUNIA_PROFILE_V1",
+  "governance_contract": ".xunia/nist-ai-rmf.json",
+  "repository_scope": "github.com/sonoxo/*",
+  "responsibilities": [
+    "XUNIAverse domain ontology",
+    "repository registry",
+    "identity graph",
+    "CRM",
+    "compliance",
+    "licensing",
+    "domain governance",
+    "AI risk inventory",
+    "TEVV evidence routing",
+    "residual risk tracking",
+    "decommission governance"
+  ],
+  "collective_ai_layers": [
+    "classical_ai",
+    "machine_learning",
+    "neural_networks",
+    "deep_learning",
+    "generative_ai",
+    "agentic_ai"
+  ],
+  "governance_functions": [
+    "GOVERN",
+    "MAP",
+    "MEASURE",
+    "MANAGE"
+  ],
+  "authority_boundary": "XuniaDAO is authoritative for the XUNIAverse domain graph only; it does not supersede the Black House global control plane and ecosystem membership creates no third-party rights or authorization. NIST AI RMF adoption is an internal risk-management profile and does not imply NIST certification, endorsement, or automatic legal compliance."
 }
