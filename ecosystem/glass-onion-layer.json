@@ -1,6 +1,6 @@
 {
   "codename": "GLASS ONION",
-  "version": "2.7.0",
+  "version": "2.8.0",
   "command": "/glass",
   "aitCommand": "/glass ait",
   "crmCommand": "/glass crm",
@@ -19,7 +19,14 @@
   "umbrella": "XUNIA",
   "face": "XUNIA / XuniaDAO",
   "purpose": "Root ontology, cross-repository intelligence, mission telemetry simulation, agent identity security, defensive cloud governance, licensing, compliance evidence, market discovery, and governed orchestration for the XUNIAverse.",
-  "layers": ["xunia", "zyra", "sonoxo", "almighty-sonoxo", "va3lm", "gpt-uap-xo"],
+  "layers": [
+    "xunia",
+    "zyra",
+    "sonoxo",
+    "almighty-sonoxo",
+    "va3lm",
+    "gpt-uap-xo"
+  ],
   "capabilities": [
     "INTELLIGENCE_QUERY",
     "AIT_ONTOLOGY",
@@ -40,24 +47,99 @@
     "QUANTUM_BLUEPRINT",
     "CADENCE_FLOW",
     "UAP_AGENT_RUNTIME",
-    "CI_VALIDATION"
+    "CI_VALIDATION",
+    "AUTHENTICATED_BROWSER",
+    "UNIVERSAL_HIVE_MONETARY",
+    "PALANTIR_FLOW_XRPL"
   ],
   "governanceOntology": {
     "contract": "ecosystem/governance-ontology.json",
     "architecture": "OBJECT_PROPERTY_LINK_ACTION_EVIDENCE_DECISION",
-    "domains": ["LICENSES", "EXCHANGES", "GDPR_HIPAA_EVIDENCE", "AGENT_IDENTITY", "GCPXUNIA_DEFENSE", "TECH_PEERS", "XUNIAVERSE", "MISSION_TELEMETRY"]
+    "domains": [
+      "LICENSES",
+      "EXCHANGES",
+      "GDPR_HIPAA_EVIDENCE",
+      "AGENT_IDENTITY",
+      "GCPXUNIA_DEFENSE",
+      "TECH_PEERS",
+      "XUNIAVERSE",
+      "MISSION_TELEMETRY"
+    ]
   },
   "pipelines": {
-    "LICENSE_REGISTRY": ["REPOSITORY_DISCOVERY", "LICENSE_FILE_VERIFY", "SPDX_VALIDATE", "OBLIGATION_EVALUATE", "ATTRIBUTION_EVIDENCE"],
-    "EXCHANGE_MARKET_DATA": ["TOKEN_SCOPE", "LISTING_PACKET_VALIDATE", "LIVE_EXCHANGE_DISCOVERY", "LISTING_STATUS_VERIFY", "READ_ONLY_TICKER"],
-    "COMPLIANCE_EVIDENCE": ["FRAMEWORK_SCOPE", "REQUIREMENT_MAP", "EVIDENCE_INGEST", "PROVENANCE_VERIFY", "EXPIRY_CHECK", "READINESS_ASSESSMENT"],
-    "AGENT_IDENTITY_SECURITY": ["AGENT_INVENTORY", "SPIFFE_IDENTITY_VERIFY", "AGENT_ATTESTATION", "AUTH_MANAGER_BROKER", "LEAST_PRIVILEGE_POLICY", "DPOP_OR_MTLS_BINDING", "AUDIT_EVIDENCE"],
-    "GCPXUNIA_DEFENSE": ["XUNIA_SCOPE", "AGENT_IDENTITY_VERIFY", "GCPXUNIA_AUTH_BROKER", "VIRGINIA_POLICY_BOUNDARY", "VA3LM_REASON_AND_PLAN", "RUNTIME_GUARDRAIL", "ZYRA_ACTION_GATE", "AUDIT_EVIDENCE"],
-    "TECH_PEER_ONTOLOGY": ["PEER_SOURCE_DISCOVERY", "PRIMARY_SOURCE_VERIFY", "DOMAIN_MAP", "ONTOLOGY_LINK", "CREDENTIAL_EVIDENCE_CHECK", "ALIGNMENT_ASSESSMENT"],
-    "XUNIAVERSE_REGISTRY": ["REPOSITORY_DISCOVERY", "UPSTREAM_PROVENANCE", "NODE_ROLE_MAP", "XUNIADAO_ROOT_LINK", "LICENSE_BOUNDARY", "REGISTRY_EVIDENCE"],
-    "MISSION_TELEMETRY": ["PUBLIC_MISSION_DATA", "FPRIME_SIM_TELEMETRY", "PROVENANCE_NORMALIZE", "XUNIA_ONTOLOGY", "VIRGINIA_QUERY", "VA3LM_REASON", "ZYRA_VERIFY", "HUMAN_REVIEW"]
+    "LICENSE_REGISTRY": [
+      "REPOSITORY_DISCOVERY",
+      "LICENSE_FILE_VERIFY",
+      "SPDX_VALIDATE",
+      "OBLIGATION_EVALUATE",
+      "ATTRIBUTION_EVIDENCE"
+    ],
+    "EXCHANGE_MARKET_DATA": [
+      "TOKEN_SCOPE",
+      "LISTING_PACKET_VALIDATE",
+      "LIVE_EXCHANGE_DISCOVERY",
+      "LISTING_STATUS_VERIFY",
+      "READ_ONLY_TICKER"
+    ],
+    "COMPLIANCE_EVIDENCE": [
+      "FRAMEWORK_SCOPE",
+      "REQUIREMENT_MAP",
+      "EVIDENCE_INGEST",
+      "PROVENANCE_VERIFY",
+      "EXPIRY_CHECK",
+      "READINESS_ASSESSMENT"
+    ],
+    "AGENT_IDENTITY_SECURITY": [
+      "AGENT_INVENTORY",
+      "SPIFFE_IDENTITY_VERIFY",
+      "AGENT_ATTESTATION",
+      "AUTH_MANAGER_BROKER",
+      "LEAST_PRIVILEGE_POLICY",
+      "DPOP_OR_MTLS_BINDING",
+      "AUDIT_EVIDENCE"
+    ],
+    "GCPXUNIA_DEFENSE": [
+      "XUNIA_SCOPE",
+      "AGENT_IDENTITY_VERIFY",
+      "GCPXUNIA_AUTH_BROKER",
+      "VIRGINIA_POLICY_BOUNDARY",
+      "VA3LM_REASON_AND_PLAN",
+      "RUNTIME_GUARDRAIL",
+      "ZYRA_ACTION_GATE",
+      "AUDIT_EVIDENCE"
+    ],
+    "TECH_PEER_ONTOLOGY": [
+      "PEER_SOURCE_DISCOVERY",
+      "PRIMARY_SOURCE_VERIFY",
+      "DOMAIN_MAP",
+      "ONTOLOGY_LINK",
+      "CREDENTIAL_EVIDENCE_CHECK",
+      "ALIGNMENT_ASSESSMENT"
+    ],
+    "XUNIAVERSE_REGISTRY": [
+      "REPOSITORY_DISCOVERY",
+      "UPSTREAM_PROVENANCE",
+      "NODE_ROLE_MAP",
+      "XUNIADAO_ROOT_LINK",
+      "LICENSE_BOUNDARY",
+      "REGISTRY_EVIDENCE"
+    ],
+    "MISSION_TELEMETRY": [
+      "PUBLIC_MISSION_DATA",
+      "FPRIME_SIM_TELEMETRY",
+      "PROVENANCE_NORMALIZE",
+      "XUNIA_ONTOLOGY",
+      "VIRGINIA_QUERY",
+      "VA3LM_REASON",
+      "ZYRA_VERIFY",
+      "HUMAN_REVIEW"
+    ]
   },
-  "decisions": ["ALLOW", "REVIEW", "BLOCK"],
+  "decisions": [
+    "ALLOW",
+    "REVIEW",
+    "BLOCK"
+  ],
   "invariants": {
     "xuniadaoIsXuniaverseRoot": true,
     "provenanceRequired": true,
