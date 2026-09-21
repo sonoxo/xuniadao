@@ -57,7 +57,7 @@ jobs:
 
           assert.equal(pkg.name, 'xunia-glass-onion');
           assert.equal(pkg.license, 'Apache-2.0');
-          assert.equal(glass.GLASS_ONION_LAYER.version, '2.7.0');
+          assert.equal(glass.GLASS_ONION_LAYER.version, '2.8.0');
           assert.equal(glass.GLASS_ONION_LAYER.missionCommand, '/glass mission');
           assert.equal(glass.GLASS_ONION_LAYER.licensesCommand, '/glass licenses');
           assert.equal(glass.GLASS_ONION_LAYER.exchangesCommand, '/glass exchanges');
