@@ -65,7 +65,7 @@ jobs:
       - name: Validate generated token lists
         run: |
           for token_list in src/tokens/flow-mainnet.tokenlist.json src/tokens/flow-testnet.tokenlist.json; do
-            npx --yes -p ajv-cli -p ajv-formats ajv validate \
+            npx --yes -p ajv-cli@5.0.0 -p ajv-formats@2.1.1 ajv validate \
               -c ajv-formats \
               -s src/schemas/tokenlist.schema.json \
               -r src/schemas/token.schema.json \
