@@ -101,7 +101,7 @@ jobs:
             - Mirrors the upstream `token-registry/`
             - Records the exact upstream commit SHA
             - Regenerates Flow mainnet/testnet token lists
-            - Runs the XuniaDAO test suite before proposing changes
+            - Validates generated token lists against repository schemas before proposing changes
 
             Upstream contributions remain PR-based; this workflow never direct-pushes to FlowFans/OnFlow repositories.
           labels: TokenList
