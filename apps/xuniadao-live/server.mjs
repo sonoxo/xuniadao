@@ -5,11 +5,12 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import ccxt from 'ccxt';
 import pg from 'pg';
+import { runUniversalHive, verifyUniversalHiveRun, hiveStatus } from './swarm.mjs';
 
 const { Pool } = pg;
 const PORT = Number(process.env.PORT || 3000);
 const HOST = process.env.HOST || '0.0.0.0';
-const VERSION = 'XUNIADAO-LIVE-1.0.0';
+const VERSION = 'XUNIADAO-LIVE-1.1.0-HIVE';
 const DATA_DIR = process.env.XUNIA_DATA_DIR || '/tmp/xuniadao';
 const CHAIN_FILE = path.join(DATA_DIR, 'receipts.json');
 const pool = process.env.DATABASE_URL ? new Pool({
@@ -18,6 +19,7 @@ const pool = process.env.DATABASE_URL ? new Pool({
 }) : null;
 const intents = new Map();
 const audit = [];
+const hiveRuns = new Map();
 
 const now = () => new Date().toISOString();
 function stable(v) {
@@ -163,8 +165,43 @@ async function handler(req, res) {
         chainHeight: latest?.blockNo || 0,
         moneroWalletRpc: Boolean(process.env.MONERO_WALLET_RPC_URL),
         ccxtAdapters: ccxt.exchanges.length,
-        withdrawals: 'disabled'
+        withdrawals: 'disabled',
+        universalHive: hiveStatus()
       });
+    }
+    if (req.method === 'GET' && u.pathname === '/api/hive/status') {
+      return json(res,200,hiveStatus());
+    }
+    if (req.method === 'POST' && u.pathname === '/api/hive/summon') {
+      const b = await body(req);
+      const prompt = String(b.prompt || '').trim();
+      if (!prompt) return json(res,400,{error:'prompt required'});
+      const run = runUniversalHive({
+        prompt,
+        ontology:b.ontology || 'XUNIADAO_CANONICAL_V2',
+        builders:b.builders || ['operator'],
+        requestedWorkers:b.requestedWorkers || 14,
+        requestId:b.requestId || null
+      });
+      const verification = verifyUniversalHiveRun(run);
+      if (!verification.valid) return json(res,500,{error:'Hive verification failed',verification});
+      hiveRuns.set(run.job.jobId,run);
+      if (hiveRuns.size > 200) hiveRuns.delete(hiveRuns.keys().next().value);
+      log('UNIVERSAL_HIVE_SWARM_CREATED',{
+        jobId:run.job.jobId,
+        hiveId:run.hive.hiveId,
+        swarmId:run.swarm.swarmId,
+        activeWorkers:run.swarm.activeWorkers,
+        logicalHiveCapacity:run.hive.logicalCapacity,
+        logicalSwarmCapacity:run.swarm.logicalCapacity,
+        rewardEventId:run.builderRewardEvent.rewardEventId
+      });
+      return json(res,201,{run,verification});
+    }
+    if (req.method === 'GET' && u.pathname === '/api/hive/run') {
+      const id = u.searchParams.get('jobId') || '';
+      const run = hiveRuns.get(id);
+      return run ? json(res,200,{run,verification:verifyUniversalHiveRun(run)}) : json(res,404,{error:'Hive run not found in active memory'});
     }
     if (req.method === 'GET' && u.pathname === '/api/exchanges') {
       const q = (u.searchParams.get('q') || '').toLowerCase();
@@ -252,21 +289,48 @@ async function handler(req, res) {
       const b = await body(req);
       const prompt = String(b.prompt || '').trim();
       if (!prompt) return json(res,400,{error:'prompt required'});
+      const hiveRun = runUniversalHive({
+        prompt,
+        ontology:b.ontology || 'XUNIADAO_CANONICAL_V2',
+        builders:b.builders || ['operator'],
+        requestedWorkers:b.requestedWorkers || 14,
+        requestId:b.requestId || null
+      });
+      const hiveVerification = verifyUniversalHiveRun(hiveRun);
+      if (!hiveVerification.valid) return json(res,500,{error:'Hive verification failed',hiveVerification});
       const latest = await latestReceipt();
       const blockNo = Number(latest?.blockNo || 0)+1;
       const prevHash = latest?.blockHash || 'GENESIS';
-      const jobId = crypto.randomUUID();
-      const promptHash = sha256(prompt);
-      const ontologyHash = sha256(b.ontology || 'XUNIADAO_CANONICAL_V1');
-      const work = {jobId,worker:'GPT-DOUG-DEMO-WORKER',outputHash:sha256('WORK:'+prompt),evidenceHash:sha256('EVIDENCE:'+promptHash),confidence:0.90};
-      const critique = {critic:'GPT-CHAOS',critiqueHash:sha256('CRITIQUE:'+work.outputHash),contradictions:[],status:'PASSED'};
-      const verification = {schema:true,provenance:true,policy:true,duplicateCheck:true,humanAuthorityBoundary:true};
-      const root = merkleRoot([promptHash,ontologyHash,work.outputHash,work.evidenceHash,critique.critiqueHash,sha256(verification)]);
-      const core = {protocol:'XUNIADAO',version:1,blockNo,prevHash,job:{jobId,createdAt:now(),promptHash,ontologyHash},work,critique,verification,merkleRoot:root,consensus:{proof:'PROOF_OF_VERIFIED_CONTRIBUTION',verifiedWorkScore:9000},settlement:{authorized:false,moneroTxid:null}};
+      const core = {
+        protocol:'XUNIADAO',
+        version:2,
+        blockNo,
+        prevHash,
+        job:hiveRun.job,
+        hive:hiveRun.hive,
+        swarm:hiveRun.swarm,
+        workers:hiveRun.workers,
+        chaos:hiveRun.chaos,
+        reconciliation:hiveRun.reconciliation,
+        builderRewardEvent:hiveRun.builderRewardEvent,
+        verification:{...hiveRun.verification,hiveMerkleVerified:hiveVerification.valid},
+        merkleRoot:hiveRun.merkleRoot,
+        consensus:hiveRun.consensus,
+        settlement:hiveRun.settlement,
+        apmLoop:hiveRun.apmLoop
+      };
       const blockHash = sha256(core);
       const receipt = {...core,blockHash,receiptSignature:receiptSignature(blockHash)};
       await appendReceipt(receipt);
-      log('NEURAL_RECEIPT_APPENDED',{blockNo,blockHash,jobId});
+      hiveRuns.set(hiveRun.job.jobId,hiveRun);
+      if (hiveRuns.size > 200) hiveRuns.delete(hiveRuns.keys().next().value);
+      log('NEURAL_HIVE_RECEIPT_APPENDED',{
+        blockNo,blockHash,jobId:hiveRun.job.jobId,
+        hiveId:hiveRun.hive.hiveId,
+        swarmId:hiveRun.swarm.swarmId,
+        activeWorkers:hiveRun.swarm.activeWorkers,
+        rewardEventId:hiveRun.builderRewardEvent.rewardEventId
+      });
       return json(res,201,receipt);
     }
     if (req.method === 'GET' && u.pathname === '/api/receipts') return json(res,200,await recentReceipts(Number(u.searchParams.get('limit')||20)));
