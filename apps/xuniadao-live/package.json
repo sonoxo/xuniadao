@@ -1,0 +1,9 @@
+{
+  "name": "xuniadao-live-control-plane",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "engines": {"node": ">=20"},
+  "scripts": {"start": "node server.mjs", "check": "node --check server.mjs"},
+  "dependencies": {"ccxt": "latest", "pg": "^8.13.0"}
+}
