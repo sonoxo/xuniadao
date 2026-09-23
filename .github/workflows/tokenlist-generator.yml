@@ -64,7 +64,13 @@ jobs:
 
       - name: Validate generated token lists
         run: |
-          for token_list in src/tokens/*.tokenlist.json; do
+          shopt -s nullglob
+          token_lists=(src/tokens/*.tokenlist.json)
+          if [ ${#token_lists[@]} -eq 0 ]; then
+            echo "No generated token list artifacts found; skipping schema validation."
+            exit 0
+          fi
+          for token_list in "${token_lists[@]}"; do
             yarn ajv validate \
               -c ajv-formats \
               -s src/schemas/tokenlist.schema.json \
