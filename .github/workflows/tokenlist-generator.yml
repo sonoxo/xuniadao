@@ -64,7 +64,46 @@ jobs:
 
       - name: Validate generated token lists
         run: |
-          node -e "const fs=require('fs'); JSON.parse(fs.readFileSync('src/tokens/flow-mainnet.tokenlist.json','utf8')); JSON.parse(fs.readFileSync('src/tokens/flow-testnet.tokenlist.json','utf8'));"
+          python - <<'PY'
+          import json
+          import subprocess
+          import sys
+          from pathlib import Path
+
+          try:
+            from jsonschema import Draft7Validator, RefResolver
+          except ImportError:
+            subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'jsonschema'])
+            from jsonschema import Draft7Validator, RefResolver
+
+          schema_path = Path('src/schemas/tokenlist.schema.json')
+          token_schema_path = Path('src/schemas/token.schema.json')
+          schema = json.loads(schema_path.read_text())
+          token_schema = json.loads(token_schema_path.read_text())
+          schema.pop('$id', None)
+          token_schema.pop('$id', None)
+          schema_dir_uri = f'{schema_path.parent.resolve().as_uri()}/'
+          resolver = RefResolver(
+            base_uri=schema_dir_uri,
+            referrer=schema,
+            store={
+              'token.schema.json': token_schema,
+              f'{schema_dir_uri}token.schema.json': token_schema,
+            },
+          )
+          validator = Draft7Validator(schema, resolver=resolver)
+
+          for token_list_path in (
+            Path('src/tokens/flow-mainnet.tokenlist.json'),
+            Path('src/tokens/flow-testnet.tokenlist.json'),
+          ):
+            token_list = json.loads(token_list_path.read_text())
+            errors = sorted(validator.iter_errors(token_list), key=lambda error: list(error.path))
+            if errors:
+              first = errors[0]
+              location = '.'.join(str(part) for part in first.path) or '<root>'
+              raise SystemExit(f'{token_list_path}: {first.message} at {location}')
+          PY
 
       - name: Detect synchronized changes
         id: changes
@@ -88,7 +127,7 @@ jobs:
             - Mirrors the upstream `token-registry/`
             - Records the exact upstream commit SHA
             - Regenerates Flow mainnet/testnet token lists
-            - Validates generated token list JSON before proposing changes
+            - Validates generated token lists against XuniaDAO schema before proposing changes
 
             Upstream contributions remain PR-based; this workflow never direct-pushes to FlowFans/OnFlow repositories.
           labels: TokenList
