@@ -92,11 +92,10 @@ jobs:
             Path('src/tokens/flow-testnet.tokenlist.json'),
           ):
             token_list = json.loads(token_list_path.read_text())
-            errors = sorted(validator.iter_errors(token_list), key=lambda error: list(error.path))
-            if errors:
-              first = errors[0]
-              location = '.'.join(str(part) for part in first.path) or '<root>'
-              raise SystemExit(f'{token_list_path}: {first.message} at {location}')
+            first_error = next(validator.iter_errors(token_list), None)
+            if first_error:
+              location = '.'.join(str(part) for part in first_error.path) or '<root>'
+              raise SystemExit(f'{token_list_path}: {first_error.message} at {location}')
           PY
 
       - name: Detect synchronized changes
