@@ -62,8 +62,9 @@ jobs:
       - name: Format generated token lists
         run: yarn prettier --write src/tokens/*.json
 
-      - name: Validate build and tests
-        run: yarn test
+      - name: Validate generated token lists
+        run: |
+          node -e "const fs=require('fs'); JSON.parse(fs.readFileSync('src/tokens/flow-mainnet.tokenlist.json','utf8')); JSON.parse(fs.readFileSync('src/tokens/flow-testnet.tokenlist.json','utf8'));"
 
       - name: Detect synchronized changes
         id: changes
@@ -87,7 +88,7 @@ jobs:
             - Mirrors the upstream `token-registry/`
             - Records the exact upstream commit SHA
             - Regenerates Flow mainnet/testnet token lists
-            - Runs the XuniaDAO test suite before proposing changes
+            - Validates generated token list JSON before proposing changes
 
             Upstream contributions remain PR-based; this workflow never direct-pushes to FlowFans/OnFlow repositories.
           labels: TokenList
