@@ -53,8 +53,16 @@ jobs:
           node-version: '20'
           cache: yarn
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
       - name: Install dependencies
         run: yarn --frozen-lockfile
+
+      - name: Install schema validation dependency
+        run: python -m pip install jsonschema==4.23.0
 
       - name: Generate Flow token lists
         run: node src/utils/tokenlist-generator.js
@@ -66,15 +74,9 @@ jobs:
         run: |
           python - <<'PY'
           import json
-          import subprocess
-          import sys
           from pathlib import Path
 
-          try:
-            from jsonschema import Draft7Validator, RefResolver
-          except ImportError:
-            subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'jsonschema'])
-            from jsonschema import Draft7Validator, RefResolver
+          from jsonschema import Draft7Validator, RefResolver
 
           schema_path = Path('src/schemas/tokenlist.schema.json')
           token_schema_path = Path('src/schemas/token.schema.json')
