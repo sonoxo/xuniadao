@@ -76,7 +76,7 @@ jobs:
           import json
           from pathlib import Path
 
-          from jsonschema import Draft7Validator, RefResolver
+          from jsonschema import Draft7Validator
 
           schema_path = Path('src/schemas/tokenlist.schema.json')
           token_schema_path = Path('src/schemas/token.schema.json')
@@ -84,16 +84,8 @@ jobs:
           token_schema = json.loads(token_schema_path.read_text())
           schema.pop('$id', None)
           token_schema.pop('$id', None)
-          schema_dir_uri = f'{schema_path.parent.resolve().as_uri()}/'
-          resolver = RefResolver(
-            base_uri=schema_dir_uri,
-            referrer=schema,
-            store={
-              'token.schema.json': token_schema,
-              f'{schema_dir_uri}token.schema.json': token_schema,
-            },
-          )
-          validator = Draft7Validator(schema, resolver=resolver)
+          schema['properties']['tokens']['items'] = token_schema
+          validator = Draft7Validator(schema)
 
           for token_list_path in (
             Path('src/tokens/flow-mainnet.tokenlist.json'),
