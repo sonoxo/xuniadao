@@ -64,7 +64,16 @@ jobs:
 
       - name: Validate generated token lists
         run: |
-          node -e "const fs=require('fs'); for (const f of ['src/tokens/flow-mainnet.tokenlist.json','src/tokens/flow-testnet.tokenlist.json']) { const d=JSON.parse(fs.readFileSync(f,'utf8')); if (!Array.isArray(d.tokens)) throw new Error(`${f} missing tokens array`); if (!d.version) throw new Error(`${f} missing version`); }"
+          npx --yes -p ajv-cli -p ajv-formats ajv validate \
+            -c ajv-formats \
+            -s src/schemas/tokenlist.schema.json \
+            -r src/schemas/token.schema.json \
+            -d src/tokens/flow-mainnet.tokenlist.json
+          npx --yes -p ajv-cli -p ajv-formats ajv validate \
+            -c ajv-formats \
+            -s src/schemas/tokenlist.schema.json \
+            -r src/schemas/token.schema.json \
+            -d src/tokens/flow-testnet.tokenlist.json
 
       - name: Detect synchronized changes
         id: changes
