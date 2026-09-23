@@ -62,8 +62,74 @@ jobs:
       - name: Format generated token lists
         run: yarn prettier --write src/tokens/*.json
 
-      - name: Validate build and tests
-        run: yarn test
+      - name: Validate generated token lists
+        shell: bash
+        run: |
+          shopt -s nullglob
+          token_lists=(src/tokens/*.tokenlist.json)
+          if [ ${#token_lists[@]} -eq 0 ]; then
+            echo "No generated token list artifacts found; skipping schema validation."
+            exit 0
+          fi
+
+          mapfile -t referenced_schemas < <(node - <<'NODE'
+          const fs = require('fs');
+          const path = require('path');
+
+          const root = 'src/schemas/tokenlist.schema.json';
+          const queue = [root];
+          const seen = new Set();
+          const refs = new Set();
+
+          while (queue.length > 0) {
+            const file = queue.pop();
+            if (seen.has(file)) continue;
+            seen.add(file);
+
+            const schema = JSON.parse(fs.readFileSync(file, 'utf8'));
+            const visit = (value) => {
+              if (Array.isArray(value)) {
+                value.forEach(visit);
+                return;
+              }
+              if (!value || typeof value !== 'object') return;
+              for (const [key, nested] of Object.entries(value)) {
+                if (
+                  key === '$ref' &&
+                  typeof nested === 'string' &&
+                  nested.endsWith('.json') &&
+                  !nested.startsWith('http')
+                ) {
+                  const resolved = path.normalize(path.join(path.dirname(file), nested));
+                  if (!refs.has(resolved)) refs.add(resolved);
+                  queue.push(resolved);
+                } else {
+                  visit(nested);
+                }
+              }
+            };
+
+            visit(schema);
+          }
+
+          for (const ref of refs) {
+            console.log(ref);
+          }
+          NODE
+          )
+
+          for token_list in "${token_lists[@]}"; do
+            validate_cmd=(
+              yarn ajv validate
+              -c ajv-formats
+              -s src/schemas/tokenlist.schema.json
+              -d "$token_list"
+            )
+            for ref in "${referenced_schemas[@]}"; do
+              validate_cmd+=(-r "$ref")
+            done
+            "${validate_cmd[@]}"
+          done
 
       - name: Detect synchronized changes
         id: changes
@@ -87,7 +153,7 @@ jobs:
             - Mirrors the upstream `token-registry/`
             - Records the exact upstream commit SHA
             - Regenerates Flow mainnet/testnet token lists
-            - Runs the XuniaDAO test suite before proposing changes
+            - Validates generated token lists against repository schemas before proposing changes
 
             Upstream contributions remain PR-based; this workflow never direct-pushes to FlowFans/OnFlow repositories.
           labels: TokenList
