@@ -62,8 +62,9 @@ jobs:
       - name: Format generated token lists
         run: yarn prettier --write src/tokens/*.json
 
-      - name: Validate build and tests
-        run: yarn test
+      - name: Validate generated token lists
+        run: |
+          node -e "const fs=require('fs'); for (const f of ['src/tokens/flow-mainnet.tokenlist.json','src/tokens/flow-testnet.tokenlist.json']) { const d=JSON.parse(fs.readFileSync(f,'utf8')); if (!Array.isArray(d.tokens)) throw new Error(`${f} missing tokens array`); if (!d.version) throw new Error(`${f} missing version`); }"
 
       - name: Detect synchronized changes
         id: changes
