@@ -64,7 +64,7 @@ jobs:
 
       - name: Validate generated token lists
         run: |
-          for token_list in src/tokens/flow-mainnet.tokenlist.json src/tokens/flow-testnet.tokenlist.json; do
+          for token_list in src/tokens/*.tokenlist.json; do
             yarn ajv validate \
               -c ajv-formats \
               -s src/schemas/tokenlist.schema.json \
