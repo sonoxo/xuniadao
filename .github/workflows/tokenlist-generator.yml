@@ -63,6 +63,7 @@ jobs:
         run: yarn prettier --write src/tokens/*.json
 
       - name: Validate generated token lists
+        shell: bash
         run: |
           shopt -s nullglob
           token_lists=(src/tokens/*.tokenlist.json)
