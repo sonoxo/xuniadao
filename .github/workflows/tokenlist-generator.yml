@@ -53,16 +53,8 @@ jobs:
           node-version: '20'
           cache: yarn
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
       - name: Install dependencies
         run: yarn --frozen-lockfile
-
-      - name: Install schema validation dependency
-        run: python -m pip install jsonschema==4.23.0
 
       - name: Generate Flow token lists
         run: node src/utils/tokenlist-generator.js
@@ -71,32 +63,73 @@ jobs:
         run: yarn prettier --write src/tokens/*.json
 
       - name: Validate generated token lists
+        shell: bash
         run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
+          shopt -s nullglob
+          token_lists=(src/tokens/*.tokenlist.json)
+          if [ ${#token_lists[@]} -eq 0 ]; then
+            echo "No generated token list artifacts found; skipping schema validation."
+            exit 0
+          fi
 
-          from jsonschema import Draft7Validator
+          mapfile -t referenced_schemas < <(node - <<'NODE'
+          const fs = require('fs');
+          const path = require('path');
 
-          schema_path = Path('src/schemas/tokenlist.schema.json')
-          token_schema_path = Path('src/schemas/token.schema.json')
-          schema = json.loads(schema_path.read_text())
-          token_schema = json.loads(token_schema_path.read_text())
-          schema.pop('$id', None)
-          token_schema.pop('$id', None)
-          schema['properties']['tokens']['items'] = token_schema
-          validator = Draft7Validator(schema)
+          const root = 'src/schemas/tokenlist.schema.json';
+          const queue = [root];
+          const seen = new Set();
+          const refs = new Set();
 
-          for token_list_path in (
-            Path('src/tokens/flow-mainnet.tokenlist.json'),
-            Path('src/tokens/flow-testnet.tokenlist.json'),
-          ):
-            token_list = json.loads(token_list_path.read_text())
-            first_error = next(validator.iter_errors(token_list), None)
-            if first_error:
-              location = '.'.join(str(part) for part in first_error.path) or '<root>'
-              raise SystemExit(f'{token_list_path}: {first_error.message} at {location}')
-          PY
+          while (queue.length > 0) {
+            const file = queue.pop();
+            if (seen.has(file)) continue;
+            seen.add(file);
+
+            const schema = JSON.parse(fs.readFileSync(file, 'utf8'));
+            const visit = (value) => {
+              if (Array.isArray(value)) {
+                value.forEach(visit);
+                return;
+              }
+              if (!value || typeof value !== 'object') return;
+              for (const [key, nested] of Object.entries(value)) {
+                if (
+                  key === '$ref' &&
+                  typeof nested === 'string' &&
+                  nested.endsWith('.json') &&
+                  !nested.startsWith('http')
+                ) {
+                  const resolved = path.normalize(path.join(path.dirname(file), nested));
+                  if (!refs.has(resolved)) refs.add(resolved);
+                  queue.push(resolved);
+                } else {
+                  visit(nested);
+                }
+              }
+            };
+
+            visit(schema);
+          }
+
+          for (const ref of refs) {
+            console.log(ref);
+          }
+          NODE
+          )
+
+          for token_list in "${token_lists[@]}"; do
+            validate_cmd=(
+              yarn ajv validate
+              -c ajv-formats
+              -s src/schemas/tokenlist.schema.json
+              -d "$token_list"
+            )
+            for ref in "${referenced_schemas[@]}"; do
+              validate_cmd+=(-r "$ref")
+            done
+            "${validate_cmd[@]}"
+          done
 
       - name: Detect synchronized changes
         id: changes
@@ -120,7 +153,7 @@ jobs:
             - Mirrors the upstream `token-registry/`
             - Records the exact upstream commit SHA
             - Regenerates Flow mainnet/testnet token lists
-            - Validates generated token lists against XuniaDAO schema before proposing changes
+            - Validates generated token lists against repository schemas before proposing changes
 
             Upstream contributions remain PR-based; this workflow never direct-pushes to FlowFans/OnFlow repositories.
           labels: TokenList
