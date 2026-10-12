@@ -95,8 +95,8 @@
   },
   "truthState": {
     "sourceMergedIntoGptDoug": "VERIFIED",
-    "XuniaDomainContract": "SOURCE_IMPLEMENTED_MERGE_PENDING",
-    "XuniaHubRoute": "PROPOSED_SEPARATE_REVIEW",
+    "XuniaDomainContract": "SOURCE_DEFINED_NOT_LIVE_RUNTIME_PROOF",
+    "XuniaHubRoute": "SEPARATE_REPOSITORY_ROUTE_DEPLOYMENT_NOT_VERIFIED",
     "localOSIRISRuntime": "NOT_ATTESTED",
     "publicInternetFeedHealth": "NOT_ATTESTED",
     "deployment": "NOT_DEPLOYED_BY_THIS_CONTRACT"
