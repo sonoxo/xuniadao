@@ -56,13 +56,14 @@ jobs:
           const { GLASS_ONION_LAYER, routeGlassOnion } = require('./dist/main/lib/glass-onion-layer');
           const ontology = require('./dist/main/lib/ecosystem-governance-ontology');
           assert.equal(GLASS_ONION_LAYER.codename, 'GLASS ONION');
-          assert.equal(GLASS_ONION_LAYER.version, '2.7.0');
+          assert.equal(GLASS_ONION_LAYER.version, '2.8.0');
           assert.equal(GLASS_ONION_LAYER.licensesCommand, '/glass licenses');
           assert.equal(GLASS_ONION_LAYER.exchangesCommand, '/glass exchanges');
           assert.equal(GLASS_ONION_LAYER.evidenceCommand, '/glass evidence');
           assert.equal(GLASS_ONION_LAYER.missionCommand, '/glass mission');
+          assert.equal(GLASS_ONION_LAYER.osirisCommand, '/glass osiris');
           assert.equal(GLASS_ONION_LAYER.layers.length, 6);
-          for (const capability of ['LICENSE_REGISTRY','EXCHANGE_MARKET_DATA','COMPLIANCE_EVIDENCE','MISSION_TELEMETRY']) {
+          for (const capability of ['LICENSE_REGISTRY','EXCHANGE_MARKET_DATA','COMPLIANCE_EVIDENCE','MISSION_TELEMETRY','PINEAL_OSIRIS_FEED_HEALTH']) {
             assert.ok(GLASS_ONION_LAYER.capabilities.includes(capability));
           }
           assert.equal(routeGlassOnion({ objective: 'CI license route', capability: 'LICENSE_REGISTRY', targets: ['xunia'], provenance: ['path:LICENSE'] }).decision, 'ALLOW');
@@ -84,17 +85,20 @@ jobs:
           const ontology = JSON.parse(fs.readFileSync('ecosystem/governance-ontology.json', 'utf8'));
           const mission = JSON.parse(fs.readFileSync('ecosystem/mission-telemetry.json', 'utf8'));
           assert.equal(contract.codename, 'GLASS ONION');
-          assert.equal(contract.version, '2.7.0');
+          assert.equal(contract.version, '2.8.0');
           assert.equal(contract.licensesCommand, '/glass licenses');
           assert.equal(contract.exchangesCommand, '/glass exchanges');
           assert.equal(contract.evidenceCommand, '/glass evidence');
           assert.equal(contract.missionCommand, '/glass mission');
+          assert.equal(contract.osirisCommand, '/glass osiris');
           assert.equal(contract.governanceOntologyCommand, '/glass ontology governance');
           assert.equal(contract.layers.length, 6);
           assert.ok(contract.capabilities.includes('LICENSE_REGISTRY'));
           assert.ok(contract.capabilities.includes('EXCHANGE_MARKET_DATA'));
           assert.ok(contract.capabilities.includes('COMPLIANCE_EVIDENCE'));
           assert.ok(contract.capabilities.includes('MISSION_TELEMETRY'));
+          assert.ok(contract.capabilities.includes('PINEAL_OSIRIS_FEED_HEALTH'));
+          assert.equal(contract.invariants.osirisPublicFeedHealthReadOnly, true);
           assert.equal(contract.invariants.realWorldFlightControl, false);
           assert.equal(contract.invariants.telecommandTransmission, false);
           assert.equal(contract.invariants.externalExchangeListingCannotBeSelfDeclared, true);

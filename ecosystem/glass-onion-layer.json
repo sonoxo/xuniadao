@@ -41,6 +41,7 @@
     "TECH_PEER_ONTOLOGY",
     "XUNIAVERSE_REGISTRY",
     "MISSION_TELEMETRY",
+    "PINEAL_OSIRIS_FEED_HEALTH",
     "CODE_PLAN",
     "ONTOLOGY_WORKFLOW",
     "MEDIA_WORKFLOW",
@@ -63,7 +64,8 @@
       "GCPXUNIA_DEFENSE",
       "TECH_PEERS",
       "XUNIAVERSE",
-      "MISSION_TELEMETRY"
+      "MISSION_TELEMETRY",
+      "PINEAL_OSIRIS_FEED_HEALTH"
     ]
   },
   "pipelines": {
@@ -133,6 +135,15 @@
       "VA3LM_REASON",
       "ZYRA_VERIFY",
       "HUMAN_REVIEW"
+    ],
+    "PINEAL_OSIRIS_FEED_HEALTH": [
+      "AUTHORIZED_LOCAL_STATUS",
+      "ALLOWLIST_CHECK",
+      "PROVENANCE_VERIFY",
+      "FRESHNESS_RECOMPUTE",
+      "XUNIA_DOMAIN_NORMALIZE",
+      "GLASS_ONION_REVIEW",
+      "ZYRA_APPROVAL_FOR_PROMOTION"
     ]
   },
   "decisions": [
@@ -155,6 +166,10 @@
     "productionComplianceEvidenceCannotBeInferred": true,
     "automaticFundMovement": false,
     "automaticGovernanceVoting": false,
-    "arbitraryRemoteShell": false
-  }
+    "arbitraryRemoteShell": false,
+    "osirisPublicFeedHealthReadOnly": true,
+    "osirisNoCameraOrTrackingImport": true,
+    "osirisNoPublicToPrivateLoopbackProxy": true
+  },
+  "osirisCommand": "/glass osiris"
 }

@@ -14,6 +14,7 @@ export type GlassOnionCapability =
   | 'TECH_PEER_ONTOLOGY'
   | 'XUNIAVERSE_REGISTRY'
   | 'MISSION_TELEMETRY'
+  | 'PINEAL_OSIRIS_FEED_HEALTH'
   | 'AUTHENTICATED_BROWSER'
   | 'CODE_PLAN'
   | 'ONTOLOGY_WORKFLOW'
@@ -63,6 +64,7 @@ const PIPELINES: Readonly<Record<GlassOnionCapability, readonly string[]>> = {
   TECH_PEER_ONTOLOGY: ['PEER_SOURCE_DISCOVERY', 'PRIMARY_SOURCE_VERIFY', 'DOMAIN_MAP', 'ONTOLOGY_LINK', 'CREDENTIAL_EVIDENCE_CHECK', 'ALIGNMENT_ASSESSMENT'],
   XUNIAVERSE_REGISTRY: ['REPOSITORY_DISCOVERY', 'UPSTREAM_PROVENANCE', 'NODE_ROLE_MAP', 'XUNIADAO_ROOT_LINK', 'LICENSE_BOUNDARY', 'REGISTRY_EVIDENCE'],
   MISSION_TELEMETRY: ['PUBLIC_MISSION_DATA', 'FPRIME_SIM_TELEMETRY', 'PROVENANCE_NORMALIZE', 'XUNIA_ONTOLOGY', 'VIRGINIA_QUERY', 'VA3LM_REASON', 'ZYRA_VERIFY', 'HUMAN_REVIEW'],
+  PINEAL_OSIRIS_FEED_HEALTH: ['AUTHORIZED_LOCAL_STATUS', 'ALLOWLIST_CHECK', 'PROVENANCE_VERIFY', 'FRESHNESS_RECOMPUTE', 'XUNIA_DOMAIN_NORMALIZE', 'GLASS_ONION_REVIEW', 'ZYRA_APPROVAL_FOR_PROMOTION'],
   AUTHENTICATED_BROWSER: ['LOCAL_PROFILE_IMPORT', 'CHROME_SESSION_REUSE', 'HTTP_HTTPS_NAVIGATION', 'AUTHENTICATED_PAGE_READ', 'PROVENANCE_CAPTURE', 'VA3LM_REASON', 'ZYRA_ACTION_GATE'],
   CODE_PLAN: ['XUNIA_SCOPE', 'VA3LM_PLAN', 'SONOXO_CODE_INTELLIGENCE', 'ZYRA_VALIDATE'],
   ONTOLOGY_WORKFLOW: ['XUNIA_OBJECTS', 'SONOXO_ONTOLOGY', 'VA3LM_FUNCTION_PLAN', 'ZYRA_ACTION_GATE'],
@@ -89,6 +91,7 @@ const PROVENANCE_CAPABILITIES: readonly GlassOnionCapability[] = [
   'TECH_PEER_ONTOLOGY',
   'XUNIAVERSE_REGISTRY',
   'MISSION_TELEMETRY',
+  'PINEAL_OSIRIS_FEED_HEALTH',
   'AUTHENTICATED_BROWSER',
   'UNIVERSAL_HIVE_MONETARY',
   'PALANTIR_FLOW_XRPL',
@@ -153,6 +156,7 @@ export const GLASS_ONION_LAYER = {
   peersCommand: '/glass peers',
   xuniaverseCommand: '/glass xuniaverse',
   missionCommand: '/glass mission',
+  osirisCommand: '/glass osiris',
   browserCommand: '/glass browse',
   uapCommand: '/glass uap',
   hiveMonetaryCommand: '/glass hive xrpl',
@@ -175,6 +179,9 @@ export const GLASS_ONION_LAYER = {
     browserConsequentialActionsRequireHumanApproval: true,
     exchangeMarketDataReadOnly: true,
     missionTelemetryReadOrSimulationOnly: true,
+    osirisPublicFeedHealthReadOnly: true,
+    osirisNoCameraOrTrackingImport: true,
+    osirisNoPublicToPrivateLoopbackProxy: true,
     realWorldFlightControl: false,
     telecommandTransmission: false,
     externalExchangeListingCannotBeSelfDeclared: true,
