@@ -70,7 +70,7 @@ test('control plane allows observation, but reviews writes and blocks recon', (t
 
 test('source is attributed without an affiliation claim', (t) => {
   t.true(PINEAL_OSIRIS_ROUTES.includes('earthquakes'));
-  t.false(PINEAL_OSIRIS_XUNIA_CONTRACT.rules.noVendorAffiliationClaim === false);
+  t.true(PINEAL_OSIRIS_XUNIA_CONTRACT.rules.noVendorAffiliationClaim);
   t.is(PINEAL_OSIRIS_XUNIA_CONTRACT.sourcePullRequest, 341);
 });
 
