@@ -1,0 +1,103 @@
+{
+  "id": "XUNIA-PINEAL-OSIRIS-HEALTH-V1",
+  "version": "1.0.0",
+  "command": "/glass osiris",
+  "domainRoot": "sonoxo/xuniadao",
+  "hostApplication": "sonoxo/xuniahub",
+  "source": {
+    "repository": "sonoxo/gpt-doug-llm",
+    "path": "integrations/pineal_osiris",
+    "pullRequest": 341,
+    "status": "MERGED_SOURCE",
+    "upstream": "simplifaisoul/osiris",
+    "upstreamLicense": "MIT",
+    "sourceProjectLicense": "MIT",
+    "domainLicense": "Apache-2.0",
+    "attribution": "No OSIRIS source is copied, no vendor endorsement or affiliation is claimed"
+  },
+  "endpoints": {
+    "localControlDeck": "http://127.0.0.1:8766/",
+    "localStatus": "http://127.0.0.1:8766/api/status",
+    "localGlobe": "http://127.0.0.1:3000/",
+    "publicHostRoute": "/xuniaverse/pineal-osiris",
+    "bridgeMode": "OPERATOR_OPT_IN_SAME_HOST_ONLY",
+    "hostedAccessToOperatorsLocalhost": false,
+    "automaticRemoteProxy": false
+  },
+  "readOnlyRoutes": [
+    "health",
+    "earthquakes",
+    "fires",
+    "weather",
+    "air-quality",
+    "space-weather",
+    "news",
+    "live-news",
+    "gdelt",
+    "markets"
+  ],
+  "visualLayers": [
+    "maritime",
+    "satellites",
+    "cctv",
+    "cctv_previews",
+    "live_news",
+    "earthquakes",
+    "global_incidents",
+    "day_night",
+    "cables",
+    "sdk_air",
+    "sdk_naval"
+  ],
+  "ontology": {
+    "objectType": "PUBLIC_FEED_HEALTH",
+    "properties": [
+      "route",
+      "status",
+      "observedAt",
+      "source",
+      "latencyMs",
+      "ageSeconds"
+    ],
+    "relationships": [
+      "DERIVED_FROM_GPT_DOUG_SAFE_MIRROR",
+      "GOVERNED_BY_GLASS_ONION",
+      "PROPOSED_TO_XUNIA_ONTOLOGY",
+      "REQUIRES_ZYRA_APPROVAL"
+    ],
+    "decisionStates": [
+      "ALLOW",
+      "REVIEW",
+      "BLOCK"
+    ],
+    "sourceProvenance": "gpt-doug.osiris-safe-mirror.v1",
+    "processing": [
+      "VERIFY_ALLOWLIST",
+      "VERIFY_PROVENANCE",
+      "RECOMPUTE_FRESHNESS",
+      "STRIP_RAW_DATA",
+      "GLASS_ONION_GATE",
+      "HUMAN_APPROVAL_FOR_IMPORT"
+    ]
+  },
+  "controls": {
+    "publicHealthOnly": true,
+    "requireLocalOperatorOptIn": true,
+    "noRawTracking": true,
+    "noCameraFrames": true,
+    "noAssetControl": true,
+    "noRemoteShell": true,
+    "noAutomaticCloudToLocalhost": true,
+    "noAutomaticOntologyWrites": true,
+    "humanReviewForPromotion": true,
+    "noVendorAffiliationClaim": true
+  },
+  "truthState": {
+    "sourceMergedIntoGptDoug": "VERIFIED",
+    "XuniaDomainContract": "PROPOSED_UNTIL_MERGED",
+    "XuniaHubRoute": "PROPOSED_UNTIL_MERGED",
+    "localOSIRISRuntime": "NOT_ATTESTED",
+    "publicInternetFeedHealth": "NOT_ATTESTED",
+    "deployment": "NOT_DEPLOYED_BY_THIS_CONTRACT"
+  }
+}
