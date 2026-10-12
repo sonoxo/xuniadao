@@ -13,7 +13,8 @@
     "upstreamLicense": "MIT",
     "sourceProjectLicense": "MIT",
     "domainLicense": "Apache-2.0",
-    "attribution": "No OSIRIS source is copied, no vendor endorsement or affiliation is claimed"
+    "attribution": "No OSIRIS source is copied, no vendor endorsement or affiliation is claimed",
+    "headReference": "sonoxo/gpt-doug-llm/main"
   },
   "endpoints": {
     "localControlDeck": "http://127.0.0.1:8766/",
@@ -94,10 +95,14 @@
   },
   "truthState": {
     "sourceMergedIntoGptDoug": "VERIFIED",
-    "XuniaDomainContract": "PROPOSED_UNTIL_MERGED",
-    "XuniaHubRoute": "PROPOSED_UNTIL_MERGED",
+    "XuniaDomainContract": "SOURCE_IMPLEMENTED_MERGE_PENDING",
+    "XuniaHubRoute": "PROPOSED_SEPARATE_REVIEW",
     "localOSIRISRuntime": "NOT_ATTESTED",
     "publicInternetFeedHealth": "NOT_ATTESTED",
     "deployment": "NOT_DEPLOYED_BY_THIS_CONTRACT"
+  },
+  "integrationPullRequests": {
+    "xuniaDomain": "sonoxo/xuniadao#36",
+    "xuniaHub": "sonoxo/xuniahub#140"
   }
 }
