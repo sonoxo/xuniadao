@@ -1,3 +1,4 @@
+import { routeGlassOnion } from './glass-onion-layer';
 import test from 'ava';
 import {
   decidePinealOsirisAction,
@@ -71,4 +72,17 @@ test('source is attributed without an affiliation claim', (t) => {
   t.true(PINEAL_OSIRIS_ROUTES.includes('earthquakes'));
   t.false(PINEAL_OSIRIS_XUNIA_CONTRACT.rules.noVendorAffiliationClaim === false);
   t.is(PINEAL_OSIRIS_XUNIA_CONTRACT.sourcePullRequest, 341);
+});
+
+test('Glass Onion requires provenance and explicit review for mutation', (t) => {
+  const context = {
+    objective: 'inspect public OSIRIS safe feed health',
+    capability: 'PINEAL_OSIRIS_FEED_HEALTH' as const,
+    targets: ['xunia' as const],
+  };
+  t.is(routeGlassOnion(context).decision, 'REVIEW');
+  t.is(routeGlassOnion({ ...context, provenance: ['source:gpt-doug.osiris-safe-mirror.v1'] }).decision, 'ALLOW');
+  t.is(routeGlassOnion({
+    ...context, provenance: ['source:gpt-doug.osiris-safe-mirror.v1'], mutatesRepository: true,
+  }).decision, 'REVIEW');
 });
