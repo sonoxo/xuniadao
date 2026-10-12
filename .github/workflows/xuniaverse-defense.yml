@@ -134,7 +134,7 @@ jobs:
           assert.ok(governance.objectTypes.includes('AGENT_IDENTITY'));
           assert.ok(governance.objectTypes.includes('TECH_PEER'));
           assert.ok(governance.objectTypes.includes('XUNIAVERSE_NODE'));
-          assert.equal(layer.GLASS_ONION_LAYER.version, '2.7.0');
+          assert.equal(layer.GLASS_ONION_LAYER.version, '2.8.0');
           assert.equal(layer.GLASS_ONION_LAYER.defenseCommand, '/glass defense');
           assert.equal(layer.GLASS_ONION_LAYER.peersCommand, '/glass peers');
           assert.equal(layer.GLASS_ONION_LAYER.xuniaverseCommand, '/glass xuniaverse');
