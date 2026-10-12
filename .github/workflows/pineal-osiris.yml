@@ -1,0 +1,62 @@
+name: XUNIA PINEAL OSIRIS Contract Lock
+
+on:
+  pull_request:
+    paths:
+      - 'src/lib/pineal-osiris.ts'
+      - 'src/lib/pineal-osiris.spec.ts'
+      - 'src/lib/glass-onion-layer.ts'
+      - 'src/index.ts'
+      - 'ecosystem/pineal-osiris.json'
+      - 'docs/PINEAL_OSIRIS.md'
+      - '.github/workflows/pineal-osiris.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'src/lib/pineal-osiris.ts'
+      - 'src/lib/pineal-osiris.spec.ts'
+      - 'src/lib/glass-onion-layer.ts'
+      - 'src/index.ts'
+      - 'ecosystem/pineal-osiris.json'
+      - 'docs/PINEAL_OSIRIS.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: yarn
+      - run: yarn install --frozen-lockfile
+      - run: yarn build:main
+      - run: yarn test:unit
+      - name: Verify XUNIA bounded OSIRIS source contract
+        run: |
+          node <<'NODE'
+          const assert = require('node:assert/strict');
+          const fs = require('node:fs');
+          const source = require('./dist/main/lib/pineal-osiris');
+          const glass = require('./dist/main/lib/glass-onion-layer');
+          const contract = JSON.parse(fs.readFileSync('ecosystem/pineal-osiris.json', 'utf8'));
+          assert.equal(contract.source.repository, 'sonoxo/gpt-doug-llm');
+          assert.equal(contract.source.pullRequest, 341);
+          assert.equal(contract.controls.noRawTracking, true);
+          assert.equal(contract.controls.noAutomaticCloudToLocalhost, true);
+          assert.equal(contract.controls.humanReviewForPromotion, true);
+          assert.equal(contract.truthState.localOSIRISRuntime, 'NOT_ATTESTED');
+          assert.equal(source.PINEAL_OSIRIS_XUNIA_CONTRACT.command, '/glass osiris');
+          assert.equal(glass.GLASS_ONION_LAYER.osirisCommand, '/glass osiris');
+          assert.equal(source.decidePinealOsirisAction('INVOKE_OSIRIS_RECON').decision, 'BLOCK');
+          assert.equal(source.decidePinealOsirisAction('PROPOSE_XUNIA_ONTOLOGY_RECORD').decision, 'REVIEW');
+          assert.equal(source.normalizePinealOsirisStatus({
+            safe_routes: { cctv: { status: 'ONLINE', provenance: 'gpt-doug.osiris-safe-mirror.v1' } }
+          }).length, 0);
+          console.log('XUNIA PINEAL OSIRIS CONTRACT: PASS');
+          NODE
