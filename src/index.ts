@@ -23,6 +23,7 @@ export * from './lib/glass-onion-health-certification';
 export * from './lib/glass-onion-layer';
 export * from './lib/licenses';
 export * from './lib/mission-telemetry';
+export * from './lib/pineal-osiris';
 export * from './lib/quantum-ontology';
 export * from './lib/sagi';
 export * from './lib/super-agent';
